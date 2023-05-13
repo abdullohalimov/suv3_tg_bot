@@ -80,11 +80,11 @@ def load_config(path: str = None) -> Config:
         #     database=env.str('POSTGRES_DB'),
         # ),
 
-        # redis=RedisConfig(
-        #     redis_pass=env.str("REDIS_PASSWORD"),
-        #     redis_port=env.int("REDIS_PORT"),
-        #     redis_host=env.str("REDIS_HOST"),
-        # ),
+        redis=RedisConfig(
+            redis_pass=env.str("REDIS_PASSWORD"),
+            redis_port=env.int("REDIS_PORT"),
+            redis_host=env.str("REDIS_HOST"),
+        ),
 
         misc=Miscellaneous()
     )

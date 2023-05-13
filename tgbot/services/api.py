@@ -1,4 +1,4 @@
-def check_phone(phone):
+async def check_phone(phone):
     if phone.isdigit():
         return True
     else:

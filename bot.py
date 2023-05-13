@@ -8,7 +8,6 @@ from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 
 from tgbot.config import load_config
 from tgbot.handlers.admin import admin_router
-from tgbot.handlers.echo import echo_router
 from tgbot.handlers.user import user_router
 from tgbot.middlewares.config import ConfigMiddleware
 from tgbot.services import broadcaster
@@ -44,14 +43,13 @@ async def main():
     for router in [
         admin_router,
         user_router,
-        echo_router
     ]:
         dp.include_router(router)
 
     register_global_middlewares(dp, config)
 
     await on_startup(bot, config.tg_bot.admin_ids)
-    await dp.start_polling(bot)
+    await dp.start_polling(bot, parse_mode='HTML')
 
 
 if __name__ == '__main__':
