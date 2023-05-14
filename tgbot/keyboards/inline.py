@@ -1,60 +1,74 @@
+import logging
+from tgbot.services import api
 from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
 from aiogram.filters.callback_data import CallbackData
+from tgbot.misc.states import i18nn as _
 
-def male_female_keyboard():
+def language_keyboard():
     keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text="Erkak", callback_data=Factories.MaleFemale(id='male').pack()))
-    keyboard.add(InlineKeyboardButton(text="Ayol", callback_data=Factories.MaleFemale(id='female').pack()))
+    keyboard.add(InlineKeyboardButton(text="🇺🇿 Ўзбекча", callback_data=Factories.Language(language="uz").pack()), 
+            InlineKeyboardButton(text="🇷🇺 Русcкий", callback_data=Factories.Language(language="ru").pack()), 
+            InlineKeyboardButton(text="🇺🇿 O'zbekcha", callback_data=Factories.Language(language="de").pack()))
+    
     return keyboard.as_markup()
 
-async def position_keyboard():
+def male_female_keyboard(lang):
     keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text="хўжалик рахбари", callback_data=Factories.Position(id=1).pack()))
-    keyboard.add(InlineKeyboardButton(text="бухгалтери", callback_data=Factories.Position(id=2).pack()))
-    keyboard.add(InlineKeyboardButton(text="ишчиси", callback_data=Factories.Position(id=3).pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Эркак", locale=lang), callback_data=Factories.MaleFemale(id='1').pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Аёл", locale=lang), callback_data=Factories.MaleFemale(id='2').pack()))
+    return keyboard.as_markup()
+
+async def position_keyboard(lang):
+    keyboard = InlineKeyboardBuilder()
+    keyboard.add(InlineKeyboardButton(text=_("Хўжалик рахбари", locale=lang), callback_data=Factories.Position(id=1).pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Бухгалтер", locale=lang), callback_data=Factories.Position(id=2).pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Ишчи", locale=lang), callback_data=Factories.Position(id=3).pack()))
     keyboard.adjust(1)
     return keyboard.as_markup()
     
-async def regions_keyboard():
-    keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text="Region 1", callback_data=Factories.Region(id=1).pack()))
-    keyboard.add(InlineKeyboardButton(text="Region 2", callback_data=Factories.Region(id=2).pack()))
-    keyboard.add(InlineKeyboardButton(text="Region 3", callback_data=Factories.Region(id=3).pack()))
-    keyboard.add(InlineKeyboardButton(text="Region 4", callback_data=Factories.Region(id=4).pack()))
-    keyboard.add(InlineKeyboardButton(text="Region 5", callback_data=Factories.Region(id=5).pack()))
-    keyboard.adjust(2)
-    return keyboard.as_markup()
 
-async def district_keyboard():
+async def faoliyat_turi_keyboard(lang):
     keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text="District 1", callback_data=Factories.District(id=1).pack()))
-    keyboard.add(InlineKeyboardButton(text="District 2", callback_data=Factories.District(id=2).pack()))
-    keyboard.add(InlineKeyboardButton(text="District 3", callback_data=Factories.District(id=3).pack()))
-    keyboard.add(InlineKeyboardButton(text="District 4", callback_data=Factories.District(id=4).pack()))
-    keyboard.add(InlineKeyboardButton(text="District 5", callback_data=Factories.District(id=5).pack()))
-    keyboard.add(InlineKeyboardButton(text="District 6", callback_data=Factories.District(id=6).pack()))
-    keyboard.add(InlineKeyboardButton(text="District 7", callback_data=Factories.District(id=7).pack()))
-    keyboard.adjust(2)
-    return keyboard.as_markup()
-
-async def faoliyat_turi_keyboard():
-    keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text="Пахтачилик/ғаллачилик", callback_data=Factories.FaoliyatTuri(id=1).pack()))
-    keyboard.add(InlineKeyboardButton(text="Боғдорчилик/узумчилик", callback_data=Factories.FaoliyatTuri(id=2).pack()))
-    keyboard.add(InlineKeyboardButton(text="Сабзавот-полиз", callback_data=Factories.FaoliyatTuri(id=3).pack()))
-    keyboard.add(InlineKeyboardButton(text="Сабзавот-ғалла", callback_data=Factories.FaoliyatTuri(id=1).pack()))
-    keyboard.add(InlineKeyboardButton(text="Бошқа йўналиш", callback_data=Factories.FaoliyatTuri(id=1).pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Пахтачилик/ғаллачилик", locale=lang), callback_data=Factories.FaoliyatTuri(id=1).pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Боғдорчилик/узумчилик", locale=lang), callback_data=Factories.FaoliyatTuri(id=2).pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Сабзавот-полиз", locale=lang), callback_data=Factories.FaoliyatTuri(id=3).pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Сабзавот-ғалла", locale=lang), callback_data=Factories.FaoliyatTuri(id=1).pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Бошқа йўналиш", locale=lang), callback_data=Factories.FaoliyatTuri(id=1).pack()))
     keyboard.adjust(1)
     return keyboard.as_markup()
 
-async def download_cert():
+async def download_cert(lang):
     keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text="Сертификатни юклаб олиш", callback_data=Factories.Certificate(id='download').pack()))
+    keyboard.add(InlineKeyboardButton(text=_("Сертификатни юклаб олиш", locale=lang), callback_data=Factories.Certificate(id='download').pack()))
     keyboard.adjust(1)
 
     return keyboard.as_markup()
+
+async def region_inline_keyboard():
+    regions_list = await api.get_region_with_districts()
+    keyb = InlineKeyboardBuilder()
+    for i in regions_list['data']:
+        logging.info(i)
+        keyb.add(InlineKeyboardButton(text=str(i['name']), callback_data=Factories.Region(id=str(i['id'])).pack()))
+    keyb.adjust(2)
+    return keyb.as_markup()
+
+async def district_inline_keyboard(region_id):
+    districts_list = await api.get_region_with_districts()
+    keyb = InlineKeyboardBuilder()
+    for i in districts_list['data']:
+        # logging.info(i)
+        if str(i['id']) == str(region_id):
+            for j in i['districts']:
+                logging.info(j)
+                keyb.add(InlineKeyboardButton(text=str(j['name']), callback_data=Factories.District(id=str(j['id'])).pack()))
+    keyb.adjust(2)
+    return keyb.as_markup()
 
 class Factories:
+    class Language(CallbackData, prefix="language"):
+        language: str
+
     class MaleFemale(CallbackData, prefix="male_female"):
         id: str
 

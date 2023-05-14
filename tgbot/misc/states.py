@@ -1,8 +1,15 @@
 from aiogram.filters.state import State, StatesGroup
+from aiogram.utils.i18n import I18n
+
+i18n = I18n(path="locales", default_locale="uz", domain="messages")
+
+i18nn = i18n.gettext
 
 class UserRegistration(StatesGroup):
     phone = State()
-    fullname = State()
+    firstname = State()
+    secondname = State()
+    lastname = State()
     birthday = State()
     malefemale = State()
     fermer_xojalik = State()
