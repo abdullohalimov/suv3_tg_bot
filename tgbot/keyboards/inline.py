@@ -100,13 +100,13 @@ async def faoliyat_turi_keyboard(lang):
     keyboard.add(
         InlineKeyboardButton(
             text=_("Сабзавот-ғалла", locale=lang),
-            callback_data=Factories.FaoliyatTuri(id=1).pack(),
+            callback_data=Factories.FaoliyatTuri(id=4).pack(),
         )
     )
     keyboard.add(
         InlineKeyboardButton(
             text=_("Бошқа йўналиш", locale=lang),
-            callback_data=Factories.FaoliyatTuri(id=1).pack(),
+            callback_data=Factories.FaoliyatTuri(id=5).pack(),
         )
     )
     keyboard.add(
