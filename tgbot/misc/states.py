@@ -8,8 +8,8 @@ i18nn = i18n.gettext
 class UserRegistration(StatesGroup):
     phone = State()
     firstname = State()
-    secondname = State()
     lastname = State()
+    secondname = State()
     birthday = State()
     malefemale = State()
     fermer_xojalik = State()
@@ -18,3 +18,4 @@ class UserRegistration(StatesGroup):
     address_district = State()
     faoliyat_turi = State()
     cert = State()
+    cert2 = State()

@@ -12,24 +12,96 @@ from tgbot.misc.states import i18nn as _
 user_router = Router()
 
 
+@user_router.message(F.text == '🔙 Орқага')
+@user_router.message(F.text == '🔙 Назад')
+@user_router.message(F.text == '🔙 Orqaga')
+async def back(message: Message, state: FSMContext):
+    state2 = await state.get_state()
+    data = await state.get_data()
+    if state2 == states.UserRegistration.phone:
+        await StepOne.start(message)
+    elif state2 == states.UserRegistration.firstname:
+        await message.answer(
+                text=_('📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:', locale=data.get("language")), reply_markup=reply.phone_keyboard(data.get("language"))
+            )
+        await state.set_state(states.UserRegistration.phone)
+    elif state2 == states.UserRegistration.lastname:
+        await message.reply(
+                text=_("✍🏼 <b>Исмингиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк</i>",
+                       locale=data.get("language")), reply_markup=reply.back_keyboard()
+            )
+        await state.set_state(states.UserRegistration.firstname)
+    elif state2 == states.UserRegistration.secondname:
+        await message.answer(
+            text=_("✍🏼 <b>Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Умаров</i>",
+                    locale=data.get("language")), reply_markup=reply.back_keyboard()
+        )
+        await state.set_state(states.UserRegistration.lastname)
+    elif state2 == states.UserRegistration.birthday:
+        await message.answer(
+                text=_("✍🏼 <b>Шарифингиз</b>ни киритинг.\n<i>Мисол учун: Иброҳимович ёки Иброҳим ўғли</i>", locale=data.get("language")), reply_markup=reply.back_keyboard())
+        await state.set_state(states.UserRegistration.secondname)
+    elif state2 == states.UserRegistration.fermer_xojalik:
+        await message.answer(
+                text=_("👥 Жинсингиз:", locale=data.get("language")), reply_markup=inline.male_female_keyboard(data.get("language"))
+            )
+        await state.set_state(states.UserRegistration.malefemale)
+    elif state2 == states.UserRegistration.cert2:
+        await state.clear()
+        await message.answer('Тилни танланг..\nВыберите язык..\nTilni tanlang..', reply_markup=inline.language_keyboard())
+
+@user_router.callback_query(inline.Factories.Back.filter())
+async def user_back(callback: CallbackQuery, callback_data: inline.Factories.Back, state: FSMContext):
+    state2 = await state.get_state()
+    data = await state.get_data()
+    if state2 == states.UserRegistration.malefemale:
+        await callback.message.answer(
+    text=_("📅 Туғилган санангизни <b>йил-ой-кун</b> форматида киритинг\n<i>Мисол учун: 2000-12-21</i>",
+            locale=data.get("language")), reply_markup=reply.back_keyboard()
+)
+        await state.set_state(states.UserRegistration.birthday)
+    elif state2 == states.UserRegistration.position:
+        await callback.message.edit_text(text=_("🚜 Фермер ёки деҳқон хўжалиги номини киритинг", locale=data.get("language")), reply_markup=reply.back_keyboard())
+        await state.set_state(states.UserRegistration.fermer_xojalik)
+    elif state2 == states.UserRegistration.address_region:
+        await callback.message.edit_text(
+            text=_("🧑‍🌾 Сизнинг лавозимингиз", locale=data.get("language")), reply_markup=await inline.position_keyboard(data.get("language"))
+        )
+        await state.set_state(states.UserRegistration.position)
+    elif state2 == states.UserRegistration.address_district:
+        await callback.message.edit_text(
+            text=_("📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
+                   locale=data.get("language")),
+            reply_markup=await inline.region_inline_keyboard(),
+        )
+    elif state2 == states.UserRegistration.faoliyat_turi:
+        await call.message.edit_text(
+            text=_("📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
+                   locale=data.get("language")),
+            reply_markup=await inline.district_inline_keyboard(callback_data.id, data.get("language")),
+        )
+        await state.set_state(states.UserRegistration.address_district)
+
 class StepOne:
     @user_router.message(CommandStart())
     async def start(message: Message):
         await message.answer('Тилни танланг..\nВыберите язык..\nTilni tanlang..', reply_markup=inline.language_keyboard())
-    
+
     @user_router.callback_query(inline.Factories.Language.filter())
     async def user_phone(callback: CallbackQuery, callback_data: inline.Factories.Language, state: FSMContext):
         await state.update_data(language=callback_data.language)
         data = await state.get_data()
         if data.get("id_number"):
             await callback.message.answer(
-                text=_("✅Сиз муваффақиятли рўйхатдан ўтгансиз.\n🆔Сизнинг <b>ID рақамингиз</b> 202300001.\n\n🎫Курс якунлангандан сўнг, шу ерда <b>сертификатингизни</b> юклаб олишингиз мумкин", locale=data.get("language")),
+                text=_("✅Сиз муваффақиятли рўйхатдан ўтгансиз.\n🆔Сизнинг <b>ID рақамингиз</b> {certificate_id}.\n\n🎫Курс якунлангандан сўнг, шу ерда <b>сертификатингизни</b> юклаб олишингиз мумкин", locale=data.get("language")).format(
+                    certificate_id=data.get("id_number")
+                ),
                 reply_markup=await inline.download_cert(data.get("language")),
             )
             await state.set_state(states.UserRegistration.cert)
         else:
             await callback.message.answer(
-                text=_('📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:', locale=data.get("language")), reply_markup=reply.phone_keyboard()
+                text=_('📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:', locale=data.get("language")), reply_markup=reply.phone_keyboard(data.get("language"))
             )
             await state.set_state(states.UserRegistration.phone)
 
@@ -42,14 +114,15 @@ class StepOne:
                 await state.update_data(phone=message.text.replace("+", ""))
             data = await state.get_data()
             await message.reply(
-                text=_("✍🏼 <b>Исмингиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк</i>", locale=data.get("language"))
+                text=_("✍🏼 <b>Исмингиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк</i>",
+                       locale=data.get("language")), reply_markup=reply.back_keyboard()
             )
             await state.set_state(states.UserRegistration.firstname)
 
         @user_router.message(states.UserRegistration.phone)
-        async def user_number_incorrect(message: Message):
-            data = await message.state.get_data()
-            await message.answer(text=_("❌  Телефон рақамингиз нотўғри форматда киритилган.\n☝️ Тeлeфон рақамингизни <b>+9989** *** ** **</b> шаклда\n юборинг, ёки <b>\"📱 Рақам юбориш\"</b> тугмасини босинг:", locale=data.get("language")))
+        async def user_number_incorrect(message: Message, state: FSMContext):
+            data = await state.get_data()
+            await message.answer(text=_("❌  Телефон рақамингиз нотўғри форматда киритилган.\n☝️ Тeлeфон рақамингизни <b>+9989** *** ** **</b> шаклда\n юборинг, ёки <b>\"📱 Рақам юбориш\"</b> тугмасини босинг:", locale=data.get("language")), reply_markup=reply.back_keyboard())
 
     class Fio:
         @user_router.message(states.UserRegistration.firstname, F.text.len() > 4)
@@ -57,10 +130,10 @@ class StepOne:
             data = await state.get_data()
             await state.update_data(f_name=message.text)
             await message.answer(
-                text=_("✍🏼 <b>Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Умаров</i>", locale=data.get("language"))
+                text=_("✍🏼 <b>Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Умаров</i>",
+                       locale=data.get("language")), reply_markup=reply.back_keyboard()
             )
             await state.set_state(states.UserRegistration.lastname)
-
 
         @user_router.message(states.UserRegistration.lastname, F.text.len() > 4)
         async def user_lastname(message: Message, state: FSMContext):
@@ -68,9 +141,8 @@ class StepOne:
 
             await state.update_data(l_name=message.text)
             await message.answer(
-                text=_("✍🏼 <b>Шарифингиз</b>ни киритинг.\n<i>Мисол учун: Иброҳимович ёки Иброҳим ўғли</i>", locale=data.get("language")))
+                text=_("✍🏼 <b>Шарифингиз</b>ни киритинг.\n<i>Мисол учун: Иброҳимович ёки Иброҳим ўғли</i>", locale=data.get("language")), reply_markup=reply.back_keyboard())
             await state.set_state(states.UserRegistration.secondname)
-            
 
         @user_router.message(states.UserRegistration.secondname, F.text.len() > 4)
         async def user_fullname(message: Message, state: FSMContext):
@@ -78,7 +150,8 @@ class StepOne:
             data = await state.get_data()
 
             await message.answer(
-                text=_("📅 Туғилган санангизни <b>йил-ой-кун</b> форматида киритинг\n<i>Мисол учун: 2000-12-21</i>", locale=data.get("language"))
+                text=_("📅 Туғилган санангизни <b>йил-ой-кун</b> форматида киритинг\n<i>Мисол учун: 2000-12-21</i>",
+                       locale=data.get("language")), reply_markup=reply.back_keyboard()
             )
             await state.set_state(states.UserRegistration.birthday)
 
@@ -100,7 +173,7 @@ class StepOne:
         async def user_birthday_incorrect(message: Message, state: FSMContext):
             data = await state.get_data()
 
-            await message.answer(text=_("❌  Туғилган санангизни <b>йил-ой-кун</b> форматида киритинг\n<i>Мисол учун: 2000-12-21</i>", locale=data.get("language")))
+            await message.answer(text=_("❌  Туғилган санангизни <b>йил-ой-кун</b> форматида киритинг\n<i>Мисол учун: 2000-12-21</i>", locale=data.get("language")), reply_markup=reply.back_keyboard())
 
     class Gender:
         @user_router.callback_query(
@@ -114,9 +187,13 @@ class StepOne:
 
             await state.update_data(gender=callback_data.id)
             data = await state.get_data()
-
-            await call.message.edit_text(text=_("🚜 Фермер ёки деҳқон хўжалиги номини киритинг", locale=data.get("language")))
-            await state.set_state(states.UserRegistration.fermer_xojalik)
+            request1 = await api.step_one_request(data)
+            if request1["success"]:
+                await call.message.edit_text(text=_("🚜 Фермер ёки деҳқон хўжалиги номини киритинг", locale=data.get("language")))
+                await state.set_state(states.UserRegistration.fermer_xojalik)
+            else:
+                await call.message.answer(_('Ушбу фойдаланувчи аввал ройхатдан утган. Сертификатни юклаб олиш учун ID ракамингизни киритинг', locale=data.get("language")))
+                await state.set_state(states.UserRegistration.cert2)
 
 
 class StepTwo:
@@ -140,8 +217,9 @@ class StepTwo:
         data = await state.get_data()
 
         await call.message.edit_text(
-            text=_("📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг", locale=data.get("language")),
-            reply_markup=await inline.region_inline_keyboard(),
+            text=_("📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
+                   locale=data.get("language")),
+            reply_markup=await inline.region_inline_keyboard(data.get("language")),
         )
         await state.set_state(states.UserRegistration.address_region)
 
@@ -155,8 +233,9 @@ class StepTwo:
         data = await state.get_data()
 
         await call.message.edit_text(
-            text=_("📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг", locale=data.get("language")),
-            reply_markup=await inline.district_inline_keyboard(callback_data.id),
+            text=_("📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
+                   locale=data.get("language")),
+            reply_markup=await inline.district_inline_keyboard(callback_data.id, data.get("language")),
         )
         await state.set_state(states.UserRegistration.address_district)
 
@@ -170,7 +249,8 @@ class StepTwo:
         data = await state.get_data()
 
         await call.message.edit_text(
-            text=_("⚙️ Фермер ва деҳқон хўжалиги фаолият тури", locale=data.get("language")),
+            text=_("⚙️ Фермер ва деҳқон хўжалиги фаолият тури",
+                   locale=data.get("language")),
             reply_markup=await inline.faoliyat_turi_keyboard(data.get("language")),
         )
         await state.set_state(states.UserRegistration.faoliyat_turi)
@@ -185,18 +265,20 @@ class StepThree:
     ):
         await state.update_data(farm_type=callback_data.id)
         data = await state.get_data()
-        request1 = await api.step_one_request(data)
-        if request1["success"]:
-            request2 = await api.step_two_request(data)
-            if request2["success"]:
-                await state.update_data(certificate_id=request2["data"]["certificate_id"])
-                await call.message.edit_text(
-                    text=_("✅Сиз муваффақиятли рўйхатдан ўтдингиз.\n🆔Сизнинг <b>ID рақамингиз</b> {id_number}.\n\n🎫Курс якунлангандан сўнг, шу ерда <b>сертификатингизни</b> юклаб олишингиз мумкин", locale=data.get("language")).format(id_number=request2["data"]["certificate_id"]),
-                    reply_markup=await inline.download_cert(data.get("language")),
-                )
+
+        request2 = await api.step_two_request(data)
+        if request2["success"]:
+            await state.update_data(certificate_id=request2["data"]["certificate_id"])
+            await call.message.edit_text(
+                text=_("✅Сиз муваффақиятли рўйхатдан ўтдингиз.\n🆔Сизнинг <b>ID рақамингиз</b> {id_number}.\n\n🎫Курс якунлангандан сўнг, шу ерда <b>сертификатингизни</b> юклаб олишингиз мумкин", locale=data.get(
+                    "language")).format(id_number=request2["data"]["certificate_id"]),
+                reply_markup=await inline.download_cert(data.get("language")),
+            )
+            await state.set_state(states.UserRegistration.cert)
+
         else:
-            await call.message.answer(_('Ушбу фойдаланувчи аввал ройхатдан утган. Сертификатни юклаб олиш учун ID ракамингизни киритинг', locale=data.get("language")))
-        await state.set_state(states.UserRegistration.cert)
+            await call.message.answer(_('Ушбу фойдаланувчи аввал ройхатдан утган. Сертификатни юклаб олиш учун ID ракамингизни киритинг', locale=data.get("language")), reply_markup=reply.back_keyboard())
+            await state.set_state(states.UserRegistration.cert2)
 
     @user_router.callback_query(
         inline.Factories.Certificate.filter(), states.UserRegistration.cert
@@ -212,10 +294,10 @@ class StepThree:
             pass
         else:
             await call.answer(
-                text=_("Курс хали якунланмаган\nКурс якунлангандан сўнг сертификатингизни юклаб олишингиз мумкин ", locale=data.get("language")),
+                text=_("Курс хали якунланмаган\nКурс якунлангандан сўнг сертификатингизни юклаб олишингиз мумкин",
+                       locale=data.get("language")),
                 show_alert=True,
             )
-
 
     @user_router.message(states.UserRegistration.cert, F.text.isdigit())
     async def cert_number(
@@ -228,5 +310,6 @@ class StepThree:
             pass
         else:
             await message.answer(_('Курс хали якунланмаган\nКурс якунлангандан сўнг сертификатингизни юклаб олишингиз мумкин', locale=data.get("language")))
+
         
-        pass
+
