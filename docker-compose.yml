@@ -22,7 +22,7 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
-#
+
 #  #   To enable postgres uncomment the following lines
 #  #  http://pgconfigurator.cybertec.at/ For Postgres Configuration
 #  pg_database:
@@ -49,18 +49,18 @@ services:
 #    networks:
 #      - tg_bot
 #
-#  #   To enable redis cache uncomment the following lines
-#  redis_cache:
-#    image: redis:6.2-alpine
-#    container_name: "${REDIS_CONTAINER_NAME}"
-#    restart: always
-#    command: redis-server --port $REDIS_PORT --save 20 1 --loglevel warning --requirepass $REDIS_PASSWORD
-#    env_file:
-#      - ".env"
-#    volumes:
-#      - ./cache:/data
-#    networks:
-#      - tg_bot
+ #   To enable redis cache uncomment the following lines
+  redis_cache:
+    image: redis:6.2-alpine
+    container_name: "${REDIS_CONTAINER_NAME}"
+    restart: always
+    command: redis-server --port $REDIS_PORT --save 20 1 --loglevel warning
+    env_file:
+      - ".env"
+    volumes:
+      - ./cache:/data
+    networks:
+      - tg_bot
 #
 #  webhook:
 #    image: "webhook"

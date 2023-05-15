@@ -13,7 +13,7 @@ from tgbot.handlers.user import user_router
 from tgbot.middlewares.config import ConfigMiddleware
 from tgbot.services import broadcaster
 from aiogram.utils.i18n import I18n
-from aiogram.utils.i18n.middleware import FSMI18nMiddleware
+# from aiogram.utils.i18n.middleware import FSMI18nMiddleware
 
 logger = logging.getLogger(__name__)
 log_level = logging.INFO
@@ -26,7 +26,7 @@ async def on_startup(bot: Bot, admin_ids: list[int]):
 
 def register_global_middlewares(dp: Dispatcher, config):
     dp.message.outer_middleware(ConfigMiddleware(config))
-    dp.message.outer_middleware(FSMI18nMiddleware(i18n=i18n))
+    # dp.message.outer_middleware(FSMI18nMiddleware(i18n=i18n))
     dp.callback_query.outer_middleware(ConfigMiddleware(config))
 
 
