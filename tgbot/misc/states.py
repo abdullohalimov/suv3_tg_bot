@@ -5,7 +5,9 @@ i18n = I18n(path="locales", default_locale="uz", domain="messages")
 
 i18nn = i18n.gettext
 
+
 class UserRegistration(StatesGroup):
+    language = State()
     phone = State()
     firstname = State()
     lastname = State()

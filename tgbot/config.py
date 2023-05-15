@@ -70,21 +70,18 @@ def load_config(path: str = None) -> Config:
         tg_bot=TgBot(
             token=env.str("BOT_TOKEN"),
             admin_ids=list(map(int, env.list("ADMINS"))),
-            use_redis=env.bool("USE_REDIS")
+            use_redis=env.bool("USE_REDIS"),
         ),
-
         # db=DbConfig(
         #     host=env.str('DB_HOST'),
         #     password=env.str('POSTGRES_PASSWORD'),
         #     user=env.str('POSTGRES_USER'),
         #     database=env.str('POSTGRES_DB'),
         # ),
-
-        # redis=RedisConfig(
-        #     redis_pass=env.str("REDIS_PASSWORD"),
-        #     redis_port=env.int("REDIS_PORT"),
-        #     redis_host=env.str("REDIS_HOST"),
-        # ),
-
-        misc=Miscellaneous()
+        redis=RedisConfig(
+            redis_pass=env.str("REDIS_PASSWORD"),
+            redis_port=env.int("REDIS_PORT"),
+            redis_host=env.str("REDIS_HOST"),
+        ),
+        misc=Miscellaneous(),
     )
