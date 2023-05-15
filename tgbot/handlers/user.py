@@ -167,9 +167,9 @@ class StepOne:
         )
         async def user_contact(message: Message, state: FSMContext):
             try:
-                await state.update_data(phone=message.contact.phone_number)
+                await state.update_data(phone=message.contact.phone_number.replace(" ", "").replace("+", ""))
             except:
-                await state.update_data(phone=message.text.replace("+", ""))
+                await state.update_data(phone=message.text.replace(" ", "").replace("+", ""))
             data = await state.get_data()
             await message.reply(
                 text=_(
