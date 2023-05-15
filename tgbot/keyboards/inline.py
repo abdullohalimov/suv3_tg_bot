@@ -137,7 +137,6 @@ async def region_inline_keyboard(lang):
     regions_list = await api.get_region_with_districts()
     keyb = InlineKeyboardBuilder()
     for i in regions_list["data"]:
-        logging.info(i)
         keyb.add(
             InlineKeyboardButton(
                 text=str(i["name"]),
@@ -159,10 +158,8 @@ async def district_inline_keyboard(region_id, lang):
     districts_list = await api.get_region_with_districts()
     keyb = InlineKeyboardBuilder()
     for i in districts_list["data"]:
-        # logging.info(i)
         if str(i["id"]) == str(region_id):
             for j in i["districts"]:
-                logging.info(j)
                 keyb.add(
                     InlineKeyboardButton(
                         text=str(j["name"]),
