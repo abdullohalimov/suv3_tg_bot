@@ -52,7 +52,18 @@ async def certificate_download(data):
                 return await resp.text()
                 print(False)
 
-
+async def check_phone(phone):
+    payload = {
+        "phone": int(phone),
+    }
+    async with aiohttp.ClientSession() as session:
+        async with session.post(f'http://91.213.99.234:8000/api/check-phone', data=payload) as resp:
+            try:
+                return await resp.json()
+            except:
+                return {"success": False}
+            # logging.error(await resp.json())
+            # # return resp
 
 async def get_region_with_districts():
     async with aiohttp.ClientSession() as session:
@@ -61,4 +72,4 @@ async def get_region_with_districts():
         ) as response:
             return await response.json()
 
-print(asyncio.run(certificate_download('202300001')))
+print(asyncio.run(check_phone('998998881965')))

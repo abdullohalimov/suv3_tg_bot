@@ -166,19 +166,32 @@ class StepOne:
             | F.text.replace(" ", "").replace("+", "").regexp(r"^998\d{9}$"),
         )
         async def user_contact(message: Message, state: FSMContext):
+            
             try:
                 await state.update_data(phone=message.contact.phone_number.replace(" ", "").replace("+", ""))
             except:
                 await state.update_data(phone=message.text.replace(" ", "").replace("+", ""))
             data = await state.get_data()
-            await message.reply(
-                text=_(
-                    "✍🏼 <b>Исмингиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк</i>",
-                    locale=data.get("language"),
-                ),
-                reply_markup=reply.back_keyboard(data.get("language")),
-            )
-            await state.set_state(states.UserRegistration.firstname)
+            check = await api.check_phone(data.get("phone"))
+            if check['success']:
+                await message.reply(
+                    text=_(
+                        "✍🏼 <b>Исмингиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк</i>",
+                        locale=data.get("language"),
+                    ),
+                    reply_markup=reply.back_keyboard(data.get("language")),
+                )
+                await state.set_state(states.UserRegistration.firstname)
+            else:
+                await message.answer(
+                    _(
+                        "Ушбу фойдаланувчи аввал ройхатдан утган. Сертификатни юклаб олиш учун ID ракамингизни киритинг",
+                        locale=data.get("language"),
+                    )
+                )
+                await state.set_state(states.UserRegistration.cert2)
+                await message.delete()
+
 
         @user_router.message(states.UserRegistration.phone)
         async def user_number_incorrect(message: Message, state: FSMContext):
@@ -407,6 +420,7 @@ class StepThree:
         request = await api.certificate_download(data["certificate_id"])
         if request:
             await call.message.answer_document(document=BufferedInputFile(request, filename="certificate-{cert_id}.pdf".format(cert_id=data["certificate_id"])))
+            await call.answer()
         else:
             await call.answer(
                 text=_(

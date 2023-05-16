@@ -37,13 +37,13 @@ def male_female_keyboard(lang):
             callback_data=Factories.MaleFemale(id="2").pack(),
         )
     )
-    keyboard.add(
+    keyboard.adjust(1)
+    keyboard.row(
         InlineKeyboardButton(
             text=_("🔙 Орқага", locale=lang),
             callback_data=Factories.Back(id="back").pack(),
         )
     )
-    keyboard.adjust(1)
     return keyboard.as_markup()
 
 
@@ -66,14 +66,15 @@ async def position_keyboard(lang):
             text=_("Ишчи", locale=lang), callback_data=Factories.Position(id=3).pack()
         )
     )
-    keyboard.add(
+    keyboard.adjust(1)
+
+    keyboard.row(
         InlineKeyboardButton(
             text=_("🔙 Орқага", locale=lang),
             callback_data=Factories.Back(id="back").pack(),
         )
     )
 
-    keyboard.adjust(1)
     return keyboard.as_markup()
 
 
@@ -144,7 +145,7 @@ async def region_inline_keyboard(lang):
             )
         )
     keyb.adjust(2)
-    keyb.add(
+    keyb.row(
         InlineKeyboardButton(
             text=_("🔙 Орқага", locale=lang),
             callback_data=Factories.Back(id="back").pack(),
@@ -163,11 +164,12 @@ async def district_inline_keyboard(region_id, lang):
                 keyb.add(
                     InlineKeyboardButton(
                         text=str(j["name"]),
-                        callback_data=Factories.District(id=str(j["id"])).pack(),
+                        callback_data=Factories.District(
+                            id=str(j["id"])).pack(),
                     )
                 )
     keyb.adjust(2)
-    keyb.add(
+    keyb.row(
         InlineKeyboardButton(
             text=_("🔙 Орқага", locale=lang),
             callback_data=Factories.Back(id="back").pack(),
