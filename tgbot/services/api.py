@@ -41,7 +41,7 @@ async def step_two_request(data):
 async def certificate_download(data):
     url = "http://91.213.99.234:8000/api/request/certificate"
     payload = {
-        "certificate_id": int(data),
+        "certificate_id": f"{data}",
     }
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=payload) as resp:
