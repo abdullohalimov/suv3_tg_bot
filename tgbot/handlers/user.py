@@ -132,7 +132,7 @@ class StepOne:
         )
         await state.set_state(states.UserRegistration.language)
 
-    @user_router.callback_query(states.UserRegistration.language, inline.Factories.Language.filter())
+    @user_router.callback_query(inline.Factories.Language.filter())
     async def user_phone(
         callback: CallbackQuery,
         callback_data: inline.Factories.Language,
