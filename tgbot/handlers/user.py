@@ -107,7 +107,7 @@ async def user_back(
                 "📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
                 locale=data.get("language"),
             ),
-            reply_markup=await inline.region_inline_keyboard(),
+            reply_markup=await inline.region_inline_keyboard(data.get("language")),
         )
     elif state2 == states.UserRegistration.faoliyat_turi:
         await callback.message.edit_text(
@@ -116,7 +116,7 @@ async def user_back(
                 locale=data.get("language"),
             ),
             reply_markup=await inline.district_inline_keyboard(
-                callback_data.id, data.get("language")
+                data.get('region_id'), data.get("language")
             ),
         )
         await state.set_state(states.UserRegistration.address_district)
