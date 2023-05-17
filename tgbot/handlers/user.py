@@ -109,6 +109,8 @@ async def user_back(
             ),
             reply_markup=await inline.region_inline_keyboard(data.get("language")),
         )
+        await state.set_state(states.UserRegistration.address_region)
+
     elif state2 == states.UserRegistration.faoliyat_turi:
         await callback.message.edit_text(
             text=_(
@@ -116,7 +118,7 @@ async def user_back(
                 locale=data.get("language"),
             ),
             reply_markup=await inline.district_inline_keyboard(
-                data.get('region_id'), data.get("language")
+                data.get('region'), data.get("language")
             ),
         )
         await state.set_state(states.UserRegistration.address_district)
