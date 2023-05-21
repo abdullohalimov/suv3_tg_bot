@@ -9,9 +9,8 @@ i18nn = i18n.gettext
 class UserRegistration(StatesGroup):
     language = State()
     phone = State()
-    firstname = State()
-    lastname = State()
-    secondname = State()
+
+    full_name = State()
     birthday = State()
     malefemale = State()
     fermer_xojalik = State()

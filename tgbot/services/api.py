@@ -3,15 +3,17 @@ import aiohttp
 import asyncio
 
 
-async def step_one_request(data):
+async def step_one_request(data, chat_id):
     url = "http://91.213.99.234:8000/api/request-step-one"
     payload = {
         "phone": int(data["phone"]),
-        "f_name": data["f_name"],
-        "l_name": data["l_name"],
-        "s_name": data["s_name"],
+        "f_name": data["full_name"],
+        "l_name": data["full_name"],
+        "s_name": data["full_name"],
         "gender": data["gender"],
+        "device_type": 'bot',
         "birthday": data["birthday"],
+        "chat_id": int(chat_id),
     }
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=payload) as resp:

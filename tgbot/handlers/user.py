@@ -22,7 +22,7 @@ async def back(message: Message, state: FSMContext):
     data = await state.get_data()
     if state2 == states.UserRegistration.phone:
         await StepOne.start(message, state)
-    elif state2 == states.UserRegistration.firstname:
+    elif state2 == states.UserRegistration.full_name:
         await message.answer(
             text=_(
                 '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
@@ -31,33 +31,15 @@ async def back(message: Message, state: FSMContext):
             reply_markup=reply.phone_keyboard(data.get("language")),
         )
         await state.set_state(states.UserRegistration.phone)
-    elif state2 == states.UserRegistration.lastname:
-        await message.reply(
-            text=_(
-                "✍🏼 <b>Исмингиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк</i>",
-                locale=data.get("language"),
-            ),
-            reply_markup=reply.back_keyboard(data.get("language")),
-        )
-        await state.set_state(states.UserRegistration.firstname)
-    elif state2 == states.UserRegistration.secondname:
-        await message.answer(
-            text=_(
-                "✍🏼 <b>Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Умаров</i>",
-                locale=data.get("language"),
-            ),
-            reply_markup=reply.back_keyboard(data.get("language")),
-        )
-        await state.set_state(states.UserRegistration.lastname)
     elif state2 == states.UserRegistration.birthday:
         await message.answer(
             text=_(
-                "✍🏼 <b>Шарифингиз</b>ни киритинг.\n<i>Мисол учун: Иброҳимович ёки Иброҳим ўғли</i>",
+                "✍🏼 <b>Исм-Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк Азимов</i>",
                 locale=data.get("language"),
             ),
             reply_markup=reply.back_keyboard(data.get("language")),
         )
-        await state.set_state(states.UserRegistration.secondname)
+        await state.set_state(states.UserRegistration.full_name)
     elif state2 == states.UserRegistration.fermer_xojalik:
         await message.answer(
             text=_("👥 Жинсингиз:", locale=data.get("language")),
@@ -176,12 +158,12 @@ class StepOne:
             if check['success']:
                 await message.reply(
                     text=_(
-                        "✍🏼 <b>Исмингиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк</i>",
+                        "✍🏼 <b>Исм-Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк Азимов</i>",
                         locale=data.get("language"),
                     ),
                     reply_markup=reply.back_keyboard(data.get("language")),
                 )
-                await state.set_state(states.UserRegistration.firstname)
+                await state.set_state(states.UserRegistration.full_name)
             else:
                 await message.answer(
                     _(
@@ -205,46 +187,24 @@ class StepOne:
             )
 
     class Fio:
-        @user_router.message(states.UserRegistration.firstname)
-        async def user_firstname(message: Message, state: FSMContext):
-            data = await state.get_data()
-            await state.update_data(f_name=message.text)
-            await message.answer(
-                text=_(
-                    "✍🏼 <b>Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Умаров</i>",
-                    locale=data.get("language"),
-                ),
-                reply_markup=reply.back_keyboard(data.get("language")),
-            )
-            await state.set_state(states.UserRegistration.lastname)
-
-        @user_router.message(states.UserRegistration.lastname)
-        async def user_lastname(message: Message, state: FSMContext):
-            data = await state.get_data()
-
-            await state.update_data(l_name=message.text)
-            await message.answer(
-                text=_(
-                    "✍🏼 <b>Шарифингиз</b>ни киритинг.\n<i>Мисол учун: Иброҳимович ёки Иброҳим ўғли</i>",
-                    locale=data.get("language"),
-                ),
-                reply_markup=reply.back_keyboard(data.get("language")),
-            )
-            await state.set_state(states.UserRegistration.secondname)
-
-        @user_router.message(states.UserRegistration.secondname)
+        @user_router.message(states.UserRegistration.full_name)
         async def user_fullname(message: Message, state: FSMContext):
-            await state.update_data(s_name=message.text)
-            data = await state.get_data()
 
-            await message.answer(
-                text=_(
-                    "📅 Туғилган санангизни <b>кун.ой.йил</b> форматида киритинг\n<i>Мисол учун: 21.01.2001</i>",
-                    locale=data.get("language"),
-                ),
-                reply_markup=reply.back_keyboard(data.get("language")),
-            )
-            await state.set_state(states.UserRegistration.birthday)
+            data = await state.get_data()
+            if 6 > len(message.text.split()) >= 2:
+                await state.update_data(full_name=message.text)
+
+                await message.answer(
+                    text=_(
+                        "📅 Туғилган санангизни <b>кун.ой.йил</b> форматида киритинг\n<i>Мисол учун: 21.01.2001</i>",
+                        locale=data.get("language"),
+                    ),
+                    reply_markup=reply.back_keyboard(data.get("language")),
+                )
+                await state.set_state(states.UserRegistration.birthday)
+            else:
+                await message.delete()
+                await message.answer(_("❌ <b>Исм-Фамилиянгиз</b> хато киритилди\n\n✅ <i>Мисол учун: Азизбeк Азимов</i>\n\n✍🏼 <b>Исм-Фамилиянгиз</b>ни қайтадан киритинг.", locale=data.get("language")), reply_markup=reply.back_keyboard(data.get("language")),)
 
     class Birthday:
         @user_router.message(
@@ -288,7 +248,7 @@ class StepOne:
         ):
             await state.update_data(gender=callback_data.id)
             data = await state.get_data()
-            request1 = await api.step_one_request(data)
+            request1 = await api.step_one_request(data, call.from_user.id)
             if request1["success"]:
                 await call.message.edit_text(
                     text=_(
