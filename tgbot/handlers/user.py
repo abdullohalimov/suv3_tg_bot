@@ -74,8 +74,7 @@ async def user_back(
             text=_(
                 "🚜 Фермер ёки деҳқон хўжалиги номини киритинг",
                 locale=data.get("language"),
-            ),
-            reply_markup=reply.back_keyboard(data.get("language")),
+            )
         )
         await state.set_state(states.UserRegistration.fermer_xojalik)
     elif state2 == states.UserRegistration.address_region:
@@ -90,16 +89,18 @@ async def user_back(
                 "📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
                 locale=data.get("language"),
             ),
-            reply_markup=await inline.region_inline_keyboard(),
+            reply_markup=await inline.region_inline_keyboard(data.get("language")),
         )
+        await state.set_state(states.UserRegistration.address_region)
+
     elif state2 == states.UserRegistration.faoliyat_turi:
-        await call.message.edit_text(
+        await callback.message.edit_text(
             text=_(
                 "📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
                 locale=data.get("language"),
             ),
             reply_markup=await inline.district_inline_keyboard(
-                callback_data.id, data.get("language")
+                data.get("region"), data.get("language")
             ),
         )
         await state.set_state(states.UserRegistration.address_district)
@@ -148,14 +149,17 @@ class StepOne:
             | F.text.replace(" ", "").replace("+", "").regexp(r"^998\d{9}$"),
         )
         async def user_contact(message: Message, state: FSMContext):
-            
             try:
-                await state.update_data(phone=message.contact.phone_number.replace(" ", "").replace("+", ""))
+                await state.update_data(
+                    phone=message.contact.phone_number.replace(" ", "").replace("+", "")
+                )
             except:
-                await state.update_data(phone=message.text.replace(" ", "").replace("+", ""))
+                await state.update_data(
+                    phone=message.text.replace(" ", "").replace("+", "")
+                )
             data = await state.get_data()
             check = await api.check_phone(data.get("phone"))
-            if check['success']:
+            if check["success"]:
                 await message.reply(
                     text=_(
                         "✍🏼 <b>Исм-Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк Азимов</i>",
@@ -173,7 +177,6 @@ class StepOne:
                 )
                 await state.set_state(states.UserRegistration.cert2)
                 await message.delete()
-
 
         @user_router.message(states.UserRegistration.phone)
         async def user_number_incorrect(message: Message, state: FSMContext):
@@ -212,7 +215,11 @@ class StepOne:
         )
         async def user_birthday(message: Message, state: FSMContext):
             birthdayy = message.text.split(".")
-            if 1945 <= int(birthdayy[2]) <= date.today().year and int(birthdayy[1]) <= 12 and int(birthdayy[0]) <= 31:
+            if (
+                1945 <= int(birthdayy[2]) <= date.today().year
+                and int(birthdayy[1]) <= 12
+                and int(birthdayy[0]) <= 31
+            ):
                 birthd = f"{birthdayy[2]}-{birthdayy[1]}-{birthdayy[0]}"
                 await state.update_data(birthday=birthd)
                 data = await state.get_data()
@@ -379,7 +386,14 @@ class StepThree:
         data = await state.get_data()
         request = await api.certificate_download(data["certificate_id"])
         if request:
-            await call.message.answer_document(document=BufferedInputFile(request, filename="certificate-{cert_id}.pdf".format(cert_id=data["certificate_id"])))
+            await call.message.answer_document(
+                document=BufferedInputFile(
+                    request,
+                    filename="certificate-{cert_id}.pdf".format(
+                        cert_id=data["certificate_id"]
+                    ),
+                )
+            )
             await call.answer()
         else:
             await call.answer(
@@ -396,7 +410,12 @@ class StepThree:
 
         request = await api.certificate_download(message.text)
         if request:
-            await message.answer_document(document=BufferedInputFile(request, filename="certificate-{cert_id}.pdf".format(cert_id=message.text)))
+            await message.answer_document(
+                document=BufferedInputFile(
+                    request,
+                    filename="certificate-{cert_id}.pdf".format(cert_id=message.text),
+                )
+            )
         else:
             await message.answer(
                 _(
