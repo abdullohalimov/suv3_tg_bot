@@ -7,65 +7,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-15 11:47+0500\n"
+"POT-Creation-Date: 2023-05-22 00:00+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uz\n"
 "Language-Team: uz <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.9.1\n"
 
-#: tgbot/handlers/user.py:29 tgbot/handlers/user.py:156
+#: tgbot/handlers/user.py:29 tgbot/handlers/user.py:139
 msgid ""
 "📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \n"
 "юборинг, ёки <b>\"📱 Рақам юбориш\"</b> тугмасини босинг:"
 msgstr ""
 
-#: tgbot/handlers/user.py:38 tgbot/handlers/user.py:177
+#: tgbot/handlers/user.py:38 tgbot/handlers/user.py:166
 msgid ""
-"✍🏼 <b>Исмингиз</b>ни киритинг.\n"
-"<i>Мисол учун: Азизбeк</i>"
+"✍🏼 <b>Исм-Фамилиянгиз</b>ни киритинг.\n"
+"<i>Мисол учун: Азизбeк Азимов</i>"
 msgstr ""
 
-#: tgbot/handlers/user.py:47 tgbot/handlers/user.py:202
-msgid ""
-"✍🏼 <b>Фамилиянгиз</b>ни киритинг.\n"
-"<i>Мисол учун: Умаров</i>"
-msgstr ""
-
-#: tgbot/handlers/user.py:56 tgbot/handlers/user.py:216
-msgid ""
-"✍🏼 <b>Шарифингиз</b>ни киритинг.\n"
-"<i>Мисол учун: Иброҳимович ёки Иброҳим ўғли</i>"
-msgstr ""
-
-#: tgbot/handlers/user.py:63 tgbot/handlers/user.py:248
+#: tgbot/handlers/user.py:45 tgbot/handlers/user.py:228
 msgid "👥 Жинсингиз:"
 msgstr ""
 
-#: tgbot/handlers/user.py:85 tgbot/handlers/user.py:230
+#: tgbot/handlers/user.py:67 tgbot/handlers/user.py:203
 msgid ""
 "📅 Туғилган санангизни <b>кун.ой.йил</b> форматида киритинг\n"
 "<i>Мисол учун: 21.01.2001</i>"
 msgstr ""
 
-#: tgbot/handlers/user.py:94 tgbot/handlers/user.py:283
+#: tgbot/handlers/user.py:76 tgbot/handlers/user.py:263
 msgid "🚜 Фермер ёки деҳқон хўжалиги номини киритинг"
 msgstr ""
 
-#: tgbot/handlers/user.py:101 tgbot/handlers/user.py:305
+#: tgbot/handlers/user.py:82 tgbot/handlers/user.py:285
 msgid "🧑‍🌾 Сизнинг лавозимингиз"
 msgstr ""
 
-#: tgbot/handlers/user.py:109 tgbot/handlers/user.py:117
-#: tgbot/handlers/user.py:322 tgbot/handlers/user.py:340
+#: tgbot/handlers/user.py:90 tgbot/handlers/user.py:100
+#: tgbot/handlers/user.py:302 tgbot/handlers/user.py:320
 msgid "📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг"
 msgstr ""
 
-#: tgbot/handlers/user.py:147
+#: tgbot/handlers/user.py:130
 msgid ""
 "✅Сиз муваффақиятли рўйхатдан ўтгансиз.\n"
 "🆔Сизнинг <b>ID рақамингиз</b> {certificate_id}.\n"
@@ -74,30 +62,40 @@ msgid ""
 "олишингиз мумкин"
 msgstr ""
 
-#: tgbot/handlers/user.py:189
+#: tgbot/handlers/user.py:175 tgbot/handlers/user.py:271
+#: tgbot/handlers/user.py:372
+msgid ""
+"Ушбу фойдаланувчи аввал ройхатдан утган. Сертификатни юклаб олиш учун ID "
+"ракамингизни киритинг"
+msgstr ""
+
+#: tgbot/handlers/user.py:187
 msgid ""
 "❌  Телефон рақамингиз нотўғри форматда киритилган.\n"
 "☝️ Тeлeфон рақамингизни <b>+9989** *** ** **</b> шаклда\n"
 " юборинг, ёки <b>\"📱 Рақам юбориш\"</b> тугмасини босинг:"
 msgstr ""
 
-#: tgbot/handlers/user.py:262
+#: tgbot/handlers/user.py:210
+msgid ""
+"❌ <b>Исм-Фамилиянгиз</b> хато киритилди\n"
+"\n"
+"✅ <i>Мисол учун: Азизбeк Азимов</i>\n"
+"\n"
+"✍🏼 <b>Исм-Фамилиянгиз</b>ни қайтадан киритинг."
+msgstr ""
+
+#: tgbot/handlers/user.py:242
 msgid ""
 "❌  Туғилган санангизни <b>кун.ой.йил</b> форматида киритинг\n"
 "<i>Мисол учун: 21.01.2001</i>"
 msgstr ""
 
-#: tgbot/handlers/user.py:291 tgbot/handlers/user.py:392
-msgid ""
-"Ушбу фойдаланувчи аввал ройхатдан утган. Сертификатни юклаб олиш учун ID "
-"ракамингизни киритинг"
-msgstr ""
-
-#: tgbot/handlers/user.py:359
+#: tgbot/handlers/user.py:339
 msgid "⚙️ Фермер ва деҳқон хўжалиги фаолият тури"
 msgstr ""
 
-#: tgbot/handlers/user.py:382
+#: tgbot/handlers/user.py:362
 msgid ""
 "✅Сиз муваффақиятли рўйхатдан ўтдингиз.\n"
 "🆔Сизнинг <b>ID рақамингиз</b> {id_number}.\n"
@@ -106,13 +104,13 @@ msgid ""
 "олишингиз мумкин"
 msgstr ""
 
-#: tgbot/handlers/user.py:414
+#: tgbot/handlers/user.py:402
 msgid ""
 "⏳ Курс хали якунланмаган\n"
 "Курс якунлангандан сўнг сертификатингизни юклаб олишингиз мумкин"
 msgstr ""
 
-#: tgbot/handlers/user.py:430
+#: tgbot/handlers/user.py:423
 msgid ""
 "❔ID нотогри киритилди ёки курс хали якунланмаган\n"
 "⏳ Курс якунлангандан сўнг сертификатингизни юклаб олишингиз мумкин"
@@ -126,9 +124,9 @@ msgstr ""
 msgid "Аёл"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:42 tgbot/keyboards/inline.py:71
-#: tgbot/keyboards/inline.py:114 tgbot/keyboards/inline.py:150
-#: tgbot/keyboards/inline.py:175 tgbot/keyboards/reply.py:7
+#: tgbot/keyboards/inline.py:43 tgbot/keyboards/inline.py:73
+#: tgbot/keyboards/inline.py:115 tgbot/keyboards/inline.py:150
+#: tgbot/keyboards/inline.py:174 tgbot/keyboards/reply.py:7
 #: tgbot/keyboards/reply.py:14
 msgid "🔙 Орқага"
 msgstr ""
@@ -145,27 +143,27 @@ msgstr ""
 msgid "Ишчи"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:84
+#: tgbot/keyboards/inline.py:85
 msgid "Пахтачилик/ғаллачилик"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:90
+#: tgbot/keyboards/inline.py:91
 msgid "Боғдорчилик/узумчилик"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:96
+#: tgbot/keyboards/inline.py:97
 msgid "Сабзавот-полиз"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:102
+#: tgbot/keyboards/inline.py:103
 msgid "Сабзавот-ғалла"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:108
+#: tgbot/keyboards/inline.py:109
 msgid "Бошқа йўналиш"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:127
+#: tgbot/keyboards/inline.py:128
 msgid "Сертификатни юклаб олиш"
 msgstr ""
 
@@ -219,5 +217,20 @@ msgstr ""
 #~ msgid ""
 #~ "❌  Туғилган санангизни <b>кун-ой-йил</b> форматида киритинг\n"
 #~ "<i>Мисол учун: 21.01.2001</i>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "✍🏼 <b>Исмингиз</b>ни киритинг.\n"
+#~ "<i>Мисол учун: Азизбeк</i>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "✍🏼 <b>Фамилиянгиз</b>ни киритинг.\n"
+#~ "<i>Мисол учун: Умаров</i>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "✍🏼 <b>Шарифингиз</b>ни киритинг.\n"
+#~ "<i>Мисол учун: Иброҳимович ёки Иброҳим ўғли</i>"
 #~ msgstr ""
 
