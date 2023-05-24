@@ -119,7 +119,7 @@ class StepOne:
     async def start(message: Message, state: FSMContext, bot: Bot):
         if (
             await is_subscribed(
-                user_id=message.from_user.id, channels_id="-1001642941332", bot=bot
+                user_id=message.from_user.id, channels_id="-1001876037953", bot=bot
             )
             == "left"
         ):
