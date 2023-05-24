@@ -117,35 +117,48 @@ async def user_back(
 class StepOne:
     @user_router.message(CommandStart())
     async def start(message: Message, state: FSMContext):
-            await message.answer(
-                "Тилни танланг..\nВыберите язык..\nTilni tanlang..",
-                reply_markup=inline.language_keyboard(),
-            )
-            await state.set_state(states.UserRegistration.language)
+        await message.answer(
+            "Тилни танланг..\nВыберите язык..\nTilni tanlang..",
+            reply_markup=inline.language_keyboard(),
+        )
+        await state.set_state(states.UserRegistration.language)
 
     @user_router.callback_query(inline.Factories.Language.filter())
     async def user_phone(
         callback: CallbackQuery,
         callback_data: inline.Factories.Language,
         state: FSMContext,
-        bot: Bot
-    ):  
+        bot: Bot,
+    ):
         if callback_data.language == "check":
             pass
         else:
             await state.update_data(language=callback_data.language)
         data = await state.get_data()
-        subscribe = await is_subscribed(user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot)
+        subscribe = await is_subscribed(
+            user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
+        )
 
         if subscribe == "left":
             # await message.answer(text='Not subscribed')
-            await callback.answer(text=_("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), show_alert=True)
+            await callback.answer(
+                text=_(
+                    "Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!",
+                    locale=data.get("language"),
+                ),
+                show_alert=True,
+            )
             if callback_data.language == "check":
                 pass
             else:
                 await callback.message.answer(
-                _("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), reply_markup=await inline.channels_keyboard()
-            )
+                    _(
+                        "Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!",
+                        locale=data.get("language"),
+                    ),
+                    reply_markup=await inline.channels_keyboard(),
+                )
+                await callback.message.delete()
 
         else:
             await callback.message.answer(
@@ -232,8 +245,8 @@ class StepOne:
                     reply_markup=reply.back_keyboard(data.get("language")),
                 )
 
-class Address:
 
+class Address:
     @user_router.callback_query(
         inline.Factories.Region.filter(), states.UserRegistration.address_region
     )
@@ -271,10 +284,6 @@ class Address:
         )
         await state.set_state(states.UserRegistration.birthday)
         await call.message.delete()
-
-
-        
-
 
     class Birthday:
         @user_router.message(
@@ -370,6 +379,7 @@ class StepTwo:
             reply_markup=await inline.faoliyat_turi_keyboard(data.get("language")),
         )
         await state.set_state(states.UserRegistration.faoliyat_turi)
+
 
 class StepThree:
     @user_router.callback_query(

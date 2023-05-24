@@ -203,11 +203,11 @@ msgstr "Sertifikatni yuklab olish"
 
 #: tgbot/keyboards/inline.py:186
 msgid "Сувчилар Мактаби канали"
-msgstr ""
+msgstr "Suvchilar Maktabi kanali"
 
 #: tgbot/keyboards/inline.py:193
 msgid "Обунани текшириш"
-msgstr ""
+msgstr "Obunani tekshirish"
 
 #: tgbot/keyboards/reply.py:6
 msgid "📱 Рақам юбориш"
