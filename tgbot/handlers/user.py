@@ -138,7 +138,7 @@ class StepOne:
         subscribe = await is_subscribed(
             user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
         )
-
+        # subscribe = 'left'
         if subscribe == "left":
             # await message.answer(text='Not subscribed')
             await callback.answer(
@@ -156,7 +156,7 @@ class StepOne:
                         "Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!",
                         locale=data.get("language"),
                     ),
-                    reply_markup=await inline.channels_keyboard(),
+                    reply_markup=await inline.channels_keyboard(data.get("language")),
                 )
                 await callback.message.delete()
 

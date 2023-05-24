@@ -179,18 +179,18 @@ async def district_inline_keyboard(region_id, lang):
     return keyb.as_markup()
 
 
-async def channels_keyboard():
+async def channels_keyboard(lang):
     keyboard = InlineKeyboardBuilder()
     keyboard.add(
         InlineKeyboardButton(
-            text=_("Сувчилар Мактаби канали", locale="uz"),
+            text=_("Сувчилар Мактаби канали", locale=lang),
             url='https://t.me/suvchilar_maktabi',
         )
     )
 
     keyboard.row(
         InlineKeyboardButton(
-            text=_("Обунани текшириш", locale="uz"),
+            text=_("Обунани текшириш", locale=lang),
             callback_data=Factories.Language(language="check").pack(),
         )
     )
