@@ -67,11 +67,15 @@ async def check_phone(phone):
             # logging.error(await resp.json())
             # # return resp
 
-async def get_region_with_districts():
-    async with aiohttp.ClientSession() as session:
+async def get_region_with_districts(lang):
+    if lang in ['uz', 'ru']:
+        header = {
+            'Language': 'uz_cyrl',
+        }
+    async with aiohttp.ClientSession(headers=header) as session:
         async with session.get(
             f"http://91.213.99.234:8000/api/region/with-district"
         ) as response:
             return await response.json()
 
-print(asyncio.run(check_phone('998998881965')))
+# print(asyncio.run(check_phone('998998881965')))

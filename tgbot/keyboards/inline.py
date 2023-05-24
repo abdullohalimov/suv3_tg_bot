@@ -51,7 +51,7 @@ async def position_keyboard(lang):
     keyboard = InlineKeyboardBuilder()
     keyboard.add(
         InlineKeyboardButton(
-            text=_("Хўжалик рахбари", locale=lang),
+            text=_("Хўжалик раҳбари", locale=lang),
             callback_data=Factories.Position(id=1).pack(),
         )
     )
@@ -135,7 +135,7 @@ async def download_cert(lang):
 
 
 async def region_inline_keyboard(lang):
-    regions_list = await api.get_region_with_districts()
+    regions_list = await api.get_region_with_districts(lang)
     keyb = InlineKeyboardBuilder()
     for i in regions_list["data"]:
         keyb.add(
@@ -156,7 +156,7 @@ async def region_inline_keyboard(lang):
 
 
 async def district_inline_keyboard(region_id, lang):
-    districts_list = await api.get_region_with_districts()
+    districts_list = await api.get_region_with_districts(lang)
     keyb = InlineKeyboardBuilder()
     for i in districts_list["data"]:
         if str(i["id"]) == str(region_id):
