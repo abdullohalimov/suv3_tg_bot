@@ -1,6 +1,6 @@
 from datetime import date
 import logging
-from aiogram import F, Router
+from aiogram import F, Bot, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import CommandStart
 from aiogram.types import Message, CallbackQuery
@@ -10,18 +10,26 @@ import tgbot.keyboards.inline as inline
 import tgbot.keyboards.reply as reply
 from tgbot.misc.states import i18nn as _
 from aiogram.types import BufferedInputFile
+import re
 
 user_router = Router()
+
+
+async def is_subscribed(user_id, channels_id, bot: Bot) -> bool:
+    chat_member = await bot.get_chat_member(chat_id=channels_id, user_id=user_id)
+
+    return chat_member.status
 
 
 @user_router.message(F.text == "🔙 Орқага")
 @user_router.message(F.text == "🔙 Назад")
 @user_router.message(F.text == "🔙 Orqaga")
-async def back(message: Message, state: FSMContext):
+async def back(message: Message, state: FSMContext, bot: Bot):
+    # await channel_check(bot, message)
     state2 = await state.get_state()
     data = await state.get_data()
     if state2 == states.UserRegistration.phone:
-        await StepOne.start(message, state)
+        await StepOne.start(message, state, bot)
     elif state2 == states.UserRegistration.full_name:
         await message.answer(
             text=_(
@@ -108,12 +116,24 @@ async def user_back(
 
 class StepOne:
     @user_router.message(CommandStart())
-    async def start(message: Message, state: FSMContext):
-        await message.answer(
-            "Тилни танланг..\nВыберите язык..\nTilni tanlang..",
-            reply_markup=inline.language_keyboard(),
-        )
-        await state.set_state(states.UserRegistration.language)
+    async def start(message: Message, state: FSMContext, bot: Bot):
+        if (
+            await is_subscribed(
+                user_id=message.from_user.id, channels_id="-1001642941332", bot=bot
+            )
+            == "left"
+        ):
+            # await message.answer(text='Not subscribed')
+            await message.answer(
+                "Not subscribed!", reply_markup=await inline.channels_keyboard()
+            )
+
+        else:
+            await message.answer(
+                "Тилни танланг..\nВыберите язык..\nTilni tanlang..",
+                reply_markup=inline.language_keyboard(),
+            )
+            await state.set_state(states.UserRegistration.language)
 
     @user_router.callback_query(inline.Factories.Language.filter())
     async def user_phone(
@@ -160,7 +180,7 @@ class StepOne:
             data = await state.get_data()
             check = await api.check_phone(data.get("phone"))
             if check["success"]:
-                await message.reply(
+                await message.answer(
                     text=_(
                         "✍🏼 <b>ФИШ\nФамилия, Исм, Шарифингиз</b>ни киритинг.\n<i>Мисол учун: Азимов Азизбeк Азизович</i>",
                         locale=data.get("language"),
@@ -192,22 +212,74 @@ class StepOne:
     class Fio:
         @user_router.message(states.UserRegistration.full_name)
         async def user_fullname(message: Message, state: FSMContext):
-
             data = await state.get_data()
             if 6 > len(message.text.split()) >= 2:
                 await state.update_data(full_name=message.text)
 
                 await message.answer(
                     text=_(
-                        "📅 Туғилган санангизни <b>кун.ой.йил</b> форматида киритинг\n<i>Мисол учун: 21.01.2001</i>",
+                        "📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
+                        locale=data.get("language"),
+                    ),
+                    reply_markup=await inline.region_inline_keyboard(
+                        data.get("language")
+                    ),
+                )
+                await state.set_state(states.UserRegistration.address_region)
+
+            else:
+                await message.delete()
+                await message.answer(
+                    _(
+                        "❌ <b>ФИШ\nФамилия, Исм, Шарифингиз</b> хато киритилди\n\n✅ <i>Мисол учун: Азимов Азизбeк Азизович</i>\n\n✍🏼 <b>nФамилия, Исм, Шарифингиз</b>ни қайтадан киритинг.",
                         locale=data.get("language"),
                     ),
                     reply_markup=reply.back_keyboard(data.get("language")),
                 )
-                await state.set_state(states.UserRegistration.birthday)
-            else:
-                await message.delete()
-                await message.answer(_("❌ <b>ФИШ\nФамилия, Исм, Шарифингиз</b> хато киритилди\n\n✅ <i>Мисол учун: Азимов Азизбeк Азизович</i>\n\n✍🏼 <b>nФамилия, Исм, Шарифингиз</b>ни қайтадан киритинг.", locale=data.get("language")), reply_markup=reply.back_keyboard(data.get("language")),)
+
+class Address:
+
+    @user_router.callback_query(
+        inline.Factories.Region.filter(), states.UserRegistration.address_region
+    )
+    async def address_region(
+        call: CallbackQuery, callback_data: inline.Factories.Region, state: FSMContext
+    ):
+        await state.update_data(region=callback_data.id)
+        data = await state.get_data()
+
+        await call.message.edit_text(
+            text=_(
+                "📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
+                locale=data.get("language"),
+            ),
+            reply_markup=await inline.district_inline_keyboard(
+                callback_data.id, data.get("language")
+            ),
+        )
+        await state.set_state(states.UserRegistration.address_district)
+
+    @user_router.callback_query(
+        inline.Factories.District.filter(), states.UserRegistration.address_district
+    )
+    async def address_district(
+        call: CallbackQuery, callback_data: inline.Factories.District, state: FSMContext
+    ):
+        await state.update_data(district_id=callback_data.id)
+        data = await state.get_data()
+        await call.message.answer(
+            text=_(
+                "📅 Туғилган санангизни <b>кун.ой.йил</b> форматида киритинг\n<i>Мисол учун: 21.01.2001</i>",
+                locale=data.get("language"),
+            ),
+            reply_markup=reply.back_keyboard(data.get("language")),
+        )
+        await state.set_state(states.UserRegistration.birthday)
+        await call.message.delete()
+
+
+        
+
 
     class Birthday:
         @user_router.message(
@@ -290,48 +362,10 @@ class StepTwo:
     @user_router.callback_query(
         inline.Factories.Position.filter(), states.UserRegistration.position
     )
-    async def address(
+    async def position(
         call: CallbackQuery, callback_data: inline.Factories.Position, state: FSMContext
     ):
         await state.update_data(position=callback_data.id)
-        data = await state.get_data()
-
-        await call.message.edit_text(
-            text=_(
-                "📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
-                locale=data.get("language"),
-            ),
-            reply_markup=await inline.region_inline_keyboard(data.get("language")),
-        )
-        await state.set_state(states.UserRegistration.address_region)
-
-    @user_router.callback_query(
-        inline.Factories.Region.filter(), states.UserRegistration.address_region
-    )
-    async def address_region(
-        call: CallbackQuery, callback_data: inline.Factories.Region, state: FSMContext
-    ):
-        await state.update_data(region=callback_data.id)
-        data = await state.get_data()
-
-        await call.message.edit_text(
-            text=_(
-                "📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг",
-                locale=data.get("language"),
-            ),
-            reply_markup=await inline.district_inline_keyboard(
-                callback_data.id, data.get("language")
-            ),
-        )
-        await state.set_state(states.UserRegistration.address_district)
-
-    @user_router.callback_query(
-        inline.Factories.District.filter(), states.UserRegistration.address_district
-    )
-    async def address_district(
-        call: CallbackQuery, callback_data: inline.Factories.District, state: FSMContext
-    ):
-        await state.update_data(district_id=callback_data.id)
         data = await state.get_data()
 
         await call.message.edit_text(
@@ -341,7 +375,6 @@ class StepTwo:
             reply_markup=await inline.faoliyat_turi_keyboard(data.get("language")),
         )
         await state.set_state(states.UserRegistration.faoliyat_turi)
-
 
 class StepThree:
     @user_router.callback_query(

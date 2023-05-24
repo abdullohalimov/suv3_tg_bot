@@ -55,12 +55,12 @@ async def position_keyboard(lang):
             callback_data=Factories.Position(id=1).pack(),
         )
     )
-    keyboard.add(
-        InlineKeyboardButton(
-            text=_("Бухгалтер", locale=lang),
-            callback_data=Factories.Position(id=2).pack(),
-        )
-    )
+    # keyboard.add(
+    #     InlineKeyboardButton(
+    #         text=_("Бухгалтер", locale=lang),
+    #         callback_data=Factories.Position(id=2).pack(),
+    #     )
+    # )
     keyboard.add(
         InlineKeyboardButton(
             text=_("Ишчи", locale=lang), callback_data=Factories.Position(id=3).pack()
@@ -178,6 +178,17 @@ async def district_inline_keyboard(region_id, lang):
 
     return keyb.as_markup()
 
+
+async def channels_keyboard():
+    keyboard = InlineKeyboardBuilder()
+    keyboard.add(
+        InlineKeyboardButton(
+            text=_("Suvchilar maktabi kanali", locale="uz"),
+            url='https://t.me/suvchilar_maktabi',
+        )
+    )
+
+    return keyboard.as_markup()
 
 class Factories:
     class Language(CallbackData, prefix="language"):

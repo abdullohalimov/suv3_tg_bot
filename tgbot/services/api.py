@@ -6,12 +6,15 @@ import asyncio
 async def step_one_request(data, chat_id):
     url = "http://91.213.99.234:8000/api/request-step-one"
     payload = {
-        "phone": int(data["phone"]),
-        "full_name": data["full_name"],
-        "gender": data["gender"],
         "birthday": data["birthday"],
         "device_type": 'bot',
+        "district_id": data["district_id"],
+        # "region_id": data["district_id"],
+        "full_name": data["full_name"],
+        "gender": data["gender"],
+        "phone": int(data["phone"]),
         "chat_id": int(chat_id),
+
     }
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=payload) as resp:
@@ -28,7 +31,6 @@ async def step_two_request(data):
         "farm_name": data["farm_name"],
         "farm_type": data["farm_type"],
         "position": data["position"],
-        "district_id": data["district_id"],
     }
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=payload) as resp:
