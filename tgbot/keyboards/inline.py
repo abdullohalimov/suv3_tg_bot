@@ -11,9 +11,9 @@ def language_keyboard():
         InlineKeyboardButton(
             text="🇺🇿 Ўзбекча", callback_data=Factories.Language(language="uz").pack()
         ),
-        InlineKeyboardButton(
-            text="🇷🇺 Русcкий", callback_data=Factories.Language(language="ru").pack()
-        ),
+        # InlineKeyboardButton(
+        #     text="🇷🇺 Русcкий", callback_data=Factories.Language(language="ru").pack()
+        # ),
         InlineKeyboardButton(
             text="🇺🇿 O'zbekcha", callback_data=Factories.Language(language="de").pack()
         ),

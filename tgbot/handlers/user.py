@@ -22,7 +22,7 @@ async def is_subscribed(user_id, channels_id, bot: Bot) -> bool:
 
 
 @user_router.message(F.text == "🔙 Орқага")
-@user_router.message(F.text == "🔙 Назад")
+# @user_router.message(F.text == "🔙 Назад")
 @user_router.message(F.text == "🔙 Orqaga")
 async def back(message: Message, state: FSMContext, bot: Bot):
     # await channel_check(bot, message)
@@ -118,7 +118,7 @@ class StepOne:
     @user_router.message(CommandStart())
     async def start(message: Message, state: FSMContext):
         await message.answer(
-            "Тилни танланг..\nВыберите язык..\nTilni tanlang..",
+            "Тилни танланг..\n\nTilni tanlang..",
             reply_markup=inline.language_keyboard(),
         )
         await state.set_state(states.UserRegistration.language)
