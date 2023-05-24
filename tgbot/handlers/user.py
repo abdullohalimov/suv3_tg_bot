@@ -29,7 +29,7 @@ async def back(message: Message, state: FSMContext, bot: Bot):
     state2 = await state.get_state()
     data = await state.get_data()
     if state2 == states.UserRegistration.phone:
-        await StepOne.start(message, state, bot)
+        await StepOne.start(message, state)
     elif state2 == states.UserRegistration.full_name:
         await message.answer(
             text=_(
