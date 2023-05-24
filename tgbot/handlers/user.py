@@ -132,12 +132,9 @@ class StepOne:
     ):
         await state.update_data(language=callback_data.language)
         data = await state.get_data()
-        if (
-            await is_subscribed(
-                user_id=callback.message.from_user.id, channels_id="-1001876037953", bot=bot
-            )
-            == "left"
-        ):
+        subscribe = await is_subscribed(user_id=callback.message.from_user.id, channels_id="-1001876037953", bot=bot)
+        logging.error(subscribe)
+        if subscribe == "left":
             # await message.answer(text='Not subscribed')
             await callback.answer(text=_("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), show_alert=True)
             await callback.message.answer(
