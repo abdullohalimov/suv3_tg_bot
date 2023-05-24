@@ -188,10 +188,10 @@ async def channels_keyboard():
         )
     )
 
-    keyboard.add(
+    keyboard.row(
         InlineKeyboardButton(
             text=_("Обунани текшириш", locale="uz"),
-            CallbackData=Factories.Language(language="check").pack(),
+            callback_data=Factories.Language(language="check").pack(),
         )
     )
 
