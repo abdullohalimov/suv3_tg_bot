@@ -129,37 +129,33 @@ class StepOne:
         callback_data: inline.Factories.Language,
         state: FSMContext,
         bot: Bot
-    ):
-        await state.update_data(language=callback_data.language)
+    ):  
+        if callback_data.language == "check":
+            pass
+        else:
+            await state.update_data(language=callback_data.language)
         data = await state.get_data()
         subscribe = await is_subscribed(user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot)
-        logging.error(subscribe)
+
         if subscribe == "left":
             # await message.answer(text='Not subscribed')
             await callback.answer(text=_("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), show_alert=True)
-            await callback.message.answer(
+            if callback_data.language == "check":
+                pass
+            else:
+                await callback.message.answer(
                 _("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), reply_markup=await inline.channels_keyboard()
             )
 
         else:
-            if data.get("id_number"):
-                await callback.message.answer(
-                    text=_(
-                        "✅Сиз муваффақиятли рўйхатдан ўтгансиз.\n🆔Сизнинг <b>ID рақамингиз</b> {certificate_id}.\n\n🎫Курс якунлангандан сўнг, шу ерда <b>сертификатингизни</b> юклаб олишингиз мумкин",
-                        locale=data.get("language"),
-                    ).format(certificate_id=data.get("id_number")),
-                    reply_markup=await inline.download_cert(data.get("language")),
-                )
-                await state.set_state(states.UserRegistration.cert)
-            else:
-                await callback.message.answer(
-                    text=_(
-                        '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
-                        locale=data.get("language"),
-                    ),
-                    reply_markup=reply.phone_keyboard(data.get("language")),
-                )
-                await state.set_state(states.UserRegistration.phone)
+            await callback.message.answer(
+                text=_(
+                    '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
+                    locale=data.get("language"),
+                ),
+                reply_markup=reply.phone_keyboard(data.get("language")),
+            )
+            await state.set_state(states.UserRegistration.phone)
 
     class Phone:
         @user_router.message(

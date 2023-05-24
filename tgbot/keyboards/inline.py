@@ -183,8 +183,15 @@ async def channels_keyboard():
     keyboard = InlineKeyboardBuilder()
     keyboard.add(
         InlineKeyboardButton(
-            text=_("Suvchilar maktabi kanali", locale="uz"),
+            text=_("Сувчилар Мактаби канали", locale="uz"),
             url='https://t.me/suvchilar_maktabi',
+        )
+    )
+
+    keyboard.add(
+        InlineKeyboardButton(
+            text=_("Обунани текшириш", locale="uz"),
+            CallbackData=Factories.Language(id="check").pack(),
         )
     )
 
