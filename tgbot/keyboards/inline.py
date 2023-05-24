@@ -9,13 +9,13 @@ def language_keyboard():
     keyboard = InlineKeyboardBuilder()
     keyboard.add(
         InlineKeyboardButton(
-            text="🇺🇿 Ўзбекча", callback_data=Factories.Language(language="uz").pack()
+            text="Ўзбекча", callback_data=Factories.Language(language="uz").pack()
         ),
         # InlineKeyboardButton(
         #     text="🇷🇺 Русcкий", callback_data=Factories.Language(language="ru").pack()
         # ),
         InlineKeyboardButton(
-            text="🇺🇿 O'zbekcha", callback_data=Factories.Language(language="de").pack()
+            text="O'zbekcha", callback_data=Factories.Language(language="de").pack()
         ),
     )
 
