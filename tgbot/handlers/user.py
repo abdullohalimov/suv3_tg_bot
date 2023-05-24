@@ -140,11 +140,8 @@ class StepOne:
         if subscribe == "left":
             # await message.answer(text='Not subscribed')
             await callback.answer(text=_("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), show_alert=True)
-            if callback_data.language == "check":
-                pass
-            else:
-                await callback.message.answer(
-                _("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), reply_markup=await inline.channels_keyboard()
+            await callback.message.answer(
+            _("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), reply_markup=await inline.channels_keyboard()
             )
 
         else:
