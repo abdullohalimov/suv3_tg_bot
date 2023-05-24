@@ -34,7 +34,7 @@ async def back(message: Message, state: FSMContext):
     elif state2 == states.UserRegistration.birthday:
         await message.answer(
             text=_(
-                "✍🏼 <b>Исм-Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк Азимов</i>",
+                "✍🏼 <b>nФамилия, Исм, Шарифингиз</b>ни киритинг.\n<i>Мисол учун: Азимов Азизбeк Азизович</i>",
                 locale=data.get("language"),
             ),
             reply_markup=reply.back_keyboard(data.get("language")),
@@ -162,7 +162,7 @@ class StepOne:
             if check["success"]:
                 await message.reply(
                     text=_(
-                        "✍🏼 <b>Исм-Фамилиянгиз</b>ни киритинг.\n<i>Мисол учун: Азизбeк Азимов</i>",
+                        "✍🏼 <b>ФИШ\nФамилия, Исм, Шарифингиз</b>ни киритинг.\n<i>Мисол учун: Азимов Азизбeк Азизович</i>",
                         locale=data.get("language"),
                     ),
                     reply_markup=reply.back_keyboard(data.get("language")),
@@ -207,7 +207,7 @@ class StepOne:
                 await state.set_state(states.UserRegistration.birthday)
             else:
                 await message.delete()
-                await message.answer(_("❌ <b>Исм-Фамилиянгиз</b> хато киритилди\n\n✅ <i>Мисол учун: Азизбeк Азимов</i>\n\n✍🏼 <b>Исм-Фамилиянгиз</b>ни қайтадан киритинг.", locale=data.get("language")), reply_markup=reply.back_keyboard(data.get("language")),)
+                await message.answer(_("❌ <b>ФИШ\nФамилия, Исм, Шарифингиз</b> хато киритилди\n\n✅ <i>Мисол учун: Азимов Азизбeк Азизович</i>\n\n✍🏼 <b>nФамилия, Исм, Шарифингиз</b>ни қайтадан киритинг.", locale=data.get("language")), reply_markup=reply.back_keyboard(data.get("language")),)
 
     class Birthday:
         @user_router.message(

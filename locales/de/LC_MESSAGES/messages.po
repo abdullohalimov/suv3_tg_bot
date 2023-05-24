@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-22 00:00+0500\n"
+"POT-Creation-Date: 2023-05-24 10:19+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -26,13 +26,13 @@ msgstr ""
 "📲 Telefon raqamingizni <b>+9989** *** ** **</b> shaklda \n"
 "yuboring, yoki <b>\"📱 Raqam yuborish\"</b> tugmasini bosing:"
 
-#: tgbot/handlers/user.py:38 tgbot/handlers/user.py:166
+#: tgbot/handlers/user.py:38
 msgid ""
-"✍🏼 <b>Исм-Фамилиянгиз</b>ни киритинг.\n"
-"<i>Мисол учун: Азизбeк Азимов</i>"
+"✍🏼 <b>nФамилия, Исм, Шарифингиз</b>ни киритинг.\n"
+"<i>Мисол учун: Азимов Азизбeк Азизович</i>"
 msgstr ""
-"✍🏼 <b>Ism-Familiyangiz</b>ni kiriting.\n"
-"<i>Misol uchun: Azizbek Azimov</i>"
+"✍🏼 <b>nFamiliya, Ism, Sharifingiz</b>ni kiriting.\n"
+"<i>Misol uchun: Azimov Azizbek Azizovich</i>"
 
 #: tgbot/handlers/user.py:45 tgbot/handlers/user.py:228
 msgid "👥 Жинсингиз:"
@@ -73,6 +73,16 @@ msgstr ""
 "🎫Kurs yakunlangandan so'ng, shu yerda <b>sertifikatingizni</b> yuklab "
 "olishingiz mumkin"
 
+#: tgbot/handlers/user.py:166
+msgid ""
+"✍🏼 <b>ФИШ\n"
+"Фамилия, Исм, Шарифингиз</b>ни киритинг.\n"
+"<i>Мисол учун: Азимов Азизбeк Азизович</i>"
+msgstr ""
+"✍🏼 <b>FISh\n"
+"Familiya, Ism, Sharifingiz</b>ni kiriting.\n"
+"<i>Misol uchun: Azimov Azizbek Azizovich</i>"
+
 #: tgbot/handlers/user.py:175 tgbot/handlers/user.py:271
 #: tgbot/handlers/user.py:372
 msgid ""
@@ -94,18 +104,19 @@ msgstr ""
 
 #: tgbot/handlers/user.py:210
 msgid ""
-"❌ <b>Исм-Фамилиянгиз</b> хато киритилди\n"
+"❌ <b>ФИШ\n"
+"Фамилия, Исм, Шарифингиз</b> хато киритилди\n"
 "\n"
-"✅ <i>Мисол учун: Азизбeк Азимов</i>\n"
+"✅ <i>Мисол учун: Азимов Азизбeк Азизович</i>\n"
 "\n"
-"✍🏼 <b>Исм-Фамилиянгиз</b>ни қайтадан киритинг."
+"✍🏼 <b>nФамилия, Исм, Шарифингиз</b>ни қайтадан киритинг."
 msgstr ""
-"❌ <b>Ism-Familiyangiz</b> xato kiritildi\n"
+"❌ <b>FISh\n"
+"Familiya, Ism, Sharifingiz</b> xato kiritildi\n"
 "\n"
-"✅ <i>Misol uchun: Azizbek Azimov</i>\n"
+"✅ <i>Misol uchun: Azimov Azizbek Azizovich</i>\n"
 "\n"
-"✍🏼 <b>Ism-Familiyangiz</b>ni qaytadan kiriting."
-
+"✍🏼 <b>nFamiliya, Ism, Sharifingiz</b>ni qaytadan kiriting."
 
 #: tgbot/handlers/user.py:242
 msgid ""
@@ -217,4 +228,13 @@ msgstr "📱 Raqam yuborish"
 #~ msgstr ""
 #~ "✍🏼 <b>Sharifingiz</b>ni kiriting.\n"
 #~ "<i>Misol uchun: Ibrohimovich yoki Ibrohim o'g'li</i>"
+
+#~ msgid ""
+#~ "✍🏼 <b>ФИО\n"
+#~ "Фамилия, Исм, Шарифингиз</b>ни киритинг.\n"
+#~ "<i>Мисол учун: Азимов Азизбeк Азизович</i>"
+#~ msgstr ""
+#~ "✍🏼 <b>FIO\n"
+#~ "Familiya, Ism, Sharifingiz</b>ni kiriting.\n"
+#~ "<i>Misol uchun: Azimov Azizbek Azizovich</i>"
 
