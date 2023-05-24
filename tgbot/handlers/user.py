@@ -116,51 +116,53 @@ async def user_back(
 
 class StepOne:
     @user_router.message(CommandStart())
-    async def start(message: Message, state: FSMContext, bot: Bot):
-        # if (
-        #     await is_subscribed(
-        #         user_id=message.from_user.id, channels_id="-1001876037953", bot=bot
-        #     )
-        #     == "left"
-        # ) or False:
-        #     # await message.answer(text='Not subscribed')
-        #     await message.answer(
-        #         "Not subscribed!", reply_markup=await inline.channels_keyboard()
-        #     )
-
-        # else:
-        await message.answer(
-            "Тилни танланг..\nВыберите язык..\nTilni tanlang..",
-            reply_markup=inline.language_keyboard(),
-        )
-        await state.set_state(states.UserRegistration.language)
+    async def start(message: Message, state: FSMContext):
+            await message.answer(
+                "Тилни танланг..\nВыберите язык..\nTilni tanlang..",
+                reply_markup=inline.language_keyboard(),
+            )
+            await state.set_state(states.UserRegistration.language)
 
     @user_router.callback_query(inline.Factories.Language.filter())
     async def user_phone(
         callback: CallbackQuery,
         callback_data: inline.Factories.Language,
         state: FSMContext,
+        bot: Bot
     ):
         await state.update_data(language=callback_data.language)
         data = await state.get_data()
-        if data.get("id_number"):
-            await callback.message.answer(
-                text=_(
-                    "✅Сиз муваффақиятли рўйхатдан ўтгансиз.\n🆔Сизнинг <b>ID рақамингиз</b> {certificate_id}.\n\n🎫Курс якунлангандан сўнг, шу ерда <b>сертификатингизни</b> юклаб олишингиз мумкин",
-                    locale=data.get("language"),
-                ).format(certificate_id=data.get("id_number")),
-                reply_markup=await inline.download_cert(data.get("language")),
+        if (
+            await is_subscribed(
+                user_id=callback.message.from_user.id, channels_id="-1001876037953", bot=bot
             )
-            await state.set_state(states.UserRegistration.cert)
+            == "left"
+        ):
+            # await message.answer(text='Not subscribed')
+            await callback.answer(text=_("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), show_alert=True)
+            await callback.message.answer(
+                _("Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби телеграм каналига аъзо бўлишингиз талаб этилади!", locale=data.get("language")), reply_markup=await inline.channels_keyboard()
+            )
+
         else:
-            await callback.message.answer(
-                text=_(
-                    '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
-                    locale=data.get("language"),
-                ),
-                reply_markup=reply.phone_keyboard(data.get("language")),
-            )
-            await state.set_state(states.UserRegistration.phone)
+            if data.get("id_number"):
+                await callback.message.answer(
+                    text=_(
+                        "✅Сиз муваффақиятли рўйхатдан ўтгансиз.\n🆔Сизнинг <b>ID рақамингиз</b> {certificate_id}.\n\n🎫Курс якунлангандан сўнг, шу ерда <b>сертификатингизни</b> юклаб олишингиз мумкин",
+                        locale=data.get("language"),
+                    ).format(certificate_id=data.get("id_number")),
+                    reply_markup=await inline.download_cert(data.get("language")),
+                )
+                await state.set_state(states.UserRegistration.cert)
+            else:
+                await callback.message.answer(
+                    text=_(
+                        '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
+                        locale=data.get("language"),
+                    ),
+                    reply_markup=reply.phone_keyboard(data.get("language")),
+                )
+                await state.set_state(states.UserRegistration.phone)
 
     class Phone:
         @user_router.message(
