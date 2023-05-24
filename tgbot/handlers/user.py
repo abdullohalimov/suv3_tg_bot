@@ -117,23 +117,23 @@ async def user_back(
 class StepOne:
     @user_router.message(CommandStart())
     async def start(message: Message, state: FSMContext, bot: Bot):
-        if (
-            await is_subscribed(
-                user_id=message.from_user.id, channels_id="-1001876037953", bot=bot
-            )
-            == "left"
-        ):
-            # await message.answer(text='Not subscribed')
-            await message.answer(
-                "Not subscribed!", reply_markup=await inline.channels_keyboard()
-            )
+        # if (
+        #     await is_subscribed(
+        #         user_id=message.from_user.id, channels_id="-1001876037953", bot=bot
+        #     )
+        #     == "left"
+        # ) or False:
+        #     # await message.answer(text='Not subscribed')
+        #     await message.answer(
+        #         "Not subscribed!", reply_markup=await inline.channels_keyboard()
+        #     )
 
-        else:
-            await message.answer(
-                "Тилни танланг..\nВыберите язык..\nTilni tanlang..",
-                reply_markup=inline.language_keyboard(),
-            )
-            await state.set_state(states.UserRegistration.language)
+        # else:
+        await message.answer(
+            "Тилни танланг..\nВыберите язык..\nTilni tanlang..",
+            reply_markup=inline.language_keyboard(),
+        )
+        await state.set_state(states.UserRegistration.language)
 
     @user_router.callback_query(inline.Factories.Language.filter())
     async def user_phone(
