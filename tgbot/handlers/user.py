@@ -306,7 +306,7 @@ class Address:
                 )
                 await state.set_state(states.UserRegistration.malefemale)
             else:
-                await StepOne.Birthday.user_birthday_incorrect(message, state)
+                await Address.Birthday.user_birthday_incorrect(message, state)
 
         @user_router.message(states.UserRegistration.birthday)
         async def user_birthday_incorrect(message: Message, state: FSMContext):
