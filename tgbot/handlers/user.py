@@ -80,7 +80,7 @@ async def user_back(
     elif state2 == states.UserRegistration.position:
         await callback.message.edit_text(
             text=_(
-                "🚜 Фермер ёки деҳқон хўжалиги номини киритинг",
+                "🚜 Фермер/деҳқон хўжалиги ёки ташкилотингиз номи",
                 locale=data.get("language"),
             )
         )

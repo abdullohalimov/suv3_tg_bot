@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-25 01:24+0500\n"
+"POT-Creation-Date: 2023-05-26 10:39+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -49,8 +49,8 @@ msgstr ""
 "<i>Например: 21.01.2001</i>"
 
 #: tgbot/handlers/user.py:84 tgbot/handlers/user.py:339
-msgid "🚜 Фермер ёки деҳқон хўжалиги номини киритинг"
-msgstr "🚜 Введите название фермерского или дехканского хозяйства"
+msgid "🚜 Фермер/деҳқон хўжалиги ёки ташкилотингиз номи"
+msgstr ""
 
 #: tgbot/handlers/user.py:90 tgbot/handlers/user.py:361
 msgid "🧑‍🌾 Сизнинг лавозимингиз"
@@ -143,7 +143,11 @@ msgstr ""
 "\n"
 "🎫После окончания курса вы можете скачать ваш <b>сертификат</b> здесь"
 
-#: tgbot/handlers/user.py:440
+#: tgbot/handlers/user.py:428 tgbot/handlers/user.py:454
+msgid "⏳ Юкланмоқда..."
+msgstr ""
+
+#: tgbot/handlers/user.py:443
 #, fuzzy
 msgid ""
 "⏳ Курс ҳали якунланмаган\n"
@@ -152,7 +156,7 @@ msgstr ""
 "⏳ Курс еще не окончен\n"
 "После окончания курса вы можете скачать сертификат"
 
-#: tgbot/handlers/user.py:461
+#: tgbot/handlers/user.py:468
 #, fuzzy
 msgid ""
 "❔ID нотогри киритилди ёки курс ҳали якунланмаган\n"
@@ -169,9 +173,9 @@ msgstr "Мужчина"
 msgid "Аёл"
 msgstr "Женщина"
 
-#: tgbot/keyboards/inline.py:43 tgbot/keyboards/inline.py:73
-#: tgbot/keyboards/inline.py:115 tgbot/keyboards/inline.py:150
-#: tgbot/keyboards/inline.py:174 tgbot/keyboards/reply.py:7
+#: tgbot/keyboards/inline.py:43 tgbot/keyboards/inline.py:92
+#: tgbot/keyboards/inline.py:134 tgbot/keyboards/inline.py:169
+#: tgbot/keyboards/inline.py:193 tgbot/keyboards/reply.py:7
 #: tgbot/keyboards/reply.py:14
 msgid "🔙 Орқага"
 msgstr "🔙 Назад"
@@ -181,39 +185,55 @@ msgstr "🔙 Назад"
 msgid "Хўжалик раҳбари"
 msgstr "Руководитель хозяйства"
 
-#: tgbot/keyboards/inline.py:66
+#: tgbot/keyboards/inline.py:60
 msgid "Ишчи"
 msgstr "Работник"
 
-#: tgbot/keyboards/inline.py:85
+#: tgbot/keyboards/inline.py:65
+msgid "Сувчи"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:71
+msgid "Ирригатор"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:77
+msgid "Банк ходими"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:83
+msgid "Бошқа"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:104
 msgid "Пахтачилик/ғаллачилик"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:91
+#: tgbot/keyboards/inline.py:110
 msgid "Боғдорчилик/узумчилик"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:97
+#: tgbot/keyboards/inline.py:116
 msgid "Сабзавот-полиз"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:103
+#: tgbot/keyboards/inline.py:122
 msgid "Сабзавот-ғалла"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:109
+#: tgbot/keyboards/inline.py:128
 msgid "Бошқа йўналиш"
 msgstr "Другое Направление"
 
-#: tgbot/keyboards/inline.py:128
+#: tgbot/keyboards/inline.py:147
 msgid "Сертификатни юклаб олиш"
 msgstr "Скачать сертификат"
 
-#: tgbot/keyboards/inline.py:186
+#: tgbot/keyboards/inline.py:205
 msgid "Сувчилар Мактаби канали"
 msgstr "Канал 'Сувчилар Мактаби'"
 
-#: tgbot/keyboards/inline.py:193
+#: tgbot/keyboards/inline.py:212
 msgid "Обунани текшириш"
 msgstr "Проверить подписку"
 
@@ -279,4 +299,7 @@ msgstr "📱 Отправить номер"
 
 #~ msgid "Suvchilar maktabi kanali"
 #~ msgstr ""
+
+#~ msgid "🚜 Фермер ёки деҳқон хўжалиги номини киритинг"
+#~ msgstr "🚜 Введите название фермерского или дехканского хозяйства"
 
