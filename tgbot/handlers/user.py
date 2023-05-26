@@ -423,7 +423,7 @@ class StepThree:
         bot: Bot,
     ):
         data = await state.get_data()
-        wait = await call.message.answer(text=_('⏳ Бир дақиқа...', locale=data.get("language")))
+        wait = await call.message.answer(text=_('⏳ Юкланмоқда, кутиб туринг...', locale=data.get("language")))
         request = await api.certificate_download(data["certificate_id"])
         if request:
             await call.message.answer_document(
@@ -450,7 +450,7 @@ class StepThree:
     async def cert_number(message: Message, state: FSMContext, bot: Bot):
         data = await state.get_data()
 
-        wait = await message.answer(text=_('⏳ Бир дақиқа...', locale=data.get("language")))
+        wait = await message.answer(text=_('⏳ Юкланмоқда, кутиб туринг...', locale=data.get("language")))
         request = await api.certificate_download(message.text)
         if request:
             await message.answer_document(

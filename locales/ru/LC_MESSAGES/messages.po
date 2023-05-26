@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-26 10:46+0500\n"
+"POT-Creation-Date: 2023-05-26 12:08+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
 "Language-Team: ru <LL@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.9.1\n"
 
 #: tgbot/handlers/user.py:37 tgbot/handlers/user.py:167
 msgid ""
@@ -144,7 +144,7 @@ msgstr ""
 "🎫После окончания курса вы можете скачать ваш <b>сертификат</b> здесь"
 
 #: tgbot/handlers/user.py:426 tgbot/handlers/user.py:453
-msgid "⏳ Бир дақиқа..."
+msgid "⏳ Юкланмоқда, кутиб туринг..."
 msgstr ""
 
 #: tgbot/handlers/user.py:442
@@ -304,5 +304,8 @@ msgstr "📱 Отправить номер"
 #~ msgstr "🚜 Введите название фермерского или дехканского хозяйства"
 
 #~ msgid "⏳ Юкланмоқда..."
+#~ msgstr ""
+
+#~ msgid "⏳ Бир дақиқа..."
 #~ msgstr ""
 
