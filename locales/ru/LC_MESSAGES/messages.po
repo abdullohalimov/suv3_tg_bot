@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-26 10:39+0500\n"
+"POT-Creation-Date: 2023-05-26 10:46+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -143,11 +143,11 @@ msgstr ""
 "\n"
 "🎫После окончания курса вы можете скачать ваш <b>сертификат</b> здесь"
 
-#: tgbot/handlers/user.py:428 tgbot/handlers/user.py:454
-msgid "⏳ Юкланмоқда..."
+#: tgbot/handlers/user.py:426 tgbot/handlers/user.py:453
+msgid "⏳ Бир дақиқа..."
 msgstr ""
 
-#: tgbot/handlers/user.py:443
+#: tgbot/handlers/user.py:442
 #, fuzzy
 msgid ""
 "⏳ Курс ҳали якунланмаган\n"
@@ -302,4 +302,7 @@ msgstr "📱 Отправить номер"
 
 #~ msgid "🚜 Фермер ёки деҳқон хўжалиги номини киритинг"
 #~ msgstr "🚜 Введите название фермерского или дехканского хозяйства"
+
+#~ msgid "⏳ Юкланмоқда..."
+#~ msgstr ""
 

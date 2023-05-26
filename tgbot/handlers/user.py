@@ -423,9 +423,9 @@ class StepThree:
         bot: Bot,
     ):
         data = await state.get_data()
+        wait = await call.message.answer(text=_('⏳ Бир дақиқа...', locale=data.get("language")))
         request = await api.certificate_download(data["certificate_id"])
         if request:
-            wait = await call.message.answer(text=_('⏳ Юкланмоқда...', locale=data.get("language")))
             await call.message.answer_document(
                 document=BufferedInputFile(
                     request,
@@ -434,7 +434,6 @@ class StepThree:
                     ),
                 )
             )
-            await bot.delete_message(chat_id=call.from_user.id, message_id=wait.message_id)
             await call.answer()
         else:
             await call.answer(
@@ -445,13 +444,15 @@ class StepThree:
                 show_alert=True,
             )
 
+        await bot.delete_message(chat_id=call.from_user.id, message_id=wait.message_id)
+        
     @user_router.message(states.UserRegistration.cert2, F.text.isdigit())
     async def cert_number(message: Message, state: FSMContext, bot: Bot):
         data = await state.get_data()
 
+        wait = await message.answer(text=_('⏳ Бир дақиқа...', locale=data.get("language")))
         request = await api.certificate_download(message.text)
         if request:
-            wait = await message.answer(text=_('⏳ Юкланмоқда...', locale=data.get("language")))
             await message.answer_document(
                 document=BufferedInputFile(
                     request,
@@ -459,7 +460,6 @@ class StepThree:
                 )
             )
 
-            await bot.delete_message(chat_id=message.from_user.id, message_id=wait.message_id)
 
         else:
             await message.answer(
@@ -468,3 +468,5 @@ class StepThree:
                     locale=data.get("language"),
                 )
             )
+
+        await bot.delete_message(chat_id=message.from_user.id, message_id=wait.message_id)

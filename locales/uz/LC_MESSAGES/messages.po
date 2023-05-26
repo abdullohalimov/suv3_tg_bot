@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-26 10:39+0500\n"
+"POT-Creation-Date: 2023-05-26 10:46+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uz\n"
@@ -109,11 +109,11 @@ msgid ""
 "олишингиз мумкин"
 msgstr ""
 
-#: tgbot/handlers/user.py:428 tgbot/handlers/user.py:454
-msgid "⏳ Юкланмоқда..."
+#: tgbot/handlers/user.py:426 tgbot/handlers/user.py:453
+msgid "⏳ Бир дақиқа..."
 msgstr ""
 
-#: tgbot/handlers/user.py:443
+#: tgbot/handlers/user.py:442
 msgid ""
 "⏳ Курс ҳали якунланмаган\n"
 "Курс якунланганидан сўнг сертификатингизни юклаб олишингиз мумкин"
@@ -357,5 +357,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "🚜 Фермер ёки деҳқон хўжалиги номини киритинг"
+#~ msgstr ""
+
+#~ msgid "⏳ Юкланмоқда..."
 #~ msgstr ""
 
