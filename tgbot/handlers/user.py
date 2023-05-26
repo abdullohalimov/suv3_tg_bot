@@ -434,7 +434,7 @@ class StepThree:
                     ),
                 )
             )
-            await call.answer()
+            # await call.answer()
         else:
             await call.answer(
                 text=_(
