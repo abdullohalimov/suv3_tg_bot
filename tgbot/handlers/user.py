@@ -335,7 +335,7 @@ class Address:
             if request1["success"]:
                 await call.message.edit_text(
                     text=_(
-                        "🚜 Фермер ёки деҳқон хўжалиги номини киритинг",
+                        "🚜 Фермер/деҳқон хўжалиги ёки ташкилотингиз номи",
                         locale=data.get("language"),
                     )
                 )
@@ -420,10 +420,12 @@ class StepThree:
         call: CallbackQuery,
         callback_data: inline.Factories.Certificate,
         state: FSMContext,
+        bot: Bot,
     ):
         data = await state.get_data()
         request = await api.certificate_download(data["certificate_id"])
         if request:
+            wait = await call.message.answer(text=_('⏳ Юкланмоқда...', locale=data.get("language")))
             await call.message.answer_document(
                 document=BufferedInputFile(
                     request,
@@ -432,6 +434,7 @@ class StepThree:
                     ),
                 )
             )
+            await bot.delete_message(chat_id=call.from_user.id, message_id=wait.message_id)
             await call.answer()
         else:
             await call.answer(
@@ -443,17 +446,21 @@ class StepThree:
             )
 
     @user_router.message(states.UserRegistration.cert2, F.text.isdigit())
-    async def cert_number(message: Message, state: FSMContext):
+    async def cert_number(message: Message, state: FSMContext, bot: Bot):
         data = await state.get_data()
 
         request = await api.certificate_download(message.text)
         if request:
+            wait = await message.answer(text=_('⏳ Юкланмоқда...', locale=data.get("language")))
             await message.answer_document(
                 document=BufferedInputFile(
                     request,
                     filename="certificate-{cert_id}.pdf".format(cert_id=message.text),
                 )
             )
+
+            await bot.delete_message(chat_id=message.from_user.id, message_id=wait.message_id)
+
         else:
             await message.answer(
                 _(

@@ -55,17 +55,36 @@ async def position_keyboard(lang):
             callback_data=Factories.Position(id=1).pack(),
         )
     )
-    # keyboard.add(
-    #     InlineKeyboardButton(
-    #         text=_("Бухгалтер", locale=lang),
-    #         callback_data=Factories.Position(id=2).pack(),
-    #     )
-    # )
     keyboard.add(
         InlineKeyboardButton(
             text=_("Ишчи", locale=lang), callback_data=Factories.Position(id=3).pack()
         )
     )
+    keyboard.add(
+        InlineKeyboardButton(
+            text=_("Сувчи", locale=lang),
+            callback_data=Factories.Position(id=4).pack(),
+        )
+    )
+    keyboard.add(
+    InlineKeyboardButton(
+        text=_("Ирригатор", locale=lang),
+        callback_data=Factories.Position(id=5).pack(),
+    )
+)
+    keyboard.add(
+    InlineKeyboardButton(
+        text=_("Банк ходими", locale=lang),
+        callback_data=Factories.Position(id=6).pack(),
+    )
+)    
+    keyboard.add(
+    InlineKeyboardButton(
+        text=_("Бошқа", locale=lang),
+        callback_data=Factories.Position(id=7).pack(),
+    )
+)
+    
     keyboard.adjust(1)
 
     keyboard.row(
