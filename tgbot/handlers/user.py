@@ -444,7 +444,7 @@ class StepThree:
                 show_alert=True,
             )
 
-        await bot.delete_message(chat_id=call.from_user.id, message_id=wait.message_id)
+        await wait.delete()
         
     @user_router.message(states.UserRegistration.cert2, F.text.isdigit())
     async def cert_number(message: Message, state: FSMContext, bot: Bot):
@@ -469,4 +469,5 @@ class StepThree:
                 )
             )
 
-        await bot.delete_message(chat_id=message.from_user.id, message_id=wait.message_id)
+        # await bot.delete_message(chat_id=message.from_user.id, message_id=wait.message_id)
+        await wait.delete()
