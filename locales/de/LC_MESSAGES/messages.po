@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-24 17:58+0500\n"
+"POT-Creation-Date: 2023-05-25 01:24+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
 "Language-Team: de <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
+"Generated-By: Babel 2.11.0\n"
 
 #: tgbot/handlers/user.py:37 tgbot/handlers/user.py:167
 msgid ""
@@ -27,7 +27,6 @@ msgstr ""
 "yuboring, yoki <b>\"📱 Raqam yuborish\"</b> tugmasini bosing:"
 
 #: tgbot/handlers/user.py:46
-#, fuzzy
 msgid ""
 "✍🏼 <b>Фамилия, Исм, Шарифингиз</b>ни киритинг.\n"
 "<i>Мисол учун: Азимов Азизбeк Азизович</i>"
@@ -62,11 +61,10 @@ msgstr "📍 Fermer yoki dehqon xo'jaligi joylashgan hududingizni tanlang"
 
 #: tgbot/handlers/user.py:147 tgbot/handlers/user.py:157
 msgid ""
-"Ҳурматли иштирокчи сўровномани давом эттириш учун Сувчилар Мактаби "
-"телеграм каналига аъзо бўлишингиз талаб этилади!"
+"Ҳурматли иштирокчи! Сўровномани давом эттириш учун Сувчилар мактаби "
+"расмий телеграм каналига аъзо бўлишингизни сўраймиз!"
 msgstr ""
-"Hurmatli ishtirokchi so‘rovnomani davom ettirish uchun Suvchilar Maktabi "
-"telegram kanaliga a’zo bo‘lishingiz talab etiladi!"
+"Hurmatli ishtirokchi! So'rovnomani davom ettirish uchun Suvchilar maktabi rasmiy telegram kanaliga a'zo bo'lishingizni so'raymiz!"
 
 #: tgbot/handlers/user.py:194
 msgid ""
@@ -98,7 +96,6 @@ msgstr ""
 " yuboring, yoki <b>\"📱 Raqam yuborish\"</b> tugmasini bosing:"
 
 #: tgbot/handlers/user.py:243
-#, fuzzy
 msgid ""
 "❌ <b>ФИШ\n"
 "Фамилия, Исм, Шарифингиз</b> хато киритилди\n"
