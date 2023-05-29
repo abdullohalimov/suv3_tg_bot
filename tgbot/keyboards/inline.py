@@ -57,34 +57,34 @@ async def position_keyboard(lang):
     )
     keyboard.add(
         InlineKeyboardButton(
-            text=_("Ишчи", locale=lang), callback_data=Factories.Position(id=3).pack()
+            text=_("Ишчи", locale=lang), callback_data=Factories.Position(id=2).pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
             text=_("Сувчи", locale=lang),
+            callback_data=Factories.Position(id=3).pack(),
+        )
+    )
+    keyboard.add(
+        InlineKeyboardButton(
+            text=_("Ирригатор", locale=lang),
             callback_data=Factories.Position(id=4).pack(),
         )
     )
     keyboard.add(
-    InlineKeyboardButton(
-        text=_("Ирригатор", locale=lang),
-        callback_data=Factories.Position(id=5).pack(),
+        InlineKeyboardButton(
+            text=_("Банк ходими", locale=lang),
+            callback_data=Factories.Position(id=5).pack(),
+        )
     )
-)
     keyboard.add(
-    InlineKeyboardButton(
-        text=_("Банк ходими", locale=lang),
-        callback_data=Factories.Position(id=6).pack(),
+        InlineKeyboardButton(
+            text=_("Бошқа", locale=lang),
+            callback_data=Factories.Position(id=6).pack(),
+        )
     )
-)    
-    keyboard.add(
-    InlineKeyboardButton(
-        text=_("Бошқа", locale=lang),
-        callback_data=Factories.Position(id=7).pack(),
-    )
-)
-    
+
     keyboard.adjust(1)
 
     keyboard.row(
@@ -183,8 +183,7 @@ async def district_inline_keyboard(region_id, lang):
                 keyb.add(
                     InlineKeyboardButton(
                         text=str(j["name"]),
-                        callback_data=Factories.District(
-                            id=str(j["id"])).pack(),
+                        callback_data=Factories.District(id=str(j["id"])).pack(),
                     )
                 )
     keyb.adjust(2)
@@ -203,7 +202,7 @@ async def channels_keyboard(lang):
     keyboard.add(
         InlineKeyboardButton(
             text=_("Сувчилар Мактаби канали", locale=lang),
-            url='https://t.me/suvchilar_maktabi',
+            url="https://t.me/suvchilar_maktabi",
         )
     )
 
@@ -215,6 +214,7 @@ async def channels_keyboard(lang):
     )
 
     return keyboard.as_markup()
+
 
 class Factories:
     class Language(CallbackData, prefix="language"):
