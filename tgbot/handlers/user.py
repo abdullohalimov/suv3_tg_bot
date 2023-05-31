@@ -134,42 +134,48 @@ class StepOne:
             pass
         else:
             await state.update_data(language=callback_data.language)
-        data = await state.get_data()
-        subscribe = await is_subscribed(
-            user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
-        )
-        # subscribe = 'right'
-        if subscribe == "left":
-            # await message.answer(text='Not subscribed')
-            await callback.answer(
-                text=_(
-                    "Ҳурматли иштирокчи! Сўровномани давом эттириш учун Сувчилар мактаби расмий телеграм каналига аъзо бўлишингизни сўраймиз!",
-                    locale=data.get("language"),
-                ),
-                show_alert=True,
+        if False:
+            data = await state.get_data()
+            subscribe = await is_subscribed(
+                user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
             )
-            if callback_data.language == "check":
-                pass
-            else:
-                await callback.message.answer(
-                    _(
+            # subscribe = 'right'
+            if subscribe == "left":
+                # await message.answer(text='Not subscribed')
+                await callback.answer(
+                    text=_(
                         "Ҳурматли иштирокчи! Сўровномани давом эттириш учун Сувчилар мактаби расмий телеграм каналига аъзо бўлишингизни сўраймиз!",
                         locale=data.get("language"),
                     ),
-                    reply_markup=await inline.channels_keyboard(data.get("language")),
+                    show_alert=True,
                 )
-                await callback.message.delete()
+                if callback_data.language == "check":
+                    pass
+                else:
+                    await callback.message.answer(
+                        _(
+                            "Ҳурматли иштирокчи! Сўровномани давом эттириш учун Сувчилар мактаби расмий телеграм каналига аъзо бўлишингизни сўраймиз!",
+                            locale=data.get("language"),
+                        ),
+                        reply_markup=await inline.channels_keyboard(data.get("language")),
+                    )
+                    await callback.message.delete()
 
+            else:
+                await callback.message.answer(
+                    text=_(
+                        '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
+                        locale=data.get("language"),
+                    ),
+                    reply_markup=reply.phone_keyboard(data.get("language")),
+                )
+                await state.set_state(states.UserRegistration.phone)
         else:
-            await callback.message.answer(
+            await callback.answer(
                 text=_(
-                    '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
-                    locale=data.get("language"),
-                ),
-                reply_markup=reply.phone_keyboard(data.get("language")),
+                    '"Сувчилар мактаби"да ўқув жараёнлари учун рўйхатдан ўтиш 1-июн соат 9. 30 дан бошланишини маълум қиламиз!'
+                ), show_alert=True
             )
-            await state.set_state(states.UserRegistration.phone)
-
     class Phone:
         @user_router.message(
             states.UserRegistration.phone,
