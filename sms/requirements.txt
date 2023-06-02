@@ -1,3 +1,4 @@
 fastapi
 eskiz_sms
 uvicorn[standard]
+python-multipart

@@ -1,5 +1,6 @@
+from typing import Annotated
 from eskiz_sms import EskizSMS
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 
 app = FastAPI()
 
@@ -14,9 +15,13 @@ async def send(phone, text):
 
 
 @app.post('/send_message')
-async def send_message(phone: int, message: str):
+async def send_message(phone: Annotated[str, Form()], message: Annotated[str, Form()]):
     return await send(phone=phone, text=message)
 
 @app.post('/send_message_2/{phone}/{message}')
 async def send_message(phone, message):
     return await send(phone=phone, text=message.replace('_', ' '))
+
+@app.post('/send_message_3')
+async def send_message(phone: int, message: str):
+    return await send(phone=phone, text=message)
