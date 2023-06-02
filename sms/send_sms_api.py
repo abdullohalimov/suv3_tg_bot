@@ -19,4 +19,4 @@ async def send_message(phone: int, message: str):
 
 @app.post('/send_message_2/{phone}/{message}')
 async def send_message(phone, message):
-    return await send(phone=phone, text=message)
+    return await send(phone=phone, text=message.replace('_', ' '))
