@@ -1,0 +1,3 @@
+fastapi
+eskiz_sms
+uvicorn[standard]
