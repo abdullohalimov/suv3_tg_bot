@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-31 16:19+0500\n"
+"POT-Creation-Date: 2023-06-07 23:02+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: tgbot/handlers/user.py:37 tgbot/handlers/user.py:168
+#: tgbot/handlers/user.py:38 tgbot/handlers/user.py:171
 msgid ""
 "📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \n"
 "юборинг, ёки <b>\"📱 Рақам юбориш\"</b> тугмасини босинг:"
@@ -26,7 +26,7 @@ msgstr ""
 "📲 Telefon raqamingizni <b>+9989** *** ** **</b> shaklda \n"
 "yuboring, yoki <b>\"📱 Raqam yuborish\"</b> tugmasini bosing:"
 
-#: tgbot/handlers/user.py:46
+#: tgbot/handlers/user.py:47
 msgid ""
 "✍🏼 <b>Фамилия, Исм, Шарифингиз</b>ни киритинг.\n"
 "<i>Мисол учун: Азимов Азизбeк Азизович</i>"
@@ -34,11 +34,11 @@ msgstr ""
 "✍🏼 <b>nFamiliya, Ism, Sharifingiz</b>ni kiriting.\n"
 "<i>Misol uchun: Azimov Azizbek Azizovich</i>"
 
-#: tgbot/handlers/user.py:53 tgbot/handlers/user.py:310
+#: tgbot/handlers/user.py:54 tgbot/handlers/user.py:316
 msgid "👥 Жинсингиз:"
 msgstr "👥 Jinsingiz:"
 
-#: tgbot/handlers/user.py:75 tgbot/handlers/user.py:287
+#: tgbot/handlers/user.py:76 tgbot/handlers/user.py:293
 msgid ""
 "📅 Туғилган санангизни <b>кун.ой.йил</b> форматида киритинг\n"
 "<i>Мисол учун: 21.01.2001</i>"
@@ -46,20 +46,20 @@ msgstr ""
 "📅 Tug'ilgan sanangizni <b>kun.oy.yil</b> formatida kiriting\n"
 "<i>Misol uchun: 21.01.2001</i>"
 
-#: tgbot/handlers/user.py:84 tgbot/handlers/user.py:345
+#: tgbot/handlers/user.py:85 tgbot/handlers/user.py:351
 msgid "🚜 Фермер/деҳқон хўжалиги ёки ташкилотингиз номи"
 msgstr "🚜 Fermer/dehqon xo‘jaligi yoki tashkilotingiz nomi"
 
-#: tgbot/handlers/user.py:90 tgbot/handlers/user.py:367
+#: tgbot/handlers/user.py:91 tgbot/handlers/user.py:373
 msgid "🧑‍🌾 Сизнинг лавозимингиз"
 msgstr "🧑‍🌾 Sizning lavozimingiz"
 
-#: tgbot/handlers/user.py:98 tgbot/handlers/user.py:108
-#: tgbot/handlers/user.py:236 tgbot/handlers/user.py:268
+#: tgbot/handlers/user.py:99 tgbot/handlers/user.py:109
+#: tgbot/handlers/user.py:242 tgbot/handlers/user.py:274
 msgid "📍 Фермер ёки деҳқон хўжалиги жойлашган ҳудудингизни танланг"
 msgstr "📍 Fermer yoki dehqon xo'jaligi joylashgan hududingizni tanlang"
 
-#: tgbot/handlers/user.py:148 tgbot/handlers/user.py:158
+#: tgbot/handlers/user.py:149 tgbot/handlers/user.py:159
 msgid ""
 "Ҳурматли иштирокчи! Сўровномани давом эттириш учун Сувчилар мактаби "
 "расмий телеграм каналига аъзо бўлишингизни сўраймиз!"
@@ -67,13 +67,15 @@ msgstr ""
 "Hurmatli ishtirokchi! So'rovnomani davom ettirish uchun Suvchilar maktabi"
 " rasmiy telegram kanaliga a'zo bo'lishingizni so'raymiz!"
 
-#: tgbot/handlers/user.py:175
+#: tgbot/handlers/user.py:178
 msgid ""
 "\"Сувчилар мактаби\"да ўқув жараёнлари учун рўйхатдан ўтиш 1-июн соат 9. "
 "30 дан бошланишини маълум қиламиз!"
-msgstr "\"Suvchilar maktabi\"da o'quv jarayonlari uchun ro'yxatdan o'tish 1-iyun soat 9.30 dan boshlanishini ma'lum qilamiz!"
+msgstr ""
+"\"Suvchilar maktabi\"da o'quv jarayonlari uchun ro'yxatdan o'tish 1-iyun "
+"soat 9.30 dan boshlanishini ma'lum qilamiz!"
 
-#: tgbot/handlers/user.py:200
+#: tgbot/handlers/user.py:206
 msgid ""
 "✍🏼 <b>ФИШ\n"
 "Фамилия, Исм, Шарифингиз</b>ни киритинг.\n"
@@ -83,8 +85,8 @@ msgstr ""
 "Familiya, Ism, Sharifingiz</b>ni kiriting.\n"
 "<i>Misol uchun: Azimov Azizbek Azizovich</i>"
 
-#: tgbot/handlers/user.py:209 tgbot/handlers/user.py:353
-#: tgbot/handlers/user.py:416
+#: tgbot/handlers/user.py:215 tgbot/handlers/user.py:359
+#: tgbot/handlers/user.py:422
 msgid ""
 "Ушбу фойдаланувчи аввал ройхатдан утган. Сертификатни юклаб олиш учун ID "
 "ракамингизни киритинг"
@@ -92,7 +94,7 @@ msgstr ""
 "Ushbu foydalanuvchi avval royxatdan utgan. Sertifikatni yuklab olish "
 "uchun ID raqamingizni kiriting"
 
-#: tgbot/handlers/user.py:221
+#: tgbot/handlers/user.py:227
 msgid ""
 "❌  Телефон рақамингиз нотўғри форматда киритилган.\n"
 "☝️ Тeлeфон рақамингизни <b>+9989** *** ** **</b> шаклда\n"
@@ -102,7 +104,7 @@ msgstr ""
 "☝️ Telefon raqamingizni <b>+9989** *** ** **</b> shaklda\n"
 " yuboring, yoki <b>\"📱 Raqam yuborish\"</b> tugmasini bosing:"
 
-#: tgbot/handlers/user.py:249
+#: tgbot/handlers/user.py:255
 msgid ""
 "❌ <b>ФИШ\n"
 "Фамилия, Исм, Шарифингиз</b> хато киритилди\n"
@@ -118,7 +120,7 @@ msgstr ""
 "\n"
 "✍🏼 <b>nFamiliya, Ism, Sharifingiz</b>ni qaytadan kiriting."
 
-#: tgbot/handlers/user.py:324
+#: tgbot/handlers/user.py:330
 msgid ""
 "❌  Туғилган санангизни <b>кун.ой.йил</b> форматида киритинг\n"
 "<i>Мисол учун: 21.01.2001</i>"
@@ -126,11 +128,11 @@ msgstr ""
 "❌  Tug'ilgan sanangizni <b>kun.oy.yil</b> formatida kiriting\n"
 "<i>Misol uchun: 21.01.2001</i>"
 
-#: tgbot/handlers/user.py:383
+#: tgbot/handlers/user.py:389
 msgid "⚙️ Фермер ва деҳқон хўжалиги фаолият тури"
 msgstr "⚙️ Fermer va dehqon xo'jaligi faoliyat turi"
 
-#: tgbot/handlers/user.py:406
+#: tgbot/handlers/user.py:412
 msgid ""
 "✅Сиз муваффақиятли рўйхатдан ўтдингиз.\n"
 "🆔Сизнинг <b>ID рақамингиз</b> {id_number}.\n"
@@ -144,11 +146,20 @@ msgstr ""
 "🎫Kurs yakunlanganidan so'ng, shu yerda <b>sertifikatingizni</b> yuklab "
 "olishingiz mumkin"
 
-#: tgbot/handlers/user.py:432 tgbot/handlers/user.py:459
+#: tgbot/handlers/user.py:439 tgbot/handlers/user.py:476
+#: tgbot/handlers/user.py:645 tgbot/handlers/user.py:690
 msgid "⏳ Юкланмоқда, кутиб туринг..."
 msgstr "⏳ Yuklanmoqda, kutib turing..."
 
-#: tgbot/handlers/user.py:448
+#: tgbot/handlers/user.py:454 tgbot/handlers/user.py:489
+msgid "<b>Сертификатни юклаб олиш учун қуйидаги сўровномани тўлдиринг.</b>"
+msgstr "<b>Sertifikatni yuklab olish uchun quyidagi so‘rovnomani to‘ldiring. </b>"
+
+#: tgbot/handlers/user.py:457 tgbot/handlers/user.py:492
+msgid "<b>Вилоятингизни танланг:</b>"
+msgstr "<b>Viloyatingizni tanlang:</b>"
+
+#: tgbot/handlers/user.py:464
 msgid ""
 "⏳ Курс ҳали якунланмаган\n"
 "Курс якунланганидан сўнг сертификатингизни юклаб олишингиз мумкин"
@@ -156,13 +167,75 @@ msgstr ""
 "⏳ Kurs hali yakunlanmagan\n"
 "Kurs yakunlanganidan so'ng sertifikatingizni yuklab olishingiz mumkin"
 
-#: tgbot/handlers/user.py:474
+#: tgbot/handlers/user.py:499
 msgid ""
 "❔ID нотогри киритилди ёки курс ҳали якунланмаган\n"
 "⏳ Курс якунланганидан сўнг сертификатингизни юклаб олишингиз мумкин"
 msgstr ""
 "❔ID notogri kiritildi yoki kurs hali yakunlanmagan\n"
 "⏳ Kurs yakunlanganidan so'ng sertifikatingizni yuklab olishingiz mumkin"
+
+#: tgbot/handlers/user.py:523
+msgid ""
+"<b>Университет профессор-ўқитувчисини баҳоланг</b>\n"
+"Мавзу:  <i>Сув тежовчи технологияларнинг афзалликлари ва уларни "
+"самарадорлиги</i>\n"
+"Ўқитувчи: <i> {teacher}</i>"
+msgstr "<b>Universitet professor-o‘qituvchisini baholang</b>\n"
+"Mavzu:  <i>Suv tejovchi texnologiyalarning afzalliklari va ularni "
+"samaradorligi</i>\n"
+"O‘qituvchi: <i> {teacher}</i>"
+
+#: tgbot/handlers/user.py:542
+msgid ""
+"<b>Турк мутахассисини баҳоланг</b>\n"
+"Мавзу:  <i>Замонавий суғориш тизимининг аҳамияти ва сувдан фойдаланиш "
+"маданияти</i>\n"
+"Ўқитувчи:  <i>{teacher}</i>"
+msgstr "<b>Turk mutaxassisini baholang</b>\n"
+"Mavzu:  <i>Zamonaviy sug‘orish tizimining ahamiyati va suvdan foydalanish "
+"madaniyati</i>\n"
+"O‘qituvchi:  <i>{teacher}</i>"
+
+#: tgbot/handlers/user.py:563
+msgid "<b>Банк мутахассисини баҳоланг</b>\n"
+"Мавзу:  <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  "
+"солиқ имтиёзлари ва банк кредитлари</i>\n"
+"Ўқитувчи:  <i>{teacher}</i>"
+msgstr "<b>Bank mutaxassisini baholang</b>\n"
+"Mavzu:  <i>Iqtisodiy va huquqiy savodxonlik:  subsidiya,  kafilliklar,  "
+"soliq imtiyozlari va bank kreditlari</i>\n"
+"O‘qituvchi:  <i>{teacher}</i>"
+
+#: tgbot/handlers/user.py:585
+msgid "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\n"
+"Мавзу:  <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  "
+"солиқ имтиёзлари ва банк кредитлари</i>\n"
+"Ўқитувчи:  <i>{teacher}</i>"
+msgstr "<b>Suv xo‘jaligi vazirligi mutaxassisini baholang</b>\n"
+"Mavzu:  <i>Iqtisodiy va huquqiy savodxonlik:  subsidiya,  kafilliklar, "
+"soliq imtiyozlari va bank kreditlari</i>\n"
+"O‘qituvchi:  <i>{teacher}</i>"
+
+#: tgbot/handlers/user.py:603
+msgid ""
+"<b>Ўқув курси ташкилий жараёнларини баҳоланг</b>\n"
+"(ўқув материаллари,  эсдалик совғалар,  тушлик ва бошқалар)"
+msgstr ""
+"<b>O‘quv kursi tashkiliy jarayonlarini baholang</b>\n"
+"(o‘quv materiallari,  esdalik sovg‘alar,  tushlik va boshqalar)"
+
+#: tgbot/handlers/user.py:622
+msgid ""
+"<b>Ўқув курси ҳақида фикрларингиз бўлса,  шу йерда ёзиб қолдиринг "
+"(мажбурий эмас)</b>"
+msgstr ""
+"<b>O‘quv kursi haqida fikrlaringiz bo‘lsa,  shu yerda yozib qoldiring "
+"(majburiy emas)</b>"
+
+#: tgbot/handlers/user.py:638 tgbot/handlers/user.py:684
+msgid "<b>✅ Сўровномада қатнашганингиз учун миннатдормиз! </b>"
+msgstr "<b>✅ So‘rovnomada qatnashganingiz uchun minnatdormiz! </b>"
 
 #: tgbot/keyboards/inline.py:30
 msgid "Эркак"
@@ -235,9 +308,121 @@ msgstr "Suvchilar Maktabi kanali"
 msgid "Обунани текшириш"
 msgstr "Obunani tekshirish"
 
+#: tgbot/keyboards/inline.py:256
+msgid "Давом этиш"
+msgstr "Davom etish"
+
 #: tgbot/keyboards/reply.py:6
 msgid "📱 Рақам юбориш"
 msgstr "📱 Raqam yuborish"
+
+#: tgbot/misc/regions_with_teachers.py:6 tgbot/misc/regions_with_teachers.py:13
+#: tgbot/misc/regions_with_teachers.py:20
+msgid "Азметов Рустам"
+msgstr "Azmetov Rustam"
+
+#: tgbot/misc/regions_with_teachers.py:7 tgbot/misc/regions_with_teachers.py:14
+#: tgbot/misc/regions_with_teachers.py:21
+msgid "Кдирбаев Дауранбек"
+msgstr "Kdirbaev Dauranbek"
+
+#: tgbot/misc/regions_with_teachers.py:8 tgbot/misc/regions_with_teachers.py:15
+#: tgbot/misc/regions_with_teachers.py:22
+msgid "Аманов Баходир"
+msgstr "Amanov Baxodir"
+
+#: tgbot/misc/regions_with_teachers.py:9 tgbot/misc/regions_with_teachers.py:16
+#: tgbot/misc/regions_with_teachers.py:23
+msgid "Сулаймон Кодал"
+msgstr "Sulaymon Kodal"
+
+#: tgbot/misc/regions_with_teachers.py:27
+#: tgbot/misc/regions_with_teachers.py:34
+#: tgbot/misc/regions_with_teachers.py:41
+msgid "Матисақов Тўланбой"
+msgstr "Matisaqov To‘lanboy"
+
+#: tgbot/misc/regions_with_teachers.py:28
+#: tgbot/misc/regions_with_teachers.py:35
+#: tgbot/misc/regions_with_teachers.py:42
+msgid "Усманов Шавкат"
+msgstr "Usmanov Shavkat"
+
+#: tgbot/misc/regions_with_teachers.py:29
+#: tgbot/misc/regions_with_teachers.py:36
+#: tgbot/misc/regions_with_teachers.py:43
+msgid "Исаев Сабиржан"
+msgstr "Isaev Sabirjan"
+
+#: tgbot/misc/regions_with_teachers.py:30
+#: tgbot/misc/regions_with_teachers.py:37
+#: tgbot/misc/regions_with_teachers.py:44
+msgid "Гукдемир Ибрахим Ҳакки"
+msgstr "Gukdemir Ibraxim Hakki"
+
+#: tgbot/misc/regions_with_teachers.py:48
+#: tgbot/misc/regions_with_teachers.py:55
+#: tgbot/misc/regions_with_teachers.py:62
+msgid "Усаров Фазлиддин"
+msgstr "Usarov Fazliddin"
+
+#: tgbot/misc/regions_with_teachers.py:49
+#: tgbot/misc/regions_with_teachers.py:56
+#: tgbot/misc/regions_with_teachers.py:63
+msgid "Қўзиев Фарход"
+msgstr "Qo‘ziev Farxod"
+
+#: tgbot/misc/regions_with_teachers.py:50
+#: tgbot/misc/regions_with_teachers.py:57
+#: tgbot/misc/regions_with_teachers.py:64
+msgid "Хамроев Камол "
+msgstr "Xamroev Kamol"
+
+#: tgbot/misc/regions_with_teachers.py:51
+#: tgbot/misc/regions_with_teachers.py:58
+#: tgbot/misc/regions_with_teachers.py:65
+msgid "Беязгул Муслум"
+msgstr "Beyazgul Muslum"
+
+#: tgbot/misc/regions_with_teachers.py:69
+#: tgbot/misc/regions_with_teachers.py:76
+msgid "Ғойибқулов Абдулло"
+msgstr "G‘oyibqulov Abdullo"
+
+#: tgbot/misc/regions_with_teachers.py:70
+#: tgbot/misc/regions_with_teachers.py:77
+msgid "Баракаев Мурод"
+msgstr "Barakaev Murod"
+
+#: tgbot/misc/regions_with_teachers.py:71
+#: tgbot/misc/regions_with_teachers.py:78
+msgid "Рўзимуродов Алишер "
+msgstr "Ro‘zimurodov Alisher"
+
+#: tgbot/misc/regions_with_teachers.py:72
+#: tgbot/misc/regions_with_teachers.py:79
+msgid "Темел Мухаммет"
+msgstr "Temel Muxammet"
+
+#: tgbot/misc/regions_with_teachers.py:83
+#: tgbot/misc/regions_with_teachers.py:90
+msgid "Тахиров Бобур"
+msgstr "Taxirov Bobur"
+
+#: tgbot/misc/regions_with_teachers.py:84
+#: tgbot/misc/regions_with_teachers.py:91
+msgid "Холмуроджонов Бекзод"
+msgstr "Xolmurodjonov Bekzod"
+
+#: tgbot/misc/regions_with_teachers.py:85
+#: tgbot/misc/regions_with_teachers.py:92
+msgid "Ишчанов Жавлонбек Курбанбаевич"
+msgstr "Ishchanov Javlonbek Kurbanbaevich"
+
+#: tgbot/misc/regions_with_teachers.py:86
+#: tgbot/misc/regions_with_teachers.py:93
+msgid "Копаран Месут"
+msgstr "Koparan Mesut"
 
 #~ msgid ""
 #~ "✍🏼 <b>Фамилиянгиз</b>ни киритинг.\n"

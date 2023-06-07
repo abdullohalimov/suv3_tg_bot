@@ -72,6 +72,9 @@ async def get_region_with_districts(lang):
         header = {
             'Language': 'uz_cyrl',
         }
+    else:
+        header = {
+        }
     async with aiohttp.ClientSession(headers=header) as session:
         async with session.get(
             f"http://91.213.99.234:8000/api/region/with-district"

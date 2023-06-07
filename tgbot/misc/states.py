@@ -20,3 +20,19 @@ class UserRegistration(StatesGroup):
     faoliyat_turi = State()
     cert = State()
     cert2 = State()
+
+class Survey(StatesGroup):
+    test = State()
+
+
+    
+class UserStates(StatesGroup):
+    language = State()
+    id = State()
+    first = State()
+    second = State()
+    third = State()
+    four = State()
+    five = State()
+    six = State()
+    seven = State()

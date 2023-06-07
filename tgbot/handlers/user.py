@@ -11,7 +11,8 @@ import tgbot.keyboards.reply as reply
 from tgbot.misc.states import i18nn as _
 from aiogram.types import BufferedInputFile
 import re
-
+from tgbot.services.db import Score
+from tgbot.misc.regions_with_teachers import returnn_teachers
 user_router = Router()
 
 
@@ -157,7 +158,9 @@ class StepOne:
                             "Ҳурматли иштирокчи! Сўровномани давом эттириш учун Сувчилар мактаби расмий телеграм каналига аъзо бўлишингизни сўраймиз!",
                             locale=data.get("language"),
                         ),
-                        reply_markup=await inline.channels_keyboard(data.get("language")),
+                        reply_markup=await inline.channels_keyboard(
+                            data.get("language")
+                        ),
                     )
                     await callback.message.delete()
 
@@ -173,9 +176,12 @@ class StepOne:
         else:
             await callback.answer(
                 text=_(
-                    '"Сувчилар мактаби"да ўқув жараёнлари учун рўйхатдан ўтиш 1-июн соат 9. 30 дан бошланишини маълум қиламиз!', locale=callback_data.language
-                ), show_alert=True
+                    '"Сувчилар мактаби"да ўқув жараёнлари учун рўйхатдан ўтиш 1-июн соат 9. 30 дан бошланишини маълум қиламиз!',
+                    locale=callback_data.language,
+                ),
+                show_alert=True,
             )
+
     class Phone:
         @user_router.message(
             states.UserRegistration.phone,
@@ -429,17 +435,27 @@ class StepThree:
         bot: Bot,
     ):
         data = await state.get_data()
-        wait = await call.message.answer(text=_('⏳ Юкланмоқда, кутиб туринг...', locale=data.get("language")))
+        wait = await call.message.answer(
+            text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
+        )
         request = await api.certificate_download(data["certificate_id"])
         if request:
-            await call.message.answer_document(
-                document=BufferedInputFile(
-                    request,
-                    filename="certificate-{cert_id}.pdf".format(
-                        cert_id=data["certificate_id"]
-                    ),
-                )
+            # await call.message.answer_document(
+            #     document=BufferedInputFile(
+            #         request,
+            #         filename="certificate-{cert_id}.pdf".format(
+            #             cert_id=data["certificate_id"]
+            #         ),
+            #     )
+            # )
+            await call.message.edit_text(
+            _(
+                "<b>Сертификатни юклаб олиш учун қуйидаги сўровномани тўлдиринг.</b>",
+                locale=data.get("language"),
             )
+            )
+            await call.message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
+            await state.set_state(states.Survey.test)
             # await call.answer()
         else:
             await call.answer(
@@ -451,22 +467,31 @@ class StepThree:
             )
 
         await wait.delete()
-        
+
     @user_router.message(states.UserRegistration.cert2, F.text.isdigit())
     async def cert_number(message: Message, state: FSMContext, bot: Bot):
         data = await state.get_data()
 
-        wait = await message.answer(text=_('⏳ Юкланмоқда, кутиб туринг...', locale=data.get("language")))
+        wait = await message.answer(
+            text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
+        )
         request = await api.certificate_download(message.text)
         if request:
-            await message.answer_document(
-                document=BufferedInputFile(
-                    request,
-                    filename="certificate-{cert_id}.pdf".format(cert_id=message.text),
-                )
+            # await message.answer_document(
+            #     document=BufferedInputFile(
+            #         request,
+            #         filename="certificate-{cert_id}.pdf".format(cert_id=message.text),
+            #     )
+            # )
+            await message.answer(
+            _(
+                "<b>Сертификатни юклаб олиш учун қуйидаги сўровномани тўлдиринг.</b>",
+                locale=data.get("language"),
             )
-
-
+            )
+            await message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
+            await state.set_state(states.Survey.test)
+            await state.update_data(certificate_id=message.text)
         else:
             await message.answer(
                 _(
@@ -476,4 +501,223 @@ class StepThree:
             )
 
         # await bot.delete_message(chat_id=message.from_user.id, message_id=wait.message_id)
+        await wait.delete()
+
+
+class Survey:
+    # @user_router.message(F.text == "/survey")
+    # async def user_start(message: Message, state: FSMContext):
+
+
+    @user_router.callback_query(
+        inline.Factories.Region.filter(), states.Survey.test
+    )
+    async def user_start(callback: CallbackQuery, callback_data: inline.Factories.Region, state: FSMContext):
+        data = await state.get_data()
+        teachers = returnn_teachers(int(callback_data.id), data.get("language"))
+        message = callback.message
+
+        await message.edit_text(
+            _(
+                "<b>Университет профессор-ўқитувчисини баҳоланг</b>\nМавзу:  <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>\nЎқитувчи: <i> {teacher}</i>",
+                locale=data.get("language"),
+            ).format(teacher=teachers['professor']),
+            reply_markup=await inline.score_keyboard(1),
+        )
+        await state.set_state(states.UserStates.first)
+        await state.update_data(teachers=teachers)
+
+    @user_router.callback_query(
+        states.UserStates.first, inline.Factories.Score.filter()
+    )
+    async def first_step(
+        callback: CallbackQuery,
+        callback_data: inline.Factories.Score,
+        state: FSMContext,
+    ):
+        data = await state.get_data()
+        teachers = data.get("teachers")
+        await callback.message.answer(
+            _(
+                "<b>Турк мутахассисини баҳоланг</b>\nМавзу:  <i>Замонавий суғориш тизимининг аҳамияти ва сувдан фойдаланиш маданияти</i>\nЎқитувчи:  <i>{teacher}</i>",
+                locale=data["language"],
+            ).format(teacher=teachers['turk_mutaxassis']),
+            reply_markup=await inline.score_keyboard(2),
+        )
+        await state.set_state(states.UserStates.second)
+        await state.update_data(first=callback_data.id)
+        await callback.message.edit_text(callback.message.text + f"\nБаҳо:  {callback_data.emoji}", entities=callback.message.entities)
+
+    @user_router.callback_query(
+        states.UserStates.second, inline.Factories.Score.filter()
+    )
+    async def second(
+        callback: CallbackQuery,
+        callback_data: inline.Factories.Score,
+        state: FSMContext,
+    ):
+        data = await state.get_data()
+        teachers = data.get("teachers")
+        await callback.message.answer(
+            _(
+                "<b>Банк мутахассисини баҳоланг</b>\nМавзу:  <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\nЎқитувчи:  <i>{teacher}</i>",
+                locale=data["language"],
+            ).format(teacher=teachers['bank_xodimi']),
+            reply_markup=await inline.score_keyboard(3),
+        )
+        await state.set_state(states.UserStates.third)
+        await state.update_data(second=callback_data.id)
+        await callback.message.edit_text(callback.message.text + f"\nБаҳо:  {callback_data.emoji}", entities=callback.message.entities)
+
+
+    @user_router.callback_query(
+        states.UserStates.third, inline.Factories.Score.filter()
+    )
+    async def third(
+        callback: CallbackQuery,
+        callback_data: inline.Factories.Score,
+        state: FSMContext,
+    ):
+        data = await state.get_data()
+        teachers = data.get("teachers")
+        await callback.message.answer(
+            _(
+                "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\nМавзу:  <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\nЎқитувчи:  <i>{teacher}</i>",
+                locale=data["language"],
+            ).format(teacher=teachers['suv_masuli']),
+            reply_markup=await inline.score_keyboard(4),
+        )
+        await state.set_state(states.UserStates.four)
+        await state.update_data(third=callback_data.id)
+        await callback.message.edit_text(callback.message.text + f"\nБаҳо:  {callback_data.emoji}", entities=callback.message.entities)
+
+
+    @user_router.callback_query(states.UserStates.four, inline.Factories.Score.filter())
+    async def four(
+        callback: CallbackQuery,
+        callback_data: inline.Factories.Score,
+        state: FSMContext,
+    ):
+        data = await state.get_data()
+        await callback.message.answer(
+            _(
+                "<b>Ўқув курси ташкилий жараёнларини баҳоланг</b>\n(ўқув материаллари,  эсдалик совғалар,  тушлик ва бошқалар)",
+                locale=data["language"],
+            ),
+            reply_markup=await inline.score_keyboard(5),
+        )
+        await state.set_state(states.UserStates.five)
+        await state.update_data(four=callback_data.id)
+        await callback.message.edit_text(callback.message.text + f"\nБаҳо: {callback_data.emoji}", entities=callback.message.entities)
+
+
+    @user_router.callback_query(states.UserStates.five, inline.Factories.Score.filter())
+    async def five(
+        callback: CallbackQuery,
+        callback_data: inline.Factories.Score,
+        state: FSMContext,
+    ):
+        data = await state.get_data()
+        await callback.message.answer(
+            _(
+                "<b>Ўқув курси ҳақида фикрларингиз бўлса,  шу йерда ёзиб қолдиринг (мажбурий эмас)</b>",
+                locale=data["language"],
+            ),
+            reply_markup=await inline.continue_step(data["language"]),
+        )
+        await state.set_state(states.UserStates.six)
+        await state.update_data(five=callback_data.id)
+        await callback.message.edit_text(callback.message.text + f"\nБаҳо:  {callback_data.emoji}", entities=callback.message.entities)
+
+
+    @user_router.message(states.UserStates.six)
+    async def six(message: Message, state: FSMContext):
+        await state.update_data(six=message.text)
+        data = await state.get_data()
+        await message.answer(
+            _(
+                "<b>✅ Сўровномада қатнашганингиз учун миннатдормиз! </b>",
+                locale=data["language"],
+            )
+        )
+        # await state.set_state(states.UserStates.seven)
+        wait = await message.answer(
+            text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
+        )
+        request = await api.certificate_download(data=data["certificate_id"])
+        if request:
+            await message.answer_document(
+                document=BufferedInputFile(
+                    request,
+                    filename="certificate-{cert_id}.pdf".format(
+                        cert_id=data["certificate_id"]
+                    ),
+                )
+            )
+            try:
+                record: Score = Score.get(cert_id=data["certificate_id"])
+                record.first = data["first"]
+                record.second = data["second"]
+                record.third = data["third"]
+                record.four = data["four"]
+                record.five = data["five"]
+                record.six = data["six"]
+                record.cert_id = data["certificate_id"]
+                record.save()
+            except:
+                Score.create(
+                    first=data["first"],
+                    second=data["second"],
+                    third=data["third"],
+                    four=data["four"],
+                    five=data["five"],
+                    six=data["six"],
+                    cert_id=data["certificate_id"],
+                )
+        await wait.delete()
+
+    @user_router.callback_query(states.UserStates.six)
+    async def sixdotone(callback: CallbackQuery, state: FSMContext):
+        await state.update_data(six="None")
+        data = await state.get_data()
+        await callback.message.answer(
+            _(
+                "<b>✅ Сўровномада қатнашганингиз учун миннатдормиз! </b>",
+                locale=data["language"],
+            )
+        )
+        wait = await callback.message.answer(
+            text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
+        )
+        # await state.set_state(states.UserStates.seven)
+        request = await api.certificate_download(data=data["certificate_id"])
+        if request:
+            await callback.message.answer_document(
+                document=BufferedInputFile(
+                    request,
+                    filename="certificate-{cert_id}.pdf".format(
+                        cert_id=data["certificate_id"]
+                    ),
+                )
+            )
+            try:
+                record: Score = Score.get(cert_id=data["certificate_id"])
+                record.first = data["first"]
+                record.second = data["second"]
+                record.third = data["third"]
+                record.four = data["four"]
+                record.five = data["five"]
+                record.six = data["six"]
+                record.cert_id = data["certificate_id"]
+                record.save()
+            except:
+                Score.create(
+                    first=data["first"],
+                    second=data["second"],
+                    third=data["third"],
+                    four=data["four"],
+                    five=data["five"],
+                    six=data["six"],
+                    cert_id=data["certificate_id"],
+                )
         await wait.delete()

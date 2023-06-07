@@ -153,7 +153,7 @@ async def download_cert(lang):
     return keyboard.as_markup()
 
 
-async def region_inline_keyboard(lang):
+async def region_inline_keyboard(lang, need_i_back = True):
     regions_list = await api.get_region_with_districts(lang)
     keyb = InlineKeyboardBuilder()
     for i in regions_list["data"]:
@@ -164,12 +164,13 @@ async def region_inline_keyboard(lang):
             )
         )
     keyb.adjust(2)
-    keyb.row(
-        InlineKeyboardButton(
-            text=_("🔙 Орқага", locale=lang),
-            callback_data=Factories.Back(id="back").pack(),
+    if need_i_back:
+        keyb.row(
+            InlineKeyboardButton(
+                text=_("🔙 Орқага", locale=lang),
+                callback_data=Factories.Back(id="back").pack(),
+            )
         )
-    )
 
     return keyb.as_markup()
 
@@ -216,6 +217,51 @@ async def channels_keyboard(lang):
     return keyboard.as_markup()
 
 
+async def score_keyboard(step):
+    keyboard = InlineKeyboardBuilder()
+    step = str(step)
+    keyboard.add(
+        InlineKeyboardButton(
+            text="😢", callback_data=Factories.Score(id="1", step=step, emoji="😢").pack()
+        )
+    )
+    keyboard.add(
+        InlineKeyboardButton(
+            text="🙁", callback_data=Factories.Score(id="2", step=step, emoji="🙁").pack()
+        )
+    )
+    keyboard.add(
+        InlineKeyboardButton(
+            text="😐", callback_data=Factories.Score(id="3", step=step, emoji="😐").pack()
+        )
+    )
+    keyboard.add(
+        InlineKeyboardButton(
+            text="🙂", callback_data=Factories.Score(id="4", step=step, emoji="🙂").pack()
+        )
+    )
+    keyboard.add(
+        InlineKeyboardButton(
+            text="😀", callback_data=Factories.Score(id="5", step=step, emoji="😀").pack()
+        )
+    )
+
+    return keyboard.as_markup()
+
+
+async def continue_step(lang):
+    keyboard = InlineKeyboardBuilder()
+
+    keyboard.add(
+        InlineKeyboardButton(
+            text=_("Давом этиш", locale=lang),
+            callback_data="continue",
+        )
+    )
+
+    return keyboard.as_markup()
+
+
 class Factories:
     class Language(CallbackData, prefix="language"):
         language: str
@@ -240,3 +286,8 @@ class Factories:
 
     class Back(CallbackData, prefix="back"):
         id: str
+
+    class Score(CallbackData, prefix="score"):
+        id: str
+        step: str
+        emoji: str

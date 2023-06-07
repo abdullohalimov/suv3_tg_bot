@@ -25,9 +25,7 @@ pytz==2023.3
 redis==4.5.5
 typing_extensions==4.5.0
 yarl==1.9.2
-eskiz_sms
-fastapi
-uvicorn[standard]
+peewee
 # # For enabling api:
 # backoff
 # ujson
