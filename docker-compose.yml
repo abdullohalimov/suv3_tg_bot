@@ -10,7 +10,8 @@ services:
     working_dir: "/usr/src/app/${BOT_NAME}"
     volumes:
       - .:/usr/src/app/${BOT_NAME}
-    command: python3 -m bot
+    command: sh -c "pip install -r requirements.txt &&
+             python3 bot.py"
     restart: always
     env_file:
       - ".env"
