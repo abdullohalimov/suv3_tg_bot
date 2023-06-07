@@ -675,6 +675,8 @@ class Survey:
                     cert_id=data["certificate_id"],
                 )
         await wait.delete()
+        await state.set_state(states.UserStates.seven)
+
 
     @user_router.callback_query(states.UserStates.six)
     async def sixdotone(callback: CallbackQuery, state: FSMContext):
@@ -721,3 +723,4 @@ class Survey:
                     cert_id=data["certificate_id"],
                 )
         await wait.delete()
+        await state.set_state(states.UserStates.seven)
