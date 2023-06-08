@@ -627,7 +627,7 @@ class Survey:
         )
         await state.set_state(states.UserStates.six)
         await state.update_data(five=callback_data.id)
-        await callback.message.edit_text(callback.message.text + f"\nБаҳо:  {callback_data.emoji}", entities=callback.message.entities)
+        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
 
 
     @user_router.message(states.UserStates.six)
