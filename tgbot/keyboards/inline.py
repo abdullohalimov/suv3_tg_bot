@@ -245,7 +245,7 @@ async def score_keyboard(step):
             text="5 (a’lo 😀)", callback_data=Factories.Score(id="5", step=step, emoji="5 (a’lo 😀)").pack()
         )
     )
-
+    keyboard.adjust(1)
     return keyboard.as_markup()
 
 

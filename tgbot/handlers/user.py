@@ -519,7 +519,7 @@ class Survey:
 
         await message.edit_text(
             _(
-                "<b>Университет профессор-ўқитувчисини баҳоланг</b>\nМавзу:  <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>\nЎқитувчи: <i> {teacher}</i>",
+                "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>\n<b>Ф.И.Ш:</b> <i> {teacher}</i>",
                 locale=data.get("language"),
             ).format(teacher=teachers['professor']),
             reply_markup=await inline.score_keyboard(1),
@@ -539,7 +539,7 @@ class Survey:
         teachers = data.get("teachers")
         await callback.message.answer(
             _(
-                "<b>Турк мутахассисини баҳоланг</b>\nМавзу:  <i>Замонавий суғориш тизимининг аҳамияти ва сувдан фойдаланиш маданияти</i>\nЎқитувчи:  <i>{teacher}</i>",
+                "<b>Турк мутахассисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Замонавий суғориш тизимининг аҳамияти ва сувдан фойдаланиш маданияти</i>\n<b>Ф.И.Ш:</b>  <i>{teacher}</i>",
                 locale=data["language"],
             ).format(teacher=teachers['turk_mutaxassis']),
             reply_markup=await inline.score_keyboard(2),
@@ -560,7 +560,7 @@ class Survey:
         teachers = data.get("teachers")
         await callback.message.answer(
             _(
-                "<b>Банк мутахассисини баҳоланг</b>\nМавзу:  <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\nЎқитувчи:  <i>{teacher}</i>",
+                "<b>Банк мутахассисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\n<b>Ф.И.Ш:</b>  <i>{teacher}</i>",
                 locale=data["language"],
             ).format(teacher=teachers['bank_xodimi']),
             reply_markup=await inline.score_keyboard(3),
@@ -582,7 +582,7 @@ class Survey:
         teachers = data.get("teachers")
         await callback.message.answer(
             _(
-                "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\nМавзу:  <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\nЎқитувчи:  <i>{teacher}</i>",
+                "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\n<b>Ф.И.Ш:</b>  <i>{teacher}</i>",
                 locale=data["language"],
             ).format(teacher=teachers['suv_masuli']),
             reply_markup=await inline.score_keyboard(4),
@@ -601,7 +601,7 @@ class Survey:
         data = await state.get_data()
         await callback.message.answer(
             _(
-                "<b>Ўқув курси ташкилий жараёнларини баҳоланг</b>\n(ўқув материаллари,  эсдалик совғалар,  тушлик ва бошқалар)",
+                "<b>Ўқув курси ташкилий жараёнлари</b>(ўқув материаллари, эсдалик совғалар,  тушлик ва бошқалар)<b>ни баҳоланг</b>",
                 locale=data["language"],
             ),
             reply_markup=await inline.score_keyboard(5),
@@ -620,7 +620,7 @@ class Survey:
         data = await state.get_data()
         await callback.message.answer(
             _(
-                "<b>Ўқув курси ҳақида фикрларингиз бўлса,  шу йерда ёзиб қолдиринг (мажбурий эмас)</b>",
+                "<b>Ўқув курси ҳақида фикрларингиз бўлса,  шу йерда ёзиб қолдиринг</b> (мажбурий эмас)",
                 locale=data["language"],
             ),
             reply_markup=await inline.continue_step(data["language"]),
