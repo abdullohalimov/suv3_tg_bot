@@ -176,7 +176,7 @@ msgstr ""
 "⏳ Kurs yakunlanganidan so'ng sertifikatingizni yuklab olishingiz mumkin"
 
 #: tgbot/handlers/user.py:523
-#, fuzzy
+
 msgid ""
 "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n"
 "<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва "
@@ -189,7 +189,7 @@ msgstr ""
 "<b>F.I.SH:</b> <i> {teacher}</i>"
 
 #: tgbot/handlers/user.py:541
-#, fuzzy
+
 msgid ""
 "<b>Турк мутахассисини баҳоланг</b>\n"
 "<b>Маъруза мавзуси:</b> <i>Замонавий суғориш тизимининг аҳамияти ва "
@@ -202,7 +202,7 @@ msgstr ""
 "<b>F.I.SH:</b>  <i>{teacher}</i>"
 
 #: tgbot/handlers/user.py:562
-#, fuzzy
+
 msgid ""
 "<b>Банк мутахассисини баҳоланг</b>\n"
 "<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  "
@@ -215,7 +215,7 @@ msgstr ""
 "<b>F.I.SH:</b>  <i>{teacher}</i>"
 
 #: tgbot/handlers/user.py:584
-#, fuzzy
+
 msgid ""
 "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\n"
 "<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  "
@@ -228,7 +228,7 @@ msgstr ""
 "<b>F.I.SH:</b>  <i>{teacher}</i>"
 
 #: tgbot/handlers/user.py:603
-#, fuzzy
+
 msgid ""
 "<b>Ўқув курси ташкилий жараёнлари</b>(ўқув материаллари, эсдалик "
 "совғалар,  тушлик ва бошқалар)<b>ни баҳоланг</b>"
@@ -237,13 +237,13 @@ msgstr ""
 "sovg‘alar,  tushlik va boshqalar)<b>ni baholang</b>\n"
 
 #: tgbot/handlers/user.py:622
-#, fuzzy
+
 msgid ""
 "<b>Ўқув курси ҳақида фикрларингиз бўлса,  шу йерда ёзиб қолдиринг</b> "
 "(мажбурий эмас)"
 msgstr ""
 "<b>O‘quv kursi haqida fikrlaringiz bo‘lsa, shu yerda yozib "
-"qoldiring</b> (majburiy emas)"
+"qoldiring</b>(majburiy emas)"
 
 #: tgbot/handlers/user.py:638 tgbot/handlers/user.py:686
 msgid "<b>✅ Сўровномада қатнашганингиз учун миннатдормиз! </b>"
