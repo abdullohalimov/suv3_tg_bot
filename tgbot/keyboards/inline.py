@@ -222,9 +222,9 @@ async def score_keyboard(step, lang):
     step = str(step)
     keyboard.add(
         InlineKeyboardButton(
-            text=_("1 (ёмон 😢)", locale=lang, callback_data=Factories.Score(id="1", step=step, emoji="1 (yomon😢)").pack()
+            text=_("1 (ёмон 😢)", locale=lang), callback_data=Factories.Score(id="1", step=step, emoji="1 (yomon😢)").pack()
         )
-    ))
+    )
     keyboard.add(
         InlineKeyboardButton(
             text=_("2 (қониқарсиз 🙁)", locale=lang), callback_data=Factories.Score(id="2", step=step, emoji="2 (qoniqarsiz🙁)").pack()
