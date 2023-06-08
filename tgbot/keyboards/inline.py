@@ -250,7 +250,7 @@ async def score_keyboard(step, lang):
 
 
 async def continue_step(lang):
-    ke, locale=langyboard = InlineKeyboardBuilder()
+    keyboard = InlineKeyboardBuilder()
 
     keyboard.add(
         InlineKeyboardButton(
