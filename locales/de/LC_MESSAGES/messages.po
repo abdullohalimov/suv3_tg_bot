@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-08 10:57+0500\n"
+"POT-Creation-Date: 2023-06-08 11:08+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -184,8 +184,8 @@ msgid ""
 "<b>Ф.И.Ш:</b> <i> {teacher}</i>"
 msgstr ""
 "<b>Universitet professor-o‘qituvchisini baholang</b>\n"
-"<b>Ma'ruza mavzusi:</b>  <i>Suv tejovchi texnologiyalarning afzalliklari va ularni "
-"samaradorligi</i>\n"
+"<b>Ma'ruza mavzusi:</b>  <i>Suv tejovchi texnologiyalarning afzalliklari "
+"va ularni samaradorligi</i>\n"
 "<b>F.I.SH:</b> <i> {teacher}</i>"
 
 #: tgbot/handlers/user.py:541
@@ -197,8 +197,8 @@ msgid ""
 "<b>Ф.И.Ш:</b>  <i>{teacher}</i>"
 msgstr ""
 "<b>Turk mutaxassisini baholang</b>\n"
-"<b>Ma'ruza mavzusi:</b>  <i>Zamonaviy sug‘orish tizimining ahamiyati va suvdan foydalanish"
-" madaniyati</i>\n"
+"<b>Ma'ruza mavzusi:</b>  <i>Zamonaviy sug‘orish tizimining ahamiyati va "
+"suvdan foydalanish madaniyati</i>\n"
 "<b>F.I.SH:</b>  <i>{teacher}</i>"
 
 #: tgbot/handlers/user.py:562
@@ -210,8 +210,8 @@ msgid ""
 "<b>Ф.И.Ш:</b>  <i>{teacher}</i>"
 msgstr ""
 "<b>Bank mutaxassisini baholang</b>\n"
-"<b>Ma'ruza mavzusi:</b>  <i>Iqtisodiy va huquqiy savodxonlik:  subsidiya,  kafilliklar,  "
-"soliq imtiyozlari va bank kreditlari</i>\n"
+"<b>Ma'ruza mavzusi:</b>  <i>Iqtisodiy va huquqiy savodxonlik:  subsidiya,"
+"  kafilliklar,  soliq imtiyozlari va bank kreditlari</i>\n"
 "<b>F.I.SH:</b>  <i>{teacher}</i>"
 
 #: tgbot/handlers/user.py:584
@@ -223,8 +223,8 @@ msgid ""
 "<b>Ф.И.Ш:</b>  <i>{teacher}</i>"
 msgstr ""
 "<b>Suv xo‘jaligi vazirligi mutaxassisini baholang</b>\n"
-"<b>Ma'ruza mavzusi:</b>  <i>Iqtisodiy va huquqiy savodxonlik:  subsidiya,  kafilliklar, "
-"soliq imtiyozlari va bank kreditlari</i>\n"
+"<b>Ma'ruza mavzusi:</b>  <i>Iqtisodiy va huquqiy savodxonlik:  subsidiya,"
+"  kafilliklar, soliq imtiyozlari va bank kreditlari</i>\n"
 "<b>F.I.SH:</b>  <i>{teacher}</i>"
 
 #: tgbot/handlers/user.py:603
@@ -233,8 +233,8 @@ msgid ""
 "<b>Ўқув курси ташкилий жараёнлари</b>(ўқув материаллари, эсдалик "
 "совғалар,  тушлик ва бошқалар)<b>ни баҳоланг</b>"
 msgstr ""
-"<b>O‘quv kursi tashkiliy jarayonlari</b>(o‘quv materiallari,  esdalik sovg‘alar,  tushlik va boshqalar)<b>ni baholang</b>\n"
-""
+"<b>O‘quv kursi tashkiliy jarayonlari</b>(o‘quv materiallari,  esdalik "
+"sovg‘alar,  tushlik va boshqalar)<b>ni baholang</b>\n"
 
 #: tgbot/handlers/user.py:622
 #, fuzzy
@@ -242,8 +242,8 @@ msgid ""
 "<b>Ўқув курси ҳақида фикрларингиз бўлса,  шу йерда ёзиб қолдиринг</b> "
 "(мажбурий эмас)"
 msgstr ""
-"<b>O‘quv kursi haqida fikrlaringiz bo‘lsa, shu yerda yozib qoldiring</b>"
-"(majburiy emas)"
+"<b>O‘quv kursi haqida fikrlaringiz bo‘lsa, shu yerda yozib "
+"qoldiring</b> (majburiy emas)"
 
 #: tgbot/handlers/user.py:638 tgbot/handlers/user.py:686
 msgid "<b>✅ Сўровномада қатнашганингиз учун миннатдормиз! </b>"
@@ -319,6 +319,26 @@ msgstr "Suvchilar Maktabi kanali"
 #: tgbot/keyboards/inline.py:212
 msgid "Обунани текшириш"
 msgstr "Obunani tekshirish"
+
+#: tgbot/keyboards/inline.py:225
+msgid "1 (ёмон 😢)"
+msgstr "1 (yomon 😢)"
+
+#: tgbot/keyboards/inline.py:230
+msgid "2 (қониқарсиз 🙁)"
+msgstr "2 (qoniqarsiz 🙁)"
+
+#: tgbot/keyboards/inline.py:235
+msgid "3 (қониқарли 😐)"
+msgstr "3 (qoniqarli 😐)"
+
+#: tgbot/keyboards/inline.py:240
+msgid "4 (яхши 🙂)"
+msgstr "4 (yaxshi 🙂)"
+
+#: tgbot/keyboards/inline.py:245
+msgid "5 (аъло 😀)"
+msgstr "5 (a'lo 😀)"
 
 #: tgbot/keyboards/inline.py:257
 msgid "Давом этиш"
@@ -486,4 +506,19 @@ msgstr "Koparan Mesut"
 
 #~ msgid "⏳ Бир дақиқа..."
 #~ msgstr "⏳ Bir daqiqa..."
+
+#~ msgid "1 (yomon 😢)"
+#~ msgstr ""
+
+#~ msgid "2 (qoniqarsiz 🙁)"
+#~ msgstr ""
+
+#~ msgid "3 (qoniqarli 😐)"
+#~ msgstr ""
+
+#~ msgid "4 (yaxshi 🙂)"
+#~ msgstr ""
+
+#~ msgid "5 (a’lo 😀)"
+#~ msgstr ""
 

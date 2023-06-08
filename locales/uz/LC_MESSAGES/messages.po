@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-08 10:57+0500\n"
+"POT-Creation-Date: 2023-06-08 11:08+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uz\n"
@@ -257,6 +257,26 @@ msgstr ""
 
 #: tgbot/keyboards/inline.py:212
 msgid "Обунани текшириш"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:225
+msgid "1 (ёмон 😢)"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:230
+msgid "2 (қониқарсиз 🙁)"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:235
+msgid "3 (қониқарли 😐)"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:240
+msgid "4 (яхши 🙂)"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:245
+msgid "5 (аъло 😀)"
 msgstr ""
 
 #: tgbot/keyboards/inline.py:257
@@ -580,5 +600,20 @@ msgstr ""
 #~ "<b>Ўқув курси ҳақида фикрларингиз бўлса,  "
 #~ "шу йерда ёзиб қолдиринг (мажбурий "
 #~ "эмас)</b>"
+#~ msgstr ""
+
+#~ msgid "1 (yomon 😢)"
+#~ msgstr ""
+
+#~ msgid "2 (qoniqarsiz 🙁)"
+#~ msgstr ""
+
+#~ msgid "3 (qoniqarli 😐)"
+#~ msgstr ""
+
+#~ msgid "4 (yaxshi 🙂)"
+#~ msgstr ""
+
+#~ msgid "5 (a’lo 😀)"
 #~ msgstr ""
 

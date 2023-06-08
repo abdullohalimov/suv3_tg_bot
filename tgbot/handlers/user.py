@@ -522,7 +522,7 @@ class Survey:
                 "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>\n<b>Ф.И.Ш:</b> <i> {teacher}</i>",
                 locale=data.get("language"),
             ).format(teacher=teachers['professor']),
-            reply_markup=await inline.score_keyboard(1),
+            reply_markup=await inline.score_keyboard(1, data.get("language")),
         )
         await state.set_state(states.UserStates.first)
         await state.update_data(teachers=teachers)
@@ -542,7 +542,7 @@ class Survey:
                 "<b>Турк мутахассисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Замонавий суғориш тизимининг аҳамияти ва сувдан фойдаланиш маданияти</i>\n<b>Ф.И.Ш:</b>  <i>{teacher}</i>",
                 locale=data["language"],
             ).format(teacher=teachers['turk_mutaxassis']),
-            reply_markup=await inline.score_keyboard(2),
+            reply_markup=await inline.score_keyboard(2, data.get("language")),
         )
         await state.set_state(states.UserStates.second)
         await state.update_data(first=callback_data.id)
@@ -563,7 +563,7 @@ class Survey:
                 "<b>Банк мутахассисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\n<b>Ф.И.Ш:</b>  <i>{teacher}</i>",
                 locale=data["language"],
             ).format(teacher=teachers['bank_xodimi']),
-            reply_markup=await inline.score_keyboard(3),
+            reply_markup=await inline.score_keyboard(3, data.get("language")),
         )
         await state.set_state(states.UserStates.third)
         await state.update_data(second=callback_data.id)
@@ -585,7 +585,7 @@ class Survey:
                 "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\n<b>Ф.И.Ш:</b>  <i>{teacher}</i>",
                 locale=data["language"],
             ).format(teacher=teachers['suv_masuli']),
-            reply_markup=await inline.score_keyboard(4),
+            reply_markup=await inline.score_keyboard(4, data.get("language")),
         )
         await state.set_state(states.UserStates.four)
         await state.update_data(third=callback_data.id)
@@ -604,7 +604,7 @@ class Survey:
                 "<b>Ўқув курси ташкилий жараёнлари</b>(ўқув материаллари, эсдалик совғалар,  тушлик ва бошқалар)<b>ни баҳоланг</b>",
                 locale=data["language"],
             ),
-            reply_markup=await inline.score_keyboard(5),
+            reply_markup=await inline.score_keyboard(5, data.get("language")),
         )
         await state.set_state(states.UserStates.five)
         await state.update_data(four=callback_data.id)

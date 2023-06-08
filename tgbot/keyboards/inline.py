@@ -217,32 +217,32 @@ async def channels_keyboard(lang):
     return keyboard.as_markup()
 
 
-async def score_keyboard(step):
+async def score_keyboard(step, lang):
     keyboard = InlineKeyboardBuilder()
     step = str(step)
     keyboard.add(
         InlineKeyboardButton(
-            text="1 (yomon😢)", callback_data=Factories.Score(id="1", step=step, emoji="1 (yomon😢)").pack()
+            text=_("1 (ёмон 😢)", locale=lang, callback_data=Factories.Score(id="1", step=step, emoji="1 (yomon😢)").pack()
+        )
+    ))
+    keyboard.add(
+        InlineKeyboardButton(
+            text=_("2 (қониқарсиз 🙁)", locale=lang), callback_data=Factories.Score(id="2", step=step, emoji="2 (qoniqarsiz🙁)").pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text="2 (qoniqarsiz🙁)", callback_data=Factories.Score(id="2", step=step, emoji="2 (qoniqarsiz🙁)").pack()
+            text=_("3 (қониқарли 😐)", locale=lang), callback_data=Factories.Score(id="3", step=step, emoji="3 (qoniqarli 😐) ").pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text="3 (qoniqarli 😐)", callback_data=Factories.Score(id="3", step=step, emoji="3 (qoniqarli 😐) ").pack()
+            text=_("4 (яхши 🙂)", locale=lang), callback_data=Factories.Score(id="4", step=step, emoji="4 (yaxshi 🙂)").pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text="4 (yaxshi 🙂)", callback_data=Factories.Score(id="4", step=step, emoji="4 (yaxshi 🙂)").pack()
-        )
-    )
-    keyboard.add(
-        InlineKeyboardButton(
-            text="5 (a’lo 😀)", callback_data=Factories.Score(id="5", step=step, emoji="5 (a’lo 😀)").pack()
+            text=_("5 (аъло 😀)", locale=lang), callback_data=Factories.Score(id="5", step=step, emoji="5 (a’lo 😀)").pack()
         )
     )
     keyboard.adjust(1)
@@ -250,7 +250,7 @@ async def score_keyboard(step):
 
 
 async def continue_step(lang):
-    keyboard = InlineKeyboardBuilder()
+    ke, locale=langyboard = InlineKeyboardBuilder()
 
     keyboard.add(
         InlineKeyboardButton(
