@@ -222,27 +222,27 @@ async def score_keyboard(step):
     step = str(step)
     keyboard.add(
         InlineKeyboardButton(
-            text="😢", callback_data=Factories.Score(id="1", step=step, emoji="😢").pack()
+            text="1 (yomon😢)", callback_data=Factories.Score(id="1", step=step, emoji="1 (yomon😢)").pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text="🙁", callback_data=Factories.Score(id="2", step=step, emoji="🙁").pack()
+            text="2 (qoniqarsiz🙁)", callback_data=Factories.Score(id="2", step=step, emoji="2 (qoniqarsiz🙁)").pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text="😐", callback_data=Factories.Score(id="3", step=step, emoji="😐").pack()
+            text="3 (qoniqarli 😐)", callback_data=Factories.Score(id="3", step=step, emoji="3 (qoniqarli 😐) ").pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text="🙂", callback_data=Factories.Score(id="4", step=step, emoji="🙂").pack()
+            text="4 (yaxshi 🙂)", callback_data=Factories.Score(id="4", step=step, emoji="4 (yaxshi 🙂)").pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text="😀", callback_data=Factories.Score(id="5", step=step, emoji="😀").pack()
+            text="5 (a’lo 😀)", callback_data=Factories.Score(id="5", step=step, emoji="5 (a’lo 😀)").pack()
         )
     )
 
