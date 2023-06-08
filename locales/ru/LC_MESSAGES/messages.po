@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-08 11:08+0500\n"
+"POT-Creation-Date: 2023-06-08 11:21+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -194,6 +194,13 @@ msgid ""
 "<b>Маъруза мавзуси:</b> <i>Замонавий суғориш тизимининг аҳамияти ва "
 "сувдан фойдаланиш маданияти</i>\n"
 "<b>Ф.И.Ш:</b>  <i>{teacher}</i>"
+msgstr ""
+
+#: tgbot/handlers/user.py:549 tgbot/handlers/user.py:570
+#: tgbot/handlers/user.py:592 tgbot/handlers/user.py:611
+msgid ""
+"\n"
+"Баҳо:  {emoji}"
 msgstr ""
 
 #: tgbot/handlers/user.py:562

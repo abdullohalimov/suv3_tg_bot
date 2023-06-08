@@ -546,7 +546,7 @@ class Survey:
         )
         await state.set_state(states.UserStates.second)
         await state.update_data(first=callback_data.id)
-        await callback.message.edit_text(callback.message.text + f"\nБаҳо:  {callback_data.emoji}", entities=callback.message.entities)
+        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
 
     @user_router.callback_query(
         states.UserStates.second, inline.Factories.Score.filter()
@@ -567,7 +567,7 @@ class Survey:
         )
         await state.set_state(states.UserStates.third)
         await state.update_data(second=callback_data.id)
-        await callback.message.edit_text(callback.message.text + f"\nБаҳо:  {callback_data.emoji}", entities=callback.message.entities)
+        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
 
 
     @user_router.callback_query(
@@ -589,7 +589,7 @@ class Survey:
         )
         await state.set_state(states.UserStates.four)
         await state.update_data(third=callback_data.id)
-        await callback.message.edit_text(callback.message.text + f"\nБаҳо:  {callback_data.emoji}", entities=callback.message.entities)
+        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
 
 
     @user_router.callback_query(states.UserStates.four, inline.Factories.Score.filter())
@@ -608,7 +608,7 @@ class Survey:
         )
         await state.set_state(states.UserStates.five)
         await state.update_data(four=callback_data.id)
-        await callback.message.edit_text(callback.message.text + f"\nБаҳо: {callback_data.emoji}", entities=callback.message.entities)
+        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
 
 
     @user_router.callback_query(states.UserStates.five, inline.Factories.Score.filter())

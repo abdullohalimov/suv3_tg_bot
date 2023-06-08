@@ -222,27 +222,27 @@ async def score_keyboard(step, lang):
     step = str(step)
     keyboard.add(
         InlineKeyboardButton(
-            text=_("1 (ёмон 😢)", locale=lang), callback_data=Factories.Score(id="1", step=step, emoji="1 (yomon😢)").pack()
+            text=_("1 (ёмон 😢)", locale=lang), callback_data=Factories.Score(id="1", step=step, emoji=_("1 (ёмон 😢)", locale=lang)).pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text=_("2 (қониқарсиз 🙁)", locale=lang), callback_data=Factories.Score(id="2", step=step, emoji="2 (qoniqarsiz🙁)").pack()
+            text=_("2 (қониқарсиз 🙁)", locale=lang), callback_data=Factories.Score(id="2", step=step, emoji=_("2 (қониқарсиз 🙁)", locale=lang)).pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text=_("3 (қониқарли 😐)", locale=lang), callback_data=Factories.Score(id="3", step=step, emoji="3 (qoniqarli 😐) ").pack()
+            text=_("3 (қониқарли 😐)", locale=lang), callback_data=Factories.Score(id="3", step=step, emoji=_("3 (қониқарли 😐)", locale=lang)).pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text=_("4 (яхши 🙂)", locale=lang), callback_data=Factories.Score(id="4", step=step, emoji="4 (yaxshi 🙂)").pack()
+            text=_("4 (яхши 🙂)", locale=lang), callback_data=Factories.Score(id="4", step=step, emoji=_("4 (яхши 🙂)", locale=lang)).pack()
         )
     )
     keyboard.add(
         InlineKeyboardButton(
-            text=_("5 (аъло 😀)", locale=lang), callback_data=Factories.Score(id="5", step=step, emoji="5 (a’lo 😀)").pack()
+            text=_("5 (аъло 😀)", locale=lang), callback_data=Factories.Score(id="5", step=step, emoji=_("5 (аъло 😀)", locale=lang)).pack()
         )
     )
     keyboard.adjust(1)

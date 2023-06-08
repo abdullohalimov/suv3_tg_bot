@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-08 11:08+0500\n"
+"POT-Creation-Date: 2023-06-08 11:21+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -176,7 +176,6 @@ msgstr ""
 "⏳ Kurs yakunlanganidan so'ng sertifikatingizni yuklab olishingiz mumkin"
 
 #: tgbot/handlers/user.py:523
-
 msgid ""
 "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n"
 "<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва "
@@ -189,7 +188,6 @@ msgstr ""
 "<b>F.I.SH:</b> <i> {teacher}</i>"
 
 #: tgbot/handlers/user.py:541
-
 msgid ""
 "<b>Турк мутахассисини баҳоланг</b>\n"
 "<b>Маъруза мавзуси:</b> <i>Замонавий суғориш тизимининг аҳамияти ва "
@@ -201,8 +199,15 @@ msgstr ""
 "suvdan foydalanish madaniyati</i>\n"
 "<b>F.I.SH:</b>  <i>{teacher}</i>"
 
+#: tgbot/handlers/user.py:549 tgbot/handlers/user.py:570
+#: tgbot/handlers/user.py:592 tgbot/handlers/user.py:611
+msgid ""
+"\n"
+"Баҳо:  {emoji}"
+msgstr ""
+"\n"
+"Baho:  {emoji}"
 #: tgbot/handlers/user.py:562
-
 msgid ""
 "<b>Банк мутахассисини баҳоланг</b>\n"
 "<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  "
@@ -215,7 +220,6 @@ msgstr ""
 "<b>F.I.SH:</b>  <i>{teacher}</i>"
 
 #: tgbot/handlers/user.py:584
-
 msgid ""
 "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\n"
 "<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  "
@@ -228,7 +232,6 @@ msgstr ""
 "<b>F.I.SH:</b>  <i>{teacher}</i>"
 
 #: tgbot/handlers/user.py:603
-
 msgid ""
 "<b>Ўқув курси ташкилий жараёнлари</b>(ўқув материаллари, эсдалик "
 "совғалар,  тушлик ва бошқалар)<b>ни баҳоланг</b>"
@@ -237,7 +240,6 @@ msgstr ""
 "sovg‘alar,  tushlik va boshqalar)<b>ni baholang</b>\n"
 
 #: tgbot/handlers/user.py:622
-
 msgid ""
 "<b>Ўқув курси ҳақида фикрларингиз бўлса,  шу йерда ёзиб қолдиринг</b> "
 "(мажбурий эмас)"
