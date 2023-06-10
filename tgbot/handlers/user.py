@@ -137,10 +137,10 @@ class StepOne:
             await state.update_data(language=callback_data.language)
         if True:
             data = await state.get_data()
-            subscribe = await is_subscribed(
-                user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
-            )
-            # subscribe = 'right'
+            # subscribe = await is_subscribed(
+            #     user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
+            # )
+            subscribe = 'right'
             if subscribe == "left":
                 # await message.answer(text='Not subscribed')
                 await callback.answer(
@@ -454,7 +454,7 @@ class StepThree:
                 locale=data.get("language"),
             )
             )
-            await call.message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
+            # await call.message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
             await state.set_state(states.Survey.test)
             # await call.answer()
         else:
@@ -489,7 +489,14 @@ class StepThree:
                 locale=data.get("language"),
             )
             )
-            await message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
+            # await message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
+            await message.edit_text(
+            _(
+                "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>\n<b>Ф.И.Ш:</b> <i> {teacher}</i>",
+                locale=data.get("language"),
+            ).format(teacher=teachers['professor']),
+            reply_markup=await inline.score_keyboard(1, data.get("language")),
+        )
             await state.set_state(states.Survey.test)
             await state.update_data(certificate_id=message.text)
         else:
@@ -512,18 +519,18 @@ class Survey:
     @user_router.callback_query(
         inline.Factories.Region.filter(), states.Survey.test
     )
-    async def user_start(callback: CallbackQuery, callback_data: inline.Factories.Region, state: FSMContext):
+    async def survey_start(callback: CallbackQuery, callback_data: inline.Factories.Region, state: FSMContext):
         data = await state.get_data()
         teachers = returnn_teachers(int(callback_data.id), data.get("language"))
         message = callback.message
 
-        await message.edit_text(
-            _(
-                "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>\n<b>Ф.И.Ш:</b> <i> {teacher}</i>",
-                locale=data.get("language"),
-            ).format(teacher=teachers['professor']),
-            reply_markup=await inline.score_keyboard(1, data.get("language")),
-        )
+        # await message.edit_text(
+        #     _(
+        #         "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>\n<b>Ф.И.Ш:</b> <i> {teacher}</i>",
+        #         locale=data.get("language"),
+        #     ).format(teacher=teachers['professor']),
+        #     reply_markup=await inline.score_keyboard(1, data.get("language")),
+        # )
         await state.set_state(states.UserStates.first)
         await state.update_data(teachers=teachers)
 

@@ -81,4 +81,17 @@ async def get_region_with_districts(lang):
         ) as response:
             return await response.json()
 
-# print(asyncio.run(check_phone('998998881965')))
+
+async def get_user_with_cert_id(cert_id):
+    url = 'http://91.213.99.234:8000/api/request/{certificate_id}'
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url=url) as response:
+            return await response.json()
+
+
+
+
+
+
+print(asyncio.run(get_user_with_cert_id('00053')))
