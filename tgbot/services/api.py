@@ -1,3 +1,4 @@
+import json
 import logging
 import aiohttp
 import asyncio
@@ -23,7 +24,6 @@ async def step_one_request(data, chat_id):
             except:
                 return {"success": False}
 
-
 async def step_two_request(data):
     url = "http://91.213.99.234:8000/api/request-step-two"
     payload = {
@@ -38,7 +38,6 @@ async def step_two_request(data):
                 return await resp.json()
             except:
                 return {"success": False}
-
 
 async def certificate_download(data):
     url = "http://91.213.99.234:8000/api/request/certificate"
@@ -81,4 +80,42 @@ async def get_region_with_districts(lang):
         ) as response:
             return await response.json()
 
+async def get_user_data_from_cert_id(cert_id):
+    
+    url = 'http://91.213.99.234:8000/api/request/{certificate_id}'
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            return await response.json()
+
+async def send_feedback(data):
+    url = 'http://91.213.99.234:8000/api/feedback'
+
+    headers = {
+        'accept': 'application/json', 
+        'Content-Type': 'application/json'
+    }
+
+    rates: list = []
+
+    for question in [[1, data['first']], [2, data['second']], [3, data['third']], [4, data['four']], [5, data['five']]]:
+        rates.append({
+            "question": f"{question[0]}",
+            "rate": f"{question[1]}"
+        })
+    payload = {
+        "rates": rates,
+        "comment": f"{data['six']}", 
+        "request_id": data['certificate_id']
+    }
+    # for i in range(0, len(rates)):
+    #     payload[f'rates[{i}]'] = rates[i]
+    print(payload)
+    async with aiohttp.ClientSession(headers=headers) as session:
+        async with session.post(url, data=json.dumps(payload)) as response:
+            # return await response.json()
+            print(await response.text())
+        
+
 # print(asyncio.run(check_phone('998998881965')))
+

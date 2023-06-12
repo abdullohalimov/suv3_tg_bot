@@ -137,10 +137,10 @@ class StepOne:
             await state.update_data(language=callback_data.language)
         if True:
             data = await state.get_data()
-            subscribe = await is_subscribed(
-                user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
-            )
-            # subscribe = 'right'
+            # subscribe = await is_subscribed(
+            #     user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
+            # )
+            subscribe = 'right'
             if subscribe == "left":
                 # await message.answer(text='Not subscribed')
                 await callback.answer(
@@ -475,23 +475,36 @@ class StepThree:
         wait = await message.answer(
             text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
         )
-        request = await api.certificate_download(message.text)
-        if request:
+        request = await api.get_user_data_from_cert_id(message.text)
+        if int(request.get('data', False).get('status', 0)) == 3:
             # await message.answer_document(
             #     document=BufferedInputFile(
             #         request,
             #         filename="certificate-{cert_id}.pdf".format(cert_id=message.text),
             #     )
             # )
+            teachers = returnn_teachers(int(request['data']['region_id']), data.get("language"))
+
             await message.answer(
             _(
                 "<b>Сертификатни юклаб олиш учун қуйидаги сўровномани тўлдиринг.</b>",
                 locale=data.get("language"),
             )
             )
-            await message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
-            await state.set_state(states.Survey.test)
-            await state.update_data(certificate_id=message.text)
+            # await message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
+            # await state.set_state(states.Survey.test)
+            await state.update_data(certificate_id=message.text, teachers=teachers)
+            await state.set_state(states.UserStates.first)
+            await message.answer(
+            _(
+                "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>",
+                locale=data.get("language"),
+            ).format(teacher=teachers['professor']),
+            reply_markup=await inline.score_keyboard(1, data.get("language")),
+        )
+
+            
+
         else:
             await message.answer(
                 _(
@@ -509,23 +522,14 @@ class Survey:
     # async def user_start(message: Message, state: FSMContext):
 
 
-    @user_router.callback_query(
-        inline.Factories.Region.filter(), states.Survey.test
-    )
-    async def user_start(callback: CallbackQuery, callback_data: inline.Factories.Region, state: FSMContext):
-        data = await state.get_data()
-        teachers = returnn_teachers(int(callback_data.id), data.get("language"))
-        message = callback.message
+    # @user_router.callback_query(
+    #     inline.Factories.Region.filter(), states.Survey.test
+    # )
+    # async def user_start(callback: CallbackQuery, callback_data: inline.Factories.Region, state: FSMContext):
+    #     data = await state.get_data()
+    #     message = callback.message
 
-        await message.edit_text(
-            _(
-                "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>\n<b>Ф.И.Ш:</b> <i> {teacher}</i>",
-                locale=data.get("language"),
-            ).format(teacher=teachers['professor']),
-            reply_markup=await inline.score_keyboard(1, data.get("language")),
-        )
-        await state.set_state(states.UserStates.first)
-        await state.update_data(teachers=teachers)
+        
 
     @user_router.callback_query(
         states.UserStates.first, inline.Factories.Score.filter()
@@ -539,7 +543,7 @@ class Survey:
         teachers = data.get("teachers")
         await callback.message.answer(
             _(
-                "<b>Турк мутахассисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Замонавий суғориш тизимининг аҳамияти ва сувдан фойдаланиш маданияти</i>\n<b>Ф.И.Ш:</b>  <i>{teacher}</i>",
+                "<b>Турк мутахассисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Замонавий суғориш тизимининг аҳамияти ва сувдан фойдаланиш маданияти</i>",
                 locale=data["language"],
             ).format(teacher=teachers['turk_mutaxassis']),
             reply_markup=await inline.score_keyboard(2, data.get("language")),
@@ -560,7 +564,7 @@ class Survey:
         teachers = data.get("teachers")
         await callback.message.answer(
             _(
-                "<b>Банк мутахассисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\n<b>Ф.И.Ш:</b>  <i>{teacher}</i>",
+                "<b>Банк мутахассисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>",
                 locale=data["language"],
             ).format(teacher=teachers['bank_xodimi']),
             reply_markup=await inline.score_keyboard(3, data.get("language")),
@@ -568,7 +572,6 @@ class Survey:
         await state.set_state(states.UserStates.third)
         await state.update_data(second=callback_data.id)
         await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
-
 
     @user_router.callback_query(
         states.UserStates.third, inline.Factories.Score.filter()
@@ -582,7 +585,7 @@ class Survey:
         teachers = data.get("teachers")
         await callback.message.answer(
             _(
-                "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>\n<b>Ф.И.Ш:</b>  <i>{teacher}</i>",
+                "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>",
                 locale=data["language"],
             ).format(teacher=teachers['suv_masuli']),
             reply_markup=await inline.score_keyboard(4, data.get("language")),
@@ -590,7 +593,6 @@ class Survey:
         await state.set_state(states.UserStates.four)
         await state.update_data(third=callback_data.id)
         await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
-
 
     @user_router.callback_query(states.UserStates.four, inline.Factories.Score.filter())
     async def four(
@@ -610,7 +612,6 @@ class Survey:
         await state.update_data(four=callback_data.id)
         await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
 
-
     @user_router.callback_query(states.UserStates.five, inline.Factories.Score.filter())
     async def five(
         callback: CallbackQuery,
@@ -620,7 +621,7 @@ class Survey:
         data = await state.get_data()
         await callback.message.answer(
             _(
-                "<b>Ўқув курси ҳақида фикрларингиз бўлса,  шу йерда ёзиб қолдиринг</b> (мажбурий эмас)",
+                "<b>Ўқув курси ҳақида фикрларингиз бўлса, шу йерда ёзиб қолдиринг</b> (мажбурий эмас)",
                 locale=data["language"],
             ),
             reply_markup=await inline.continue_step(data["language"]),
@@ -628,7 +629,6 @@ class Survey:
         await state.set_state(states.UserStates.six)
         await state.update_data(five=callback_data.id)
         await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
-
 
     @user_router.message(states.UserStates.six)
     async def six(message: Message, state: FSMContext):
@@ -646,6 +646,7 @@ class Survey:
         )
         request = await api.certificate_download(data=data["certificate_id"])
         if request:
+            await api.send_feedback(data=data)
             await message.answer_document(
                 document=BufferedInputFile(
                     request,
@@ -677,7 +678,6 @@ class Survey:
         await wait.delete()
         await state.set_state(states.UserStates.seven)
 
-
     @user_router.callback_query(states.UserStates.six)
     async def sixdotone(callback: CallbackQuery, state: FSMContext):
         await state.update_data(six="None")
@@ -692,8 +692,11 @@ class Survey:
             text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
         )
         # await state.set_state(states.UserStates.seven)
+        await api.send_feedback(data=data)
+        return
         request = await api.certificate_download(data=data["certificate_id"])
         if request:
+            
             await callback.message.answer_document(
                 document=BufferedInputFile(
                     request,
