@@ -82,11 +82,11 @@ async def get_region_with_districts(lang):
 
 async def get_user_data_from_cert_id(cert_id):
     
-    url = 'http://91.213.99.234:8000/api/request/{certificate_id}'
+    url = f'http://91.213.99.234:8000/api/request/{cert_id}'
     
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            return await response.json()
+            return await response.text()
 
 async def send_feedback(data):
     url = 'http://91.213.99.234:8000/api/feedback'
@@ -116,6 +116,11 @@ async def send_feedback(data):
             # return await response.json()
             print(await response.text())
         
+async def get_all_feedbacks():
+    url = 'http://91.213.99.234:8000/api/feedback'
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            return await response.json()
 
-# print(asyncio.run(check_phone('998998881965')))
+# print(asyncio.run(get_all_feedbacks()))
 

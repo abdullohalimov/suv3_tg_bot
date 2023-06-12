@@ -13,7 +13,42 @@ from aiogram.types import BufferedInputFile
 import re
 from tgbot.services.db import Score
 from tgbot.misc.regions_with_teachers import returnn_teachers
+from openpyxl import Workbook
+from openpyxl.styles import Font
+
+
 user_router = Router()
+
+
+def making_excel(data):
+
+    wb = Workbook()
+
+    ws = wb.active
+
+    ws.title = 'So\'rovnoma'
+
+    # cell_range = ws['A1':'I1']
+
+    values = ["ID",	"FIO",	"Region",	"Universitet professori",	"Turk mutaxassisi",	"Bank mutaxassisi",	"Vazirlik mutaxassisi",	"Tashkiliy jarayonlar",	"Fikrlar"]
+
+    ws.append(values)
+    ft = Font(bold=True)
+    for row in ws["A1:I1"]:
+        for cell in row:
+            cell.font = ft
+
+    for i in data:
+        ws.append(i)
+
+    # with NamedTemporaryFile() as tmp:
+    #     wb.save(tmp.name)
+    #     tmp.seek(0)
+    #     stream = tmp.read()
+
+    wb.save('so\'rovnoma.xlsx')
+
+
 
 
 async def is_subscribed(user_id, channels_id, bot: Bot) -> bool:
