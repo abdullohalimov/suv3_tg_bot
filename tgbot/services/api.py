@@ -86,7 +86,7 @@ async def get_user_data_from_cert_id(cert_id):
     
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            return await response.text()
+            return await response.json()
 
 async def send_feedback(data):
     url = 'http://91.213.99.234:8000/api/feedback'

@@ -2,53 +2,67 @@ from datetime import date
 import logging
 from aiogram import F, Bot, Router
 from aiogram.fsm.context import FSMContext
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery
 import tgbot.misc.states as states
 import tgbot.services.api as api
 import tgbot.keyboards.inline as inline
 import tgbot.keyboards.reply as reply
 from tgbot.misc.states import i18nn as _
-from aiogram.types import BufferedInputFile
+from aiogram.types import BufferedInputFile, FSInputFile
 import re
 from tgbot.services.db import Score
 from tgbot.misc.regions_with_teachers import returnn_teachers
 from openpyxl import Workbook
-from openpyxl.styles import Font
+from openpyxl.styles import Font, Alignment, Protection
 
 
 user_router = Router()
 
 
 def making_excel(data):
-
     wb = Workbook()
-
     ws = wb.active
-
-    ws.title = 'So\'rovnoma'
-
-    # cell_range = ws['A1':'I1']
-
-    values = ["ID",	"FIO",	"Region",	"Universitet professori",	"Turk mutaxassisi",	"Bank mutaxassisi",	"Vazirlik mutaxassisi",	"Tashkiliy jarayonlar",	"Fikrlar"]
+    ws.title = "So'rovnoma"
+    values = [
+        "ID",
+        "FIO",
+        "Viloyat",
+        "Universitet professori",
+        "Turk mutaxassisi",
+        "Bank mutaxassisi",
+        "Vazirlik mutaxassisi",
+        "Tashkiliy jarayonlar",
+        "Fikrlar",
+    ]
+    alignment=Alignment(wrap_text=True,
+                        shrink_to_fit=False,
+                        indent=0)
+    protection = Protection(locked=False,
+                            hidden=False)
 
     ws.append(values)
     ft = Font(bold=True)
     for row in ws["A1:I1"]:
         for cell in row:
             cell.font = ft
+            cell.alignment = alignment
+            cell.protection = protection
 
     for i in data:
         ws.append(i)
 
-    # with NamedTemporaryFile() as tmp:
-    #     wb.save(tmp.name)
-    #     tmp.seek(0)
-    #     stream = tmp.read()
+    ws.column_dimensions["B"].width = 30 
+    ws.column_dimensions["C"].width = 30 
+    ws.column_dimensions["D"].width = 12 
+    ws.column_dimensions["E"].width = 12 
+    ws.column_dimensions["F"].width = 12 
+    ws.column_dimensions["G"].width = 12 
+    ws.column_dimensions["H"].width = 12 
+    ws.column_dimensions["I"].width = 30 
 
-    wb.save('so\'rovnoma.xlsx')
 
-
+    wb.save("so'rovnoma.xlsx")
 
 
 async def is_subscribed(user_id, channels_id, bot: Bot) -> bool:
@@ -175,7 +189,7 @@ class StepOne:
             # subscribe = await is_subscribed(
             #     user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
             # )
-            subscribe = 'right'
+            subscribe = "right"
             if subscribe == "left":
                 # await message.answer(text='Not subscribed')
                 await callback.answer(
@@ -461,7 +475,7 @@ class StepThree:
             await state.set_state(states.UserRegistration.cert2)
 
     @user_router.callback_query(
-        inline.Factories.Certificate.filter(), states.UserRegistration.cert
+        inline.Factories.Certificate.filter()
     )
     async def cert_answer(
         call: CallbackQuery,
@@ -470,28 +484,39 @@ class StepThree:
         bot: Bot,
     ):
         data = await state.get_data()
+
         wait = await call.message.answer(
             text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
         )
-        request = await api.certificate_download(data["certificate_id"])
-        if request:
-            # await call.message.answer_document(
+        request = await api.get_user_data_from_cert_id(data.get("certificate_id"))
+        if int(request.get("data", False).get("status", 0)) == 3:
+            # await message.answer_document(
             #     document=BufferedInputFile(
             #         request,
-            #         filename="certificate-{cert_id}.pdf".format(
-            #             cert_id=data["certificate_id"]
-            #         ),
+            #         filename="certificate-{cert_id}.pdf".format(cert_id=message.text),
             #     )
             # )
-            await call.message.edit_text(
-            _(
-                "<b>Сертификатни юклаб олиш учун қуйидаги сўровномани тўлдиринг.</b>",
-                locale=data.get("language"),
+            teachers = returnn_teachers(
+                int(request["data"]["region_id"]), data.get("language")
             )
+
+            await call.message.answer(
+                _(
+                    "<b>Сертификатни юклаб олиш учун қуйидаги сўровномани тўлдиринг.</b>",
+                    locale=data.get("language"),
+                )
             )
-            await call.message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
-            await state.set_state(states.Survey.test)
-            # await call.answer()
+            # await message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
+            # await state.set_state(states.Survey.test)
+            await state.update_data(certificate_id=data.get("certificate_id"), teachers=teachers)
+            await state.set_state(states.UserStates.first)
+            await call.message.answer(
+                _(
+                    "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>",
+                    locale=data.get("language"),
+                ).format(teacher=teachers["professor"]),
+                reply_markup=await inline.score_keyboard(1, data.get("language")),
+            )
         else:
             await call.answer(
                 text=_(
@@ -511,34 +536,34 @@ class StepThree:
             text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
         )
         request = await api.get_user_data_from_cert_id(message.text)
-        if int(request.get('data', False).get('status', 0)) == 3:
+        if int(request.get("data", False).get("status", 0)) == 3:
             # await message.answer_document(
             #     document=BufferedInputFile(
             #         request,
             #         filename="certificate-{cert_id}.pdf".format(cert_id=message.text),
             #     )
             # )
-            teachers = returnn_teachers(int(request['data']['region_id']), data.get("language"))
+            teachers = returnn_teachers(
+                int(request["data"]["region_id"]), data.get("language")
+            )
 
             await message.answer(
-            _(
-                "<b>Сертификатни юклаб олиш учун қуйидаги сўровномани тўлдиринг.</b>",
-                locale=data.get("language"),
-            )
+                _(
+                    "<b>Сертификатни юклаб олиш учун қуйидаги сўровномани тўлдиринг.</b>",
+                    locale=data.get("language"),
+                )
             )
             # await message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
             # await state.set_state(states.Survey.test)
             await state.update_data(certificate_id=message.text, teachers=teachers)
             await state.set_state(states.UserStates.first)
             await message.answer(
-            _(
-                "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>",
-                locale=data.get("language"),
-            ).format(teacher=teachers['professor']),
-            reply_markup=await inline.score_keyboard(1, data.get("language")),
-        )
-
-            
+                _(
+                    "<b>Университет профессор-ўқитувчисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Сув тежовчи технологияларнинг афзалликлари ва уларни самарадорлиги</i>",
+                    locale=data.get("language"),
+                ).format(teacher=teachers["professor"]),
+                reply_markup=await inline.score_keyboard(1, data.get("language")),
+            )
 
         else:
             await message.answer(
@@ -556,15 +581,12 @@ class Survey:
     # @user_router.message(F.text == "/survey")
     # async def user_start(message: Message, state: FSMContext):
 
-
     # @user_router.callback_query(
     #     inline.Factories.Region.filter(), states.Survey.test
     # )
     # async def user_start(callback: CallbackQuery, callback_data: inline.Factories.Region, state: FSMContext):
     #     data = await state.get_data()
     #     message = callback.message
-
-        
 
     @user_router.callback_query(
         states.UserStates.first, inline.Factories.Score.filter()
@@ -580,12 +602,18 @@ class Survey:
             _(
                 "<b>Турк мутахассисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Замонавий суғориш тизимининг аҳамияти ва сувдан фойдаланиш маданияти</i>",
                 locale=data["language"],
-            ).format(teacher=teachers['turk_mutaxassis']),
+            ).format(teacher=teachers["turk_mutaxassis"]),
             reply_markup=await inline.score_keyboard(2, data.get("language")),
         )
         await state.set_state(states.UserStates.second)
         await state.update_data(first=callback_data.id)
-        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
+        await callback.message.edit_text(
+            callback.message.text
+            + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(
+                emoji=callback_data.emoji
+            ),
+            entities=callback.message.entities,
+        )
 
     @user_router.callback_query(
         states.UserStates.second, inline.Factories.Score.filter()
@@ -601,12 +629,18 @@ class Survey:
             _(
                 "<b>Банк мутахассисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>",
                 locale=data["language"],
-            ).format(teacher=teachers['bank_xodimi']),
+            ).format(teacher=teachers["bank_xodimi"]),
             reply_markup=await inline.score_keyboard(3, data.get("language")),
         )
         await state.set_state(states.UserStates.third)
         await state.update_data(second=callback_data.id)
-        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
+        await callback.message.edit_text(
+            callback.message.text
+            + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(
+                emoji=callback_data.emoji
+            ),
+            entities=callback.message.entities,
+        )
 
     @user_router.callback_query(
         states.UserStates.third, inline.Factories.Score.filter()
@@ -622,12 +656,18 @@ class Survey:
             _(
                 "<b>Сув хўжалиги вазирлиги мутахассисини баҳоланг</b>\n<b>Ф.И.Ш:</b> <i>{teacher}</i>\n<b>Маъруза мавзуси:</b> <i>Иқтисодий ва ҳуқуқий саводхонлик:  субсидия,  кафилликлар,  солиқ имтиёзлари ва банк кредитлари</i>",
                 locale=data["language"],
-            ).format(teacher=teachers['suv_masuli']),
+            ).format(teacher=teachers["suv_masuli"]),
             reply_markup=await inline.score_keyboard(4, data.get("language")),
         )
         await state.set_state(states.UserStates.four)
         await state.update_data(third=callback_data.id)
-        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
+        await callback.message.edit_text(
+            callback.message.text
+            + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(
+                emoji=callback_data.emoji
+            ),
+            entities=callback.message.entities,
+        )
 
     @user_router.callback_query(states.UserStates.four, inline.Factories.Score.filter())
     async def four(
@@ -645,7 +685,13 @@ class Survey:
         )
         await state.set_state(states.UserStates.five)
         await state.update_data(four=callback_data.id)
-        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
+        await callback.message.edit_text(
+            callback.message.text
+            + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(
+                emoji=callback_data.emoji
+            ),
+            entities=callback.message.entities,
+        )
 
     @user_router.callback_query(states.UserStates.five, inline.Factories.Score.filter())
     async def five(
@@ -663,7 +709,13 @@ class Survey:
         )
         await state.set_state(states.UserStates.six)
         await state.update_data(five=callback_data.id)
-        await callback.message.edit_text(callback.message.text + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(emoji=callback_data.emoji), entities=callback.message.entities)
+        await callback.message.edit_text(
+            callback.message.text
+            + _("\nБаҳо:  {emoji}", locale=data.get("language")).format(
+                emoji=callback_data.emoji
+            ),
+            entities=callback.message.entities,
+        )
 
     @user_router.message(states.UserStates.six)
     async def six(message: Message, state: FSMContext):
@@ -679,9 +731,9 @@ class Survey:
         wait = await message.answer(
             text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
         )
+        await api.send_feedback(data=data)
         request = await api.certificate_download(data=data["certificate_id"])
         if request:
-            await api.send_feedback(data=data)
             await message.answer_document(
                 document=BufferedInputFile(
                     request,
@@ -690,26 +742,26 @@ class Survey:
                     ),
                 )
             )
-            try:
-                record: Score = Score.get(cert_id=data["certificate_id"])
-                record.first = data["first"]
-                record.second = data["second"]
-                record.third = data["third"]
-                record.four = data["four"]
-                record.five = data["five"]
-                record.six = data["six"]
-                record.cert_id = data["certificate_id"]
-                record.save()
-            except:
-                Score.create(
-                    first=data["first"],
-                    second=data["second"],
-                    third=data["third"],
-                    four=data["four"],
-                    five=data["five"],
-                    six=data["six"],
-                    cert_id=data["certificate_id"],
-                )
+            # try:
+            #     record: Score = Score.get(cert_id=data["certificate_id"])
+            #     record.first = data["first"]
+            #     record.second = data["second"]
+            #     record.third = data["third"]
+            #     record.four = data["four"]
+            #     record.five = data["five"]
+            #     record.six = data["six"]
+            #     record.cert_id = data["certificate_id"]
+            #     record.save()
+            # except:
+            #     Score.create(
+            #         first=data["first"],
+            #         second=data["second"],
+            #         third=data["third"],
+            #         four=data["four"],
+            #         five=data["five"],
+            #         six=data["six"],
+            #         cert_id=data["certificate_id"],
+            #     )
         await wait.delete()
         await state.set_state(states.UserStates.seven)
 
@@ -728,10 +780,9 @@ class Survey:
         )
         # await state.set_state(states.UserStates.seven)
         await api.send_feedback(data=data)
-        return
+        # return
         request = await api.certificate_download(data=data["certificate_id"])
         if request:
-            
             await callback.message.answer_document(
                 document=BufferedInputFile(
                     request,
@@ -740,25 +791,53 @@ class Survey:
                     ),
                 )
             )
-            try:
-                record: Score = Score.get(cert_id=data["certificate_id"])
-                record.first = data["first"]
-                record.second = data["second"]
-                record.third = data["third"]
-                record.four = data["four"]
-                record.five = data["five"]
-                record.six = data["six"]
-                record.cert_id = data["certificate_id"]
-                record.save()
-            except:
-                Score.create(
-                    first=data["first"],
-                    second=data["second"],
-                    third=data["third"],
-                    four=data["four"],
-                    five=data["five"],
-                    six=data["six"],
-                    cert_id=data["certificate_id"],
-                )
+            # try:
+            #     record: Score = Score.get(cert_id=data["certificate_id"])
+            #     record.first = data["first"]
+            #     record.second = data["second"]
+            #     record.third = data["third"]
+            #     record.four = data["four"]
+            #     record.five = data["five"]
+            #     record.six = data["six"]
+            #     record.cert_id = data["certificate_id"]
+            #     record.save()
+            # except:
+            #     Score.create(
+            #         first=data["first"],
+            #         second=data["second"],
+            #         third=data["third"],
+            #         four=data["four"],
+            #         five=data["five"],
+            #         six=data["six"],
+            #         cert_id=data["certificate_id"],
+            #     )
         await wait.delete()
         await state.set_state(states.UserStates.seven)
+
+    @user_router.message(Command("survey"))
+    async def survey_results(message: Message, state: FSMContext):
+        feedbacks = await api.get_all_feedbacks()
+        results = []
+
+        for i in feedbacks["data"]:
+            try:
+                results.append(
+                    [
+                        i["request"]["id"],
+                        i["request"]["full_name"],
+                        i["request"]["region_name"],
+                        i["rates"][0]["rate"],
+                        i["rates"][1]["rate"],
+                        i["rates"][2]["rate"],
+                        i["rates"][3]["rate"],
+                        i["rates"][4]["rate"],
+                        i["comment"],
+                    ]
+                )
+            except:
+                pass
+        making_excel(results)
+
+        await message.answer_document(
+            FSInputFile("so'rovnoma.xlsx")
+        )
