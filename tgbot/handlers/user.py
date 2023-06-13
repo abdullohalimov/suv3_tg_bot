@@ -835,7 +835,7 @@ class Survey:
                         i["rates"][2]["rate"],
                         i["rates"][3]["rate"],
                         i["rates"][4]["rate"],
-                        i["comment"],
+                        i["comment"] if i['comment'] != 'None' else 'Fikr bildirilmagan',
                     ]
                 )
             except:
