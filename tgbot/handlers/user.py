@@ -15,6 +15,7 @@ from tgbot.services.db import Score
 from tgbot.misc.regions_with_teachers import returnn_teachers
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, Protection
+from tgbot.filters.admin import AdminFilter
 
 
 user_router = Router()
@@ -86,7 +87,7 @@ async def back(message: Message, state: FSMContext, bot: Bot):
     elif state2 == states.UserRegistration.full_name:
         await message.answer(
             text=_(
-                '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
+                '<b>"📱 Рақам юбориш"</b> тугмасини босинг ва телефон рақамингизни юборинг', # '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
                 locale=data.get("language"),
             ),
             reply_markup=reply.phone_keyboard(data.get("language")),
@@ -189,10 +190,10 @@ class StepOne:
             await state.update_data(language=callback_data.language)
         if True:
             data = await state.get_data()
-            subscribe = await is_subscribed(
-                user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
-            )
-            # subscribe = "right"
+            # subscribe = await is_subscribed(
+            #     user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
+            # )
+            subscribe = "right"
             if subscribe == "left":
                 # await message.answer(text='Not subscribed')
                 await callback.answer(
@@ -219,7 +220,7 @@ class StepOne:
             else:
                 await callback.message.answer(
                     text=_(
-                        '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
+                        '<b>"📱 Рақам юбориш"</b> тугмасини босинг ва телефон рақамингизни юборинг', # '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
                         locale=data.get("language"),
                     ),
                     reply_markup=reply.phone_keyboard(data.get("language")),
@@ -238,17 +239,33 @@ class StepOne:
         @user_router.message(
             states.UserRegistration.phone,
             F.contact.phone_number
-            | F.text.replace(" ", "").replace("+", "").regexp(r"^998\d{9}$"),
+            | F.text.replace(" ", "").replace("+", ""),
         )
         async def user_contact(message: Message, state: FSMContext):
+            data = await state.get_data()
             try:
                 await state.update_data(
                     phone=message.contact.phone_number.replace(" ", "").replace("+", "")
                 )
             except:
-                await state.update_data(
-                    phone=message.text.replace(" ", "").replace("+", "")
-                )
+                if 'secret' in message.text:
+                    regexp = r'^\d{12}$'
+                    number = message.text.replace(" ", "").replace("+", "").replace('secret', '')
+                    if re.match(regexp, number):
+                        await state.update_data(
+                            phone=number
+                        )
+                    else:
+                        await message.answer(
+                        text=_(
+                            '❌  Телефон рақамингиз нотўғри форматда киритилган.\n☝️ Тeлeфон рақамингизни <b>+9989** *** ** **</b> шаклда\n юборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
+                            locale=data.get("language"),
+                        ),
+                        reply_markup=reply.phone_keyboard(data.get("language")),
+                    )
+                else: 
+                    await message.delete()
+                    return
             data = await state.get_data()
             check = await api.check_phone(data.get("phone"))
             if check["success"]:
@@ -270,7 +287,7 @@ class StepOne:
                 await state.set_state(states.UserRegistration.cert2)
                 await message.delete()
 
-        @user_router.message(states.UserRegistration.phone)
+        @user_router.message(states.UserRegistration.phone, AdminFilter())
         async def user_number_incorrect(message: Message, state: FSMContext):
             data = await state.get_data()
             await message.answer(
