@@ -28,6 +28,7 @@ def making_excel(data):
         "ID",
         "FIO",
         "Viloyat",
+        "Tuman",
         "Universitet professori",
         "Turk mutaxassisi",
         "Bank mutaxassisi",
@@ -52,14 +53,16 @@ def making_excel(data):
     for i in data:
         ws.append(i)
 
+    ws.column_dimensions["A"].width = 8 
     ws.column_dimensions["B"].width = 30 
     ws.column_dimensions["C"].width = 30 
-    ws.column_dimensions["D"].width = 12 
+    ws.column_dimensions["D"].width = 30 
     ws.column_dimensions["E"].width = 12 
     ws.column_dimensions["F"].width = 12 
     ws.column_dimensions["G"].width = 12 
     ws.column_dimensions["H"].width = 12 
-    ws.column_dimensions["I"].width = 30 
+    ws.column_dimensions["I"].width = 12 
+    ws.column_dimensions["J"].width = 30 
 
 
     wb.save("sorovnoma.xlsx")
@@ -826,6 +829,7 @@ class Survey:
                         i["request"]["id"],
                         i["request"]["full_name"],
                         i["request"]["region_name"],
+                        i["request"]["district_name"],
                         i["rates"][0]["rate"],
                         i["rates"][1]["rate"],
                         i["rates"][2]["rate"],
