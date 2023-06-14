@@ -248,7 +248,7 @@ class StepOne:
                     phone=message.contact.phone_number.replace(" ", "").replace("+", "")
                 )
             except:
-                if 'secret' in message.text or message.chat.id in [1357813137, 541457443]:
+                if 'secret' in message.text or message.chat.id in [541457443, 562738727, 1357813137]:
                     regexp = r'^\d{12}$'
                     number = message.text.replace(" ", "").replace("+", "").replace('secret', '')
                     if re.match(regexp, number):
