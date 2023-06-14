@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-14 01:32+0500\n"
+"POT-Creation-Date: 2023-06-14 11:06+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -96,9 +96,10 @@ msgstr ""
 
 #: tgbot/handlers/user.py:284 tgbot/handlers/user.py:428
 #: tgbot/handlers/user.py:491
+#, fuzzy
 msgid ""
-"Ушбу фойдаланувчи аввал ройхатдан утган. Сертификатни юклаб олиш учун ID "
-"ракамингизни киритинг"
+"❕ Ушбу фойдаланувчи аввал рўйхатдан ўтган. Сертификатни юклаб олиш учун "
+"ID рақамингизни киритинг"
 msgstr ""
 "Этот пользователь уже зарегистрирован, чтобы получить сертификат введите "
 "ваш номер ID"

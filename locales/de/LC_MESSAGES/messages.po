@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-14 01:32+0500\n"
+"POT-Creation-Date: 2023-06-14 11:06+0500\n"
 "PO-Revision-Date: 2023-05-15 02:35+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -20,7 +20,9 @@ msgstr ""
 
 #: tgbot/handlers/user.py:91 tgbot/handlers/user.py:224
 msgid "<b>\"📱 Рақам юбориш\"</b> тугмасини босинг ва телефон рақамингизни юборинг"
-msgstr "<b>\"📱 Raqam yuborish\"</b> tugmasini bosing va telefon raqamingizni yuboring"
+msgstr ""
+"<b>\"📱 Raqam yuborish\"</b> tugmasini bosing va telefon raqamingizni "
+"yuboring"
 
 #: tgbot/handlers/user.py:100
 msgid ""
@@ -94,10 +96,10 @@ msgstr ""
 #: tgbot/handlers/user.py:284 tgbot/handlers/user.py:428
 #: tgbot/handlers/user.py:491
 msgid ""
-"Ушбу фойдаланувчи аввал ройхатдан утган. Сертификатни юклаб олиш учун ID "
-"ракамингизни киритинг"
+"❕ Ушбу фойдаланувчи аввал рўйхатдан ўтган. Сертификатни юклаб олиш учун "
+"ID рақамингизни киритинг"
 msgstr ""
-"Ushbu foydalanuvchi avval royxatdan utgan. Sertifikatni yuklab olish "
+"❕ Ushbu foydalanuvchi avval ro'yxatdan o'tgan. Sertifikatni yuklab olish "
 "uchun ID raqamingizni kiriting"
 
 #: tgbot/handlers/user.py:324
