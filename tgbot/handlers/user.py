@@ -190,10 +190,10 @@ class StepOne:
             await state.update_data(language=callback_data.language)
         if True:
             data = await state.get_data()
-            # subscribe = await is_subscribed(
-            #     user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
-            # )
-            subscribe = "right"
+            subscribe = await is_subscribed(
+                user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
+            )
+            # subscribe = "right"
             if subscribe == "left":
                 # await message.answer(text='Not subscribed')
                 await callback.answer(
