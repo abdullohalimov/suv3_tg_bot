@@ -190,10 +190,11 @@ class StepOne:
             await state.update_data(language=callback_data.language)
         if True:
             data = await state.get_data()
-            subscribe = await is_subscribed(
-                user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
-            )
-            # subscribe = "right"
+            # subscribe = await is_subscribed(
+            #     user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
+            # )
+            # TODO don't forget to change back
+            subscribe = "right"
             if subscribe == "left":
                 # await message.answer(text='Not subscribed')
                 await callback.answer(
@@ -556,7 +557,7 @@ class StepThree:
             text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
         )
         request = await api.get_user_data_from_cert_id(message.text)
-        if int(request.get("data", False).get("status", 0)) == 3:
+        if int(request.get("data", {'status': False}).get("status", 0)) == 3:
             # await message.answer_document(
             #     document=BufferedInputFile(
             #         request,
@@ -588,7 +589,7 @@ class StepThree:
         else:
             await message.answer(
                 _(
-                    "❔ID нотоғри киритилди ёки курс ҳали якунланмаган\n⏳ Курс якунланганидан сўнг сертификатингизни юклаб олишингиз мумкин",
+                    "❔ Ушбу ID топилмади ёки курс ҳали якунланмаган\n⏳ Курс якунланганидан сўнг сертификатингизни юклаб олишингиз мумкин",
                     locale=data.get("language"),
                 )
             )
