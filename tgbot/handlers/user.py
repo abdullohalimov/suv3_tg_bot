@@ -21,7 +21,7 @@ from tgbot.filters.admin import AdminFilter
 user_router = Router()
 
 
-def making_excel(data):
+def making_excel(data: list):
     wb = Workbook()
     ws = wb.active
     ws.title = "So'rovnoma"
@@ -42,7 +42,7 @@ def making_excel(data):
                         indent=0)
     protection = Protection(locked=False,
                             hidden=False)
-
+    print(values)
     ws.append(values)
     ft = Font(bold=True)
     for row in ws["A1:I1"]:
@@ -50,9 +50,17 @@ def making_excel(data):
             cell.font = ft
             cell.alignment = alignment
             cell.protection = protection
-
-    for i in data:
+    already_added: set = set()
+    to_add = []
+    for i in reversed(data):
+        if i[0] in already_added:
+            pass
+        else:
+            already_added.add(i[0])
+            to_add.append(i)
+    for i in reversed(to_add):
         ws.append(i)
+
 
     ws.column_dimensions["A"].width = 8 
     ws.column_dimensions["B"].width = 30 
@@ -190,11 +198,11 @@ class StepOne:
             await state.update_data(language=callback_data.language)
         if True:
             data = await state.get_data()
-            # subscribe = await is_subscribed(
-            #     user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
-            # )
-            # TODO don't forget to change back
-            subscribe = "right"
+            subscribe = await is_subscribed(
+                user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
+            )
+            #  don't forget to change back
+            # subscribe = "right"
             if subscribe == "left":
                 # await message.answer(text='Not subscribed')
                 await callback.answer(
