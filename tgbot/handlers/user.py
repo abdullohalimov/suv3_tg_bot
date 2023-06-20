@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 import logging
 from aiogram import F, Bot, Router
 from aiogram.fsm.context import FSMContext
@@ -19,7 +19,36 @@ from tgbot.filters.admin import AdminFilter
 
 
 user_router = Router()
-
+today = datetime.now().day
+admins_list = [
+    "541457443",
+    "562738727",
+    "1357813137",
+    ]
+moders_list = [
+    "143659989",
+    "1441325781",
+    "1017075026",
+    "604092057",
+    "5557914805",
+    "1703817316",
+]
+limited_admins = {
+    "143659989": 0,
+    "1441325781": 0,
+    "1017075026": 0,
+    "604092057": 0,
+    "5557914805": 0,
+    "1703817316": 0,
+}
+actual_limited_admins = {
+    "143659989": 0,
+    "1441325781": 0,
+    "1017075026": 0,
+    "604092057": 0,
+    "5557914805": 0,
+    "1703817316": 0,
+}
 
 def making_excel(data: list):
     wb = Workbook()
@@ -37,11 +66,8 @@ def making_excel(data: list):
         "Tashkiliy jarayonlar",
         "Fikrlar",
     ]
-    alignment=Alignment(wrap_text=True,
-                        shrink_to_fit=False,
-                        indent=0)
-    protection = Protection(locked=False,
-                            hidden=False)
+    alignment = Alignment(wrap_text=True, shrink_to_fit=False, indent=0)
+    protection = Protection(locked=False, hidden=False)
     print(values)
     ws.append(values)
     ft = Font(bold=True)
@@ -61,18 +87,16 @@ def making_excel(data: list):
     for i in reversed(to_add):
         ws.append(i)
 
-
-    ws.column_dimensions["A"].width = 8 
-    ws.column_dimensions["B"].width = 30 
-    ws.column_dimensions["C"].width = 30 
-    ws.column_dimensions["D"].width = 30 
-    ws.column_dimensions["E"].width = 12 
-    ws.column_dimensions["F"].width = 12 
-    ws.column_dimensions["G"].width = 12 
-    ws.column_dimensions["H"].width = 12 
-    ws.column_dimensions["I"].width = 12 
-    ws.column_dimensions["J"].width = 30 
-
+    ws.column_dimensions["A"].width = 8
+    ws.column_dimensions["B"].width = 30
+    ws.column_dimensions["C"].width = 30
+    ws.column_dimensions["D"].width = 30
+    ws.column_dimensions["E"].width = 12
+    ws.column_dimensions["F"].width = 12
+    ws.column_dimensions["G"].width = 12
+    ws.column_dimensions["H"].width = 12
+    ws.column_dimensions["I"].width = 12
+    ws.column_dimensions["J"].width = 30
 
     wb.save("sorovnoma.xlsx")
 
@@ -95,7 +119,7 @@ async def back(message: Message, state: FSMContext, bot: Bot):
     elif state2 == states.UserRegistration.full_name:
         await message.answer(
             text=_(
-                '<b>"📱 Рақам юбориш"</b> тугмасини босинг ва телефон рақамингизни юборинг', # '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
+                '<b>"📱 Рақам юбориш"</b> тугмасини босинг ва телефон рақамингизни юборинг',  # '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
                 locale=data.get("language"),
             ),
             reply_markup=reply.phone_keyboard(data.get("language")),
@@ -229,7 +253,7 @@ class StepOne:
             else:
                 await callback.message.answer(
                     text=_(
-                        '<b>"📱 Рақам юбориш"</b> тугмасини босинг ва телефон рақамингизни юборинг', # '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
+                        '<b>"📱 Рақам юбориш"</b> тугмасини босинг ва телефон рақамингизни юборинг',  # '📲 Телефон рақамингизни <b>+9989** *** ** **</b> шаклда \nюборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
                         locale=data.get("language"),
                     ),
                     reply_markup=reply.phone_keyboard(data.get("language")),
@@ -247,8 +271,7 @@ class StepOne:
     class Phone:
         @user_router.message(
             states.UserRegistration.phone,
-            F.contact.phone_number
-            | F.text.replace(" ", "").replace("+", ""),
+            F.contact.phone_number | F.text.replace(" ", "").replace("+", ""),
         )
         async def user_contact(message: Message, state: FSMContext):
             data = await state.get_data()
@@ -257,22 +280,44 @@ class StepOne:
                     phone=message.contact.phone_number.replace(" ", "").replace("+", "")
                 )
             except:
-                if 'secret' in message.text or message.chat.id in [541457443, 562738727, 1357813137]:
-                    regexp = r'^\d{12}$'
-                    number = message.text.replace(" ", "").replace("+", "").replace('secret', '')
-                    if re.match(regexp, number):
-                        await state.update_data(
-                            phone=number
+                if datetime.now().day != today:
+                    today = datetime.now().day
+                    actual_limited_admins = limited_admins
+                user_id = str(message.chat.id)
+                if user_id in admins_list:
+                    continuee = True
+                    is_admin = True
+                elif user_id in moders_list:
+                    continuee = True
+                    is_admin = False # but he's moder
+                else:
+                    continuee = False
+
+                if continuee:
+                    if actual_limited_admins.get(user_id, 16) < 15 or is_admin:
+                        regexp = r"^\d{12}$"
+                        number = (
+                            message.text.replace(" ", "")
+                            .replace("+", "")
+                            .replace("secret", "")
                         )
+                        if re.match(regexp, number):
+                            await state.update_data(phone=number)
+                            if not is_admin:
+                                actual_limited_admins[user_id] += 1
+                        else:
+                            await message.answer(
+                                text=_(
+                                    '❌  Телефон рақамингиз нотўғри форматда киритилган.\n☝️ Тeлeфон рақамингизни <b>+9989** *** ** **</b> шаклда\n юборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
+                                    locale=data.get("language"),
+                                ),
+                                reply_markup=reply.phone_keyboard(data.get("language")),
+                            )
+                            return
                     else:
-                        await message.answer(
-                        text=_(
-                            '❌  Телефон рақамингиз нотўғри форматда киритилган.\n☝️ Тeлeфон рақамингизни <b>+9989** *** ** **</b> шаклда\n юборинг, ёки <b>"📱 Рақам юбориш"</b> тугмасини босинг:',
-                            locale=data.get("language"),
-                        ),
-                        reply_markup=reply.phone_keyboard(data.get("language")),
-                    )
-                else: 
+                        await message.answer(_("Кунлик лимит нихоясига етган", locale=data.get("language")))
+                        return
+                else:
                     await message.delete()
                     return
             data = await state.get_data()
@@ -503,9 +548,7 @@ class StepThree:
             )
             await state.set_state(states.UserRegistration.cert2)
 
-    @user_router.callback_query(
-        inline.Factories.Certificate.filter()
-    )
+    @user_router.callback_query(inline.Factories.Certificate.filter())
     async def cert_answer(
         call: CallbackQuery,
         callback_data: inline.Factories.Certificate,
@@ -537,7 +580,9 @@ class StepThree:
             )
             # await message.answer(_('<b>Вилоятингизни танланг:</b>', locale=data.get("language")), reply_markup=await inline.region_inline_keyboard(data.get("language"), False))
             # await state.set_state(states.Survey.test)
-            await state.update_data(certificate_id=data.get("certificate_id"), teachers=teachers)
+            await state.update_data(
+                certificate_id=data.get("certificate_id"), teachers=teachers
+            )
             await state.set_state(states.UserStates.first)
             await call.message.answer(
                 _(
@@ -565,7 +610,7 @@ class StepThree:
             text=_("⏳ Юкланмоқда, кутиб туринг...", locale=data.get("language"))
         )
         request = await api.get_user_data_from_cert_id(message.text)
-        if int(request.get("data", {'status': False}).get("status", 0)) == 3:
+        if int(request.get("data", {"status": False}).get("status", 0)) == 3:
             # await message.answer_document(
             #     document=BufferedInputFile(
             #         request,
@@ -861,13 +906,13 @@ class Survey:
                         i["rates"][2]["rate"],
                         i["rates"][3]["rate"],
                         i["rates"][4]["rate"],
-                        i["comment"] if i['comment'] != 'None' else 'Fikr bildirilmagan',
+                        i["comment"]
+                        if i["comment"] != "None"
+                        else "Fikr bildirilmagan",
                     ]
                 )
             except:
                 pass
         making_excel(results)
 
-        await message.answer_document(
-            FSInputFile("sorovnoma.xlsx")
-        )
+        await message.answer_document(FSInputFile("sorovnoma.xlsx"))
