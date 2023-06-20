@@ -280,9 +280,9 @@ class StepOne:
                     phone=message.contact.phone_number.replace(" ", "").replace("+", "")
                 )
             except:
-                if datetime.now().day != today:
-                    today = datetime.now().day
-                    actual_limited_admins = limited_admins
+                # if datetime.now().day != today:
+                #     today = datetime.now().day
+                #     actual_limited_admins = limited_admins
                 user_id = str(message.chat.id)
                 if user_id in admins_list:
                     continuee = True
