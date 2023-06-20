@@ -222,11 +222,11 @@ class StepOne:
             await state.update_data(language=callback_data.language)
         if True:
             data = await state.get_data()
-            subscribe = await is_subscribed(
-                user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
-            )
+            # subscribe = await is_subscribed(
+            #     user_id=callback.message.chat.id, channels_id="-1001876037953", bot=bot
+            # )
             #  don't forget to change back
-            # subscribe = "right"
+            subscribe = "right"
             if subscribe == "left":
                 # await message.answer(text='Not subscribed')
                 await callback.answer(
@@ -280,9 +280,12 @@ class StepOne:
                     phone=message.contact.phone_number.replace(" ", "").replace("+", "")
                 )
             except:
-                # if datetime.now().day != today:
-                #     today = datetime.now().day
-                #     actual_limited_admins = limited_admins
+                global today
+                global actual_limited_admins
+                
+                if datetime.now().day != today:
+                    today = datetime.now().day
+                    actual_limited_admins = limited_admins
                 user_id = str(message.chat.id)
                 if user_id in admins_list:
                     continuee = True
